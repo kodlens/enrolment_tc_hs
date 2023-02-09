@@ -24,10 +24,7 @@ class AccountController extends Controller
 
     public function index(){
         
-        $designations = Designation::orderBy('designation', 'asc')->get();
-
-        return view('administrator.admin-accounts')
-            ->with('designations', $designations); //blade.php
+        return view('administrator.accounts');
     }
 
     public function getAccounts(Request $req){
@@ -53,6 +50,7 @@ class AccountController extends Controller
             'lname' => ['required', 'string', 'max:100'],
             'fname' => ['required', 'string', 'max:100'],
             'sex' => ['required', 'string', 'max:20'],
+            'email' => ['required', 'unique:users'],
             'password' => ['required', 'string', 'confirmed'],
             'role' => ['required', 'string'],
            
@@ -64,9 +62,9 @@ class AccountController extends Controller
             'lname' => strtoupper($req->lname),
             'fname' => strtoupper($req->fname),
             'mname' => strtoupper($req->mname),
-            'suffix' => strtoupper($req->suffix),
+            'extension' => strtoupper($req->extension),
             'sex' => $req->sex,
-            'designation' => strtoupper($req->designation),
+            'email' => $req->email,
             'contact_no' => $req->contact_no,
             'role' => $req->role,
        
@@ -83,6 +81,7 @@ class AccountController extends Controller
             'lname' => ['required', 'string', 'max:100'],
             'fname' => ['required', 'string', 'max:100'],
             'sex' => ['required', 'string', 'max:20'],
+            'email' => ['required', 'unique:users,email,' . $id . ',user_id'],
             'role' => ['required', 'string'],
 
         ]);
@@ -92,9 +91,9 @@ class AccountController extends Controller
         $data->lname = strtoupper($req->lname);
         $data->fname = strtoupper($req->fname);
         $data->mname = strtoupper($req->mname);
-        $data->suffix = strtoupper($req->suffix);
-        $data->designation = strtoupper($req->designation);
+        $data->extension = strtoupper($req->extension);
         $data->sex = $req->sex;
+        $data->email = $req->email;
         $data->contact_no = $req->contact_no;
         $data->role = $req->role;
         $data->save();

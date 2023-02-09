@@ -22,15 +22,17 @@
 </head>
 
 <body>
+
+    
     <div id="app">
         <navbar-component></navbar-component>
-
         <div>
             @yield('content')
-
         </div>
-        <footer-component></footer-component>
+        
     </div>
+
+
 </body>
 
 </html>

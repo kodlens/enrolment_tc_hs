@@ -3,20 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Religion;
-use App\Models\Nationality;
+
+use App\Models\AcademicYear;
 
 class OpenController extends Controller
 {
     //
 
-    public function loadNationalities(){
-        return Nationality::orderBy('nationality', 'asc')
+    public function loadAcademicYears(){
+        return AcademicYear::orderBy('academic_year', 'asc')
             ->get();
     }
 
-    public function loadReligions(){
-        return Religion::orderBy('religion', 'asc')
-            ->get();
-    }
+
 }

@@ -2,7 +2,7 @@
     <div>
         <div class="section">
             <div class="columns is-centered">
-                <div class="column is-10">
+                <div class="column is-8">
                     <div class="box">
 
                         <b-field label="Search">
@@ -55,6 +55,10 @@
 
                             <b-table-column field="role" label="Role" v-slot="props">
                                 {{ props.row.role }}
+                            </b-table-column>
+
+                            <b-table-column field="contact_no" label="Contact No." v-slot="props">
+                                {{ props.row.contact_no }}
                             </b-table-column>
 
                             <b-table-column label="Action" v-slot="props">
@@ -130,7 +134,8 @@
                                              :type="this.errors.lname ? 'is-danger':''"
                                              :message="this.errors.lname ? this.errors.lname[0] : ''">
                                         <b-input v-model="fields.lname"
-                                                 placeholder="Last Name" required>
+                                            icon="account"
+                                            placeholder="Last Name" required>
                                         </b-input>
                                     </b-field>
                                 </div>
@@ -156,11 +161,11 @@
                                     </b-field>
                                 </div>
                                 <div class="column">
-                                    <b-field label="Suffix" label-position="on-border"
-                                             :type="this.errors.suffix ? 'is-danger':''"
-                                             :message="this.errors.suffix ? this.errors.suffix[0] : ''">
-                                        <b-input v-model="fields.suffix"
-                                                 placeholder="Suffix">
+                                    <b-field label="Extension" label-position="on-border"
+                                             :type="this.errors.extension ? 'is-danger':''"
+                                             :message="this.errors.extension ? this.errors.extension[0] : ''">
+                                        <b-input v-model="fields.extension"
+                                                 placeholder="Extension">
                                         </b-input>
                                     </b-field>
                                 </div>
@@ -177,15 +182,15 @@
                                     </b-field>
                                 </div>
                                 <div class="column">
-                                    <b-field label="Designation" expanded label-position="on-border"
-                                             :type="this.errors.designation ? 'is-danger':''"
-                                             :message="this.errors.designation ? this.errors.designation[0] : ''">
-                                        <b-select v-model="fields.designation" expanded
-                                                 placeholder="Designation">
-                                            <option v-for="(item, index) in designations" :key="index" :value="item.designation">{{  item.designation }}</option>
-                                        </b-select>
+                                    <b-field label="Email" label-position="on-border"
+                                             :type="this.errors.email ? 'is-danger':''"
+                                             :message="this.errors.email ? this.errors.email[0] : ''">
+                                        <b-input type="email" v-model="fields.email" icon="email"
+                                                 placeholder="Email" required>
+                                        </b-input>
                                     </b-field>
                                 </div>
+                            
                             </div>
 
                             <div class="columns" v-if="global_id < 1">
@@ -309,7 +314,7 @@
 <script>
 
 export default{
-    props: ['propDesignations'],
+   
     data() {
         return{
             data: [],
@@ -336,17 +341,18 @@ export default{
                 lname: '', 
                 fname: '',
                 mname: '',
-                suffix: '',
-                designation: '',
+                extension: '',
+          
                 password: '', 
                 password_confirmation : '',
                 sex : '', role: '', 
                 contact_no : '',
+                email: '',
             },
             errors: {},
 
 
-            designations: [],
+         
         }
 
     },
@@ -492,12 +498,13 @@ export default{
                 lname: '', 
                 fname: '',
                 mname: '',
-                suffix: '',
-                designation: '',
+                extension: '',
+             
                 password: '', 
                 password_confirmation : '',
                 sex : '', role: '', 
                 contact_no : '',
+                email : ''
             };
         },
 
@@ -544,13 +551,10 @@ export default{
             })
         },
 
-        initData(){
-            this.designations = JSON.parse(this.propDesignations)
-        }
+      
     },
 
     mounted() {
-        this.initData();
         this.loadAsyncData()
     }
 

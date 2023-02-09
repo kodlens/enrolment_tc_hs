@@ -30,7 +30,7 @@ button{
 .w-button {
     display: inline-block;
     padding: 10px 24px;
-    border: 1px solid #29aecf;
+    border: 1px solid #1426c2;
     background-color: white;
     border-radius: 4px;
     transition: all 0.2s ease-in;
@@ -229,7 +229,7 @@ button{
 @import "~bulma/sass/utilities/_all";
 //
 ////Set your colors
-$primary: #29aecf;
+$primary: #1426c2;
 $primary-light: findLightColor($primary);
 $primary-dark: findDarkColor($primary);
 $primary-invert: findColorInvert($primary);

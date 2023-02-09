@@ -50,23 +50,6 @@ export default {
                     window.location = '/admin-home';
                 }
 
-                if(res.data.role === 'NURSE'){
-                    window.location = '/nurse-home';
-                }
-
-                if(res.data.role === 'DOCTOR'){
-                    window.location = '/doctor-home';
-                }
-
-                if(res.data.role === 'CHIEF NURSE'){
-                    window.location = '/chief-home';
-                }
-
-                if(res.data.role === 'RECORD OFFICER'){
-                    window.location = '/record-home';
-                }
-
-
                //window.location = '/dashboard';
             }).catch(err=>{
                 if(err.response.status === 422){

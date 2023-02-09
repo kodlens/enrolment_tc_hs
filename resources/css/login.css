@@ -9,7 +9,7 @@
 }
 
 .login-card:hover {
-    border: #29aecf 0.2em solid;
+    border: #1426c2 0.2em solid;
 }
 
 
@@ -24,11 +24,11 @@
 .box{
     padding: 50px 25px 50px 25px;
     border: 1px solid rgb(223, 223, 223);
-    border: 1px solid #29aecf;
+    border: 1px solid #1426c2;
 }
 
 .hr-line{
-    background-color: #29aecf;
+    background-color: #1426c2;
 }
 
 .login-input{

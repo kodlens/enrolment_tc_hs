@@ -20,8 +20,11 @@
                 </b-navbar-item> -->
                
                 <b-navbar-dropdown label="Setup">
-                    <b-navbar-item href="/designations">
-                        Designations
+                    <b-navbar-item href="/academic-year">
+                        Academic Year
+                    </b-navbar-item>
+                    <b-navbar-item href="/track">
+                        Track
                     </b-navbar-item>
                     <!-- <b-navbar-item href="/role">
                         Category
