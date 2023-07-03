@@ -22,16 +22,59 @@
 </head>
 
 <body>
-
     
     <div id="app">
-        <navbar-component></navbar-component>
+        
+        <b-navbar>
+            <template #brand>
+                <b-navbar-item>
+                    <img src="/img/logo.png" />
+                    
+                </b-navbar-item>
+            </template>
+    
+            <template #start>
+               
+    
+            </template>
+    
+            <template #end>
+                
+                <b-navbar-item href="/">
+                    Home
+                </b-navbar-item>
+                <b-navbar-item href="/registration">
+                    Register
+                </b-navbar-item>
+                <b-navbar-item tag="div">
+                    @auth()
+                        <div class="buttons">
+                            <b-button label="LOGOUT" icon-left="logout" onclick="document.getElementById('logout').submit()">
+                            </b-button>
+                        </div>
+                    @else
+                        <div class="buttons">
+                            <a class="button is-primary is-outlined" href="/login">
+                                <strong>Login</strong>
+                            </a>
+                        </div>
+                    @endauth
+                </b-navbar-item>
+                
+            </template>
+        </b-navbar>
+
+        <form id="logout" action="/logout" method="post"> @csrf </form>
+
         <div>
             @yield('content')
         </div>
         
     </div>
 
+    <script>
+        
+    </script>
 
 </body>
 

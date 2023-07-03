@@ -12,14 +12,22 @@
 //@import '~font-awesome/css/font-awesome.css';
 //npm i font-awesome
 //https://fontawesome.com/v4.7.0/
-html body {
-    font-family: 'Amaranth', sans-serif;
-    background: white;
-}
+
+// 
+// #0A4D68
+//#088395
+//#05BFDB
+//#00FFCA
+// color pallete for ensys
+
+// html body {
+//     font-family: 'Amaranth', sans-serif;
+//     background: white;
+// }
 
 .navbar {
-    border-bottom: 0.5px solid #29aecf;
-    box-shadow: 0 1px 10px rgb(224, 224, 224);
+    border-bottom: 0.5px solid #0A4D68;
+    // box-shadow: 0 1px 10px rgb(224, 224, 224);
 }
 
 button{
@@ -229,7 +237,7 @@ button{
 @import "~bulma/sass/utilities/_all";
 //
 ////Set your colors
-$primary: #1426c2;
+$primary: #0A4D68;
 $primary-light: findLightColor($primary);
 $primary-dark: findDarkColor($primary);
 $primary-invert: findColorInvert($primary);
@@ -264,16 +272,36 @@ $modal-card-head-background-color: #ffffff;
     margin: 5px 0 30px 0;
 }
 
-.box-text{
-    font-weight: bold;
-    font-size: 1.2em;
-    border-bottom: 1px solid rgb(185, 185, 185);
-    margin: 5px 0 30px 0;
+// .box-text{
+//     font-weight: bold;
+//     font-size: 1.2em;
+//     border-bottom: 1px solid rgb(185, 185, 185);
+//     margin: 5px 0 30px 0;
+// }
+
+
+h2 {
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid #000;
+    line-height: 0.1em;
+    margin: 30px 0 40px 0;
 }
 
+h2 span {
+    background: #fff;
+    padding: 0 10px;
+    font-weight: bold;
+}
+
+
 .divider{
-    border: 2px solid rgb(159, 241, 255);
-    margin: 5px 0 20px 0;
+    //border: 2px solid rgb(194, 194, 194);
+    background-color: #7a7a7a;
+    padding: 5px;
+    color: white;
+    font-weight: bold;
+    margin: 5px 0 15px 0;
 }
 
 

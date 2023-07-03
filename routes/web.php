@@ -28,7 +28,8 @@ Route::get('/', function () {
 
 
 Auth::routes([
-    'login' => 'false'
+    'login' => true,
+    'register' => false
 ]);
 
 Route::get('/load-user', function(){
@@ -47,11 +48,11 @@ Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logou
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/sign-up', [App\Http\Controllers\SignUpController::class, 'index']);
-Route::post('/sign-up', [App\Http\Controllers\SignUpController::class, 'store']);
+Route::get('/registration', [App\Http\Controllers\RegistrationController::class, 'index']);
+Route::post('/registration', [App\Http\Controllers\RegistrationController::class, 'store']);
+
 
 Route::get('/get-user/{id}', [App\Http\Controllers\OpenUserController::class, 'getUser']);
-
 
 
 //ADDRESS

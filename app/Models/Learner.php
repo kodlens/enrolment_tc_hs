@@ -15,10 +15,12 @@ class Learner extends Model
 
     protected $fillable = [
         'lrn',
+        'psa_cert_no',
         'lname',
         'fname',
         'mname',
         'extension',
+        
         'sex',
         'birthdate',
         'birthplace',
@@ -27,15 +29,24 @@ class Learner extends Model
         'specify_indigenous',
         'is_4ps',
         'household_4ps_no',
-        'contact_no',
+
+        'current_country',
+        'current_province',
+        'current_city',
+        'current_barangay',
+        'current_street',
+        'current_zipcode',
+
+        'permanent_country',
+        'permanent_province',
+        'permanent_city',
+        'permanent_barangay',
+        'permanent_street',
+        'permanent_zipcode',
+
         'email',
         'contact_no',
-        'country',
-        'province',
-        'city',
-        'barangay',
-        'street',
-        'zipcode',
+       
 
         'father_lname',
         'father_fname',
@@ -48,6 +59,12 @@ class Learner extends Model
         'mother_maiden_mname',
         'mother_maiden_extension',
         'mother_maiden_contact_no',
+
+        'guardian_lname',
+        'guardian_fname',
+        'guardian_mname',
+        'guardian_extension',
+        'guardian_contact_no',
 
     ];
 
