@@ -17630,10 +17630,51 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      fields: {},
+      fields: {
+        lrn: '',
+        lname: '',
+        fname: '',
+        mname: '',
+        sex: '',
+        age: '',
+        bdate: null,
+        birthplace: '',
+        permanent_province: '',
+        permanent_city: '',
+        permanent_barangay: '',
+        permanent_street: '',
+        permanent_zipcode: '',
+        current_province: '',
+        current_city: '',
+        current_barangay: '',
+        current_street: '',
+        current_zipcode: ''
+      },
       errors: {},
       current_provinces: [],
       current_cities: [],
@@ -17688,10 +17729,20 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     //ADDRESS
+    //copy current address
+    copyCurrentAddress: function copyCurrentAddress() {
+      this.fields.permanent_province = this.fields.current_province;
+      this.loadPermanentCity();
+      this.fields.permanent_city = this.fields.current_city;
+      this.loadPermanentBarangay();
+      this.fields.permanent_barangay = this.fields.current_barangay;
+      this.fields.permanent_street = this.fields.current_street;
+      this.fields.permanent_zipcode = this.fields.current_zipcode;
+    },
     submit: function submit() {
       var _this7 = this;
 
-      axios.post('/sign-up', this.fields).then(function (res) {
+      axios.post('/registration', this.fields).then(function (res) {
         if (res.data.status === 'saved') {
           _this7.$buefy.dialog.alert({
             title: "SAVED!",
@@ -36979,7 +37030,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.box-title[data-v-70725824]{\n        font-weight: bold;\n        text-align: center;\n}\n\n/*    dere lang kubia ang panel color*/\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.box-title[data-v-70725824]{\n        font-weight: bold;\n        font-size: 1.5rem;\n        text-align: center;\n}\n\n/*    dere lang kubia ang panel color*/\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -76202,8 +76253,9 @@ var render = function () {
                         [
                           _c("b-input", {
                             attrs: {
-                              type: "text",
-                              placeholder: "Contact No.",
+                              type: "tel",
+                              pattern: "^(09|\\+639)\\d{9}$",
+                              placeholder: "Format: 09191112222",
                               icon: "",
                             },
                             model: {
@@ -76464,6 +76516,41 @@ var render = function () {
                                 _vm.$set(_vm.fields, "bdate", $$v)
                               },
                               expression: "fields.bdate",
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "column" },
+                    [
+                      _c(
+                        "b-field",
+                        {
+                          attrs: {
+                            label: "Age",
+                            type: this.errors.age ? "is-danger" : "",
+                            message: this.errors.age ? this.errors.age[0] : "",
+                          },
+                        },
+                        [
+                          _c("b-input", {
+                            attrs: {
+                              type: "number",
+                              max: "120",
+                              placeholder: "Age",
+                            },
+                            model: {
+                              value: _vm.fields.age,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.fields, "age", $$v)
+                              },
+                              expression: "fields.age",
                             },
                           }),
                         ],
@@ -76924,9 +77011,51 @@ var render = function () {
                     ],
                     1
                   ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "column" },
+                    [
+                      _c(
+                        "b-field",
+                        { attrs: { label: "Zip Code" } },
+                        [
+                          _c("b-input", {
+                            attrs: { type: "text", placeholder: "Zip Code" },
+                            model: {
+                              value: _vm.fields.current_zipcode,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.fields, "current_zipcode", $$v)
+                              },
+                              expression: "fields.current_zipcode",
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                    ],
+                    1
+                  ),
                 ]),
                 _vm._v(" "),
                 _vm._m(1),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "buttons" },
+                  [
+                    _c(
+                      "b-button",
+                      {
+                        staticClass: "is-info is-small",
+                        attrs: { "icon-left": "home" },
+                        on: { click: _vm.copyCurrentAddress },
+                      },
+                      [_vm._v("Same as current address")]
+                    ),
+                  ],
+                  1
+                ),
                 _vm._v(" "),
                 _c("div", { staticClass: "columns" }, [
                   _c(
@@ -77105,7 +77234,46 @@ var render = function () {
                       _c(
                         "b-field",
                         { attrs: { label: "House #. Street" } },
-                        [_c("b-input", { attrs: { type: "text" } })],
+                        [
+                          _c("b-input", {
+                            attrs: {
+                              type: "text",
+                              placeholder: "House #. Street",
+                            },
+                            model: {
+                              value: _vm.fields.permanent_street,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.fields, "permanent_street", $$v)
+                              },
+                              expression: "fields.permanent_street",
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "column" },
+                    [
+                      _c(
+                        "b-field",
+                        { attrs: { label: "Zip Code" } },
+                        [
+                          _c("b-input", {
+                            attrs: { type: "text", placeholder: "Zip Code" },
+                            model: {
+                              value: _vm.fields.permanent_zipcode,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.fields, "permanent_zipcode", $$v)
+                              },
+                              expression: "fields.permanent_zipcode",
+                            },
+                          }),
+                        ],
                         1
                       ),
                     ],
@@ -77233,9 +77401,10 @@ var render = function () {
                         [
                           _c("b-input", {
                             attrs: {
-                              type: "text",
+                              type: "tel",
                               icon: "cellphone",
-                              placeholder: "Father Contact No.",
+                              pattern: "^(09|\\+639)\\d{9}$",
+                              placeholder: "Format: 09101112222",
                             },
                             model: {
                               value: _vm.fields.father_contact_no,
@@ -77375,9 +77544,9 @@ var render = function () {
                         [
                           _c("b-input", {
                             attrs: {
-                              type: "text",
-                              icon: "cellphone",
-                              placeholder: "Mother Maiden Contact No.",
+                              type: "tel",
+                              pattern: "^(09|\\+639)\\d{9}$",
+                              placeholder: "Format: 09101112222",
                             },
                             model: {
                               value: _vm.fields.mother_maiden_contact_no,
@@ -77535,10 +77704,6 @@ var render = function () {
                     ],
                     1
                   ),
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "divider" }, [
-                  _vm._v("LEARNER INFORMATION"),
                 ]),
                 _vm._v(" "),
                 _vm._m(2),

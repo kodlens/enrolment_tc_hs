@@ -17,27 +17,25 @@ class RegistrationController extends Controller
 
 
     public function store(Request $req){
-
+       
         $validate = $req->validate([
             'username' => ['required', 'string', 'unique:users'],
             'lname' => ['required', 'string', 'max:100'],
             'fname' => ['required', 'string', 'max:100'],
             'sex' => ['required', 'string', 'max:20'],
-            'email' => ['required', 'unique:users'],
+            'email' => ['required', 'unique:users', 'email'],
             'password' => ['required', 'string', 'confirmed'],
-            'province' => ['required', 'string'],
-            'city' => ['required', 'string'],
-            'barangay' => ['required', 'string'],
+            'current_province' => ['required', 'string'],
+            'current_city' => ['required', 'string'],
+            'current_barangay' => ['required', 'string'],
         ]);
 
-        $msg = 'Hi '.$req->lname . ', ' . $req->fname . '. Welcome to Dental Clinic Services. You have successfully created an account.';
+        return $req;
 
-        
 
-        $qr_code = substr(md5(time() . $req->lname . $req->fname), -8);
+        //$qr_code = substr(md5(time() . $req->lname . $req->fname), -8);
 
         User::create([
-            'qr_ref' => $qr_code,
             'username' => $req->username,
             'password' => Hash::make($req->password),
             'email' => $req->email,
@@ -47,11 +45,35 @@ class RegistrationController extends Controller
             'suffix' => strtoupper($req->suffix),
             'sex' => $req->sex,
             'contact_no' => $req->contact_no,
-            'role' => 'USER',
-            'province' => $req->province,
-            'city' => $req->city,
-            'barangay' => $req->barangay,
-            'street' => strtoupper($req->street)
+            'role' => 'STUDENT',
+
+            'father_lname' => strtoupper($req->father_lname),
+            'father_fname' => strtoupper($req->father_fname),
+            'father_mname' => strtoupper($req->father_mname),
+            'father_contact_no' => $req->father_contact_no,
+
+            'mother_maiden_lname' => strtoupper($req->mother_maiden_lname),
+            'mother_maiden_fname' => strtoupper($req->mother_maiden_fname),
+            'mother_maiden_mname' => strtoupper($req->mother_maiden_mname),
+            'mother_maiden_contact_no' => $req->mother_maiden_contact_no,
+
+            'guardian_lname' => strtoupper($req->guardian_lname),
+            'guardian_fname' => strtoupper($req->guardian_fname),
+            'guardian_mname' => strtoupper($req->guardian_mname),
+            'guardian_contact_no' => $req->guardian_contact_no,
+
+            'current_province' => $req->current_province,
+            'current_city' => $req->current_city,
+            'current_barangay' => $req->current_barangay,
+            'current_street' => strtoupper($req->currentt_street),
+            'current_street' => $req->current_zipcode,
+
+            'permanent_province' => $req->permanent_province,
+            'permanent_city' => $req->permanent_city,
+            'permanent_barangay' => $req->permanent_barangay,
+            'permanent_street' => strtoupper($req->permanentt_street),
+            'permanent_street' => $req->permanent_zipcode,
+
         ]);
 
         try{

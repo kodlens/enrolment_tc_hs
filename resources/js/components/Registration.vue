@@ -51,8 +51,10 @@
                                     <b-field label="Contact No."
                                              :type="this.errors.contact_no ? 'is-danger':''"
                                              :message="this.errors.contact_no ? this.errors.contact_no[0] : ''">
-                                        <b-input type="text" v-model="fields.contact_no" 
-                                            placeholder="Contact No." icon=""></b-input>
+                                        <b-input type="tel" 
+                                            v-model="fields.contact_no" 
+                                            pattern="^(09|\+639)\d{9}$"
+                                            placeholder="Format: 09191112222" icon=""></b-input>
                                     </b-field>
                                 </div>
                             </div>
@@ -118,6 +120,15 @@
                                         :type="this.errors.bdate ? 'is-danger':''"
                                         :message="this.errors.bdate ? this.errors.bdate[0] : ''">
                                         <b-datepicker v-model="fields.bdate" placeholder="Birthdate"></b-datepicker>
+                                    </b-field>
+                                </div>
+                                <div class="column">
+                                    <b-field label="Age"
+                                        :type="this.errors.age ? 'is-danger':''"
+                                        :message="this.errors.age ? this.errors.age[0] : ''">
+                                        <b-input type="number" v-model="fields.age"
+                                            max="120"
+                                            placeholder="Age"></b-input>
                                     </b-field>
                                 </div>
                                 <div class="column">
@@ -225,6 +236,12 @@
                                         <b-input type="text" v-model="fields.current_street" placeholder="House #. Street"></b-input>
                                     </b-field>
                                 </div>
+
+                                <div class="column">
+                                    <b-field label="Zip Code">
+                                        <b-input type="text" v-model="fields.current_zipcode" placeholder="Zip Code"></b-input>
+                                    </b-field>
+                                </div>
                             </div>
 
 
@@ -234,6 +251,9 @@
                                 <h2><span>Permanent Address</span></h2>
                             </div>
                             
+                            <div class="buttons">
+                                <b-button class="is-info is-small" @click="copyCurrentAddress" icon-left="home">Same as current address</b-button>
+                            </div>
                             <div class="columns">
                                 <div class="column">
                                     <b-field label="Province" expanded
@@ -267,7 +287,12 @@
                                 </div>
                                 <div class="column">
                                     <b-field label="House #. Street">
-                                        <b-input type="text"></b-input>
+                                        <b-input type="text" v-model="fields.permanent_street" placeholder="House #. Street"></b-input>
+                                    </b-field>
+                                </div>
+                                <div class="column">
+                                    <b-field label="Zip Code">
+                                        <b-input type="text" v-model="fields.permanent_zipcode" placeholder="Zip Code"></b-input>
                                     </b-field>
                                 </div>
                             </div>
@@ -304,10 +329,11 @@
 
                                 <div class="column">
                                     <b-field label="Father Contact No.">
-                                        <b-input type="text" 
+                                        <b-input type="tel" 
                                             v-model="fields.father_contact_no" 
                                             icon="cellphone"
-                                            placeholder="Father Contact No."></b-input>
+                                            pattern="^(09|\+639)\d{9}$"
+                                            placeholder="Format: 09101112222"></b-input>
                                     </b-field>
                                 </div>
                             </div>
@@ -348,9 +374,9 @@
 
                                 <div class="column">
                                     <b-field label="Mother Maiden Contact No.">
-                                        <b-input type="text" v-model="fields.mother_maiden_contact_no" 
-                                            icon="cellphone"
-                                            placeholder="Mother Maiden Contact No."></b-input>
+                                        <b-input type="tel" v-model="fields.mother_maiden_contact_no" 
+                                            pattern="^(09|\+639)\d{9}$"
+                                            placeholder="Format: 09101112222"></b-input>
                                     </b-field>
                                 </div>
                             </div>
@@ -394,10 +420,6 @@
                                 </div>
                             </div>
 
-                            <div class="divider">LEARNER INFORMATION</div>
-
-
-
                             <div class="buttons is-right">
                                 <button class="button is-primary">Register</button>
                             </div>
@@ -417,7 +439,29 @@ export default {
     data(){
         return{
 
-            fields: {},
+            fields: {
+                lrn: '',
+                lname: '',
+                fname: '',
+                mname: '',
+                sex:'',
+                age: '',
+                bdate: null,
+                birthplace: '',
+
+                permanent_province: '',
+                permanent_city: '',
+                permanent_barangay: '',
+                permanent_street: '',
+                permanent_zipcode: '',
+
+                current_province: '',
+                current_city: '',
+                current_barangay: '',
+                current_street: '',
+                current_zipcode: '',
+
+            },
             errors: {},
 
             current_provinces: [],
@@ -466,10 +510,27 @@ export default {
         },
         //ADDRESS
 
+        //copy current address
+        copyCurrentAddress(){
+            this.fields.permanent_province = this.fields.current_province;
+
+            this.loadPermanentCity();
+
+            this.fields.permanent_city = this.fields.current_city;
+
+            this.loadPermanentBarangay();
+
+            this.fields.permanent_barangay = this.fields.current_barangay;
+
+
+            this.fields.permanent_street = this.fields.current_street;
+            this.fields.permanent_zipcode = this.fields.current_zipcode;
+        },
+
 
 
         submit(){
-            axios.post('/sign-up', this.fields).then(res=>{
+            axios.post('/registration', this.fields).then(res=>{
                 if(res.data.status === 'saved'){
                     this.$buefy.dialog.alert({
                         title: "SAVED!",
@@ -503,6 +564,7 @@ export default {
 
     .box-title{
         font-weight: bold;
+        font-size: 1.5rem;
         text-align: center;
     }
 
