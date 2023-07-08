@@ -94,3 +94,10 @@
     margin: 15px;
 }
 
+
+.logo-wrapper{
+    display: flex;
+}
+.division-logo, .tcnhs-logo{
+    height: 15rem;
+}

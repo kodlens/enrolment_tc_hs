@@ -64,18 +64,23 @@ Route::get('/load-barangays', [App\Http\Controllers\AddressController::class, 'l
 
 // -----------------------ADMINSITRATOR-------------------------------------------
 
-Route::get('/admin-home', [App\Http\Controllers\Administrator\AdminHomeController::class, 'index']);
 
 
-Route::resource('/users', App\Http\Controllers\Administrator\UserController::class);
-Route::get('/get-accounts', [App\Http\Controllers\Administrator\UserController::class, 'getAccounts']);
-Route::post('/user-reset-password/{userid}', [App\Http\Controllers\Administrator\UserController::class, 'resetPassword']);
+Route::middleware(['auth', 'admin'])->group(function(){
+
+    Route::get('/admin-home', [App\Http\Controllers\Administrator\AdminHomeController::class, 'index']);
 
 
+    Route::resource('/users', App\Http\Controllers\Administrator\UserController::class);
+    Route::get('/get-accounts', [App\Http\Controllers\Administrator\UserController::class, 'getAccounts']);
+    Route::post('/user-reset-password/{userid}', [App\Http\Controllers\Administrator\UserController::class, 'resetPassword']);
 
-Route::resource('/academic-year', App\Http\Controllers\Administrator\AcademicYearController::class);
-Route::get('/get-academic-years', [App\Http\Controllers\Administrator\AcademicYearController::class, 'getAcademicYears']);
-Route::post('/academic-year-active/{id}', [App\Http\Controllers\Administrator\AcademicYearController::class, 'active']);
+    Route::resource('/academic-year', App\Http\Controllers\Administrator\AcademicYearController::class);
+    Route::get('/get-academic-years', [App\Http\Controllers\Administrator\AcademicYearController::class, 'getAcademicYears']);
+    Route::post('/academic-year-active/{id}', [App\Http\Controllers\Administrator\AcademicYearController::class, 'active']);
+
+
+});
 
 
 Route::resource('/track', App\Http\Controllers\Administrator\TrackController::class);

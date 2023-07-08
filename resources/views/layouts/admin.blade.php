@@ -29,7 +29,11 @@
             <template #brand>
                 <b-navbar-item>
                     <img src="/img/tcnhs_logo.png" />
-                    ENSYS
+                    @auth()
+                        {{ Auth::user()->role }}
+                    @else
+                        ENSYS
+                    @endauth
                 </b-navbar-item>
             </template>
     
@@ -40,11 +44,13 @@
     
             <template #end>
                 
-                <b-navbar-item href="/">
+                <b-navbar-item href="/admin-home">
                     Home
                 </b-navbar-item>
 
-           
+                <b-navbar-item href="/users">
+                    Users
+                </b-navbar-item>
                 <b-navbar-item tag="div">
                     @auth()
                         <div class="buttons">
