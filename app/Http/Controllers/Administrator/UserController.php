@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Designation;
 
 
-class AccountController extends Controller
+class UserController extends Controller
 {
     //
 
@@ -24,7 +24,7 @@ class AccountController extends Controller
 
     public function index(){
         
-        return view('administrator.accounts');
+        return view('administrator.users');
     }
 
     public function getAccounts(Request $req){

@@ -40,11 +40,12 @@
     
             <template #end>
                 
-                <b-navbar-item href="/">
+                <b-navbar-item href="/admin-home">
                     Home
                 </b-navbar-item>
-                <b-navbar-item href="/registration">
-                    Register
+
+                <b-navbar-item href="/users">
+                    Users
                 </b-navbar-item>
                 <b-navbar-item tag="div">
                     @auth()

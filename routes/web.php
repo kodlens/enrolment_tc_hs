@@ -67,9 +67,9 @@ Route::get('/load-barangays', [App\Http\Controllers\AddressController::class, 'l
 Route::get('/admin-home', [App\Http\Controllers\Administrator\AdminHomeController::class, 'index']);
 
 
-Route::resource('/accounts', App\Http\Controllers\Administrator\AccountController::class);
-Route::get('/get-accounts', [App\Http\Controllers\Administrator\AccountController::class, 'getAccounts']);
-Route::post('/user-reset-password/{userid}', [App\Http\Controllers\Administrator\AccountController::class, 'resetPassword']);
+Route::resource('/users', App\Http\Controllers\Administrator\UserController::class);
+Route::get('/get-accounts', [App\Http\Controllers\Administrator\UserController::class, 'getAccounts']);
+Route::post('/user-reset-password/{userid}', [App\Http\Controllers\Administrator\UserController::class, 'resetPassword']);
 
 
 

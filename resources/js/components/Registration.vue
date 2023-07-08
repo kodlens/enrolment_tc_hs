@@ -165,9 +165,9 @@
                                 </div>
                                 <div class="column" v-if="fields.is_indigenous == 1">
                                     <b-field label="If YES, Please specify"
-                                        :type="this.errors.indigenouse_specify ? 'is-danger':''"
-                                        :message="this.errors.indigenouse_specify ? this.errors.indigenouse_specify[0] : ''">
-                                        <b-input type="text" v-model="fields.indigenouse_specify" placeholder="If YES, Please specify"></b-input>
+                                        :type="this.errors.if_yes_indigenous ? 'is-danger':''"
+                                        :message="this.errors.if_yes_indigenous ? this.errors.if_yes_indigenous[0] : ''">
+                                        <b-input type="text" v-model="fields.if_yes_indigenous" placeholder="If YES, Please specify"></b-input>
                                     </b-field>
                                 </div>
                             </div>
@@ -420,6 +420,7 @@
                                 </div>
                             </div>
 
+                            <hr>
                             <div class="buttons is-right">
                                 <button class="button is-primary">Register</button>
                             </div>

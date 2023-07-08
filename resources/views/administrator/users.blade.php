@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <accounts></accounts>
+    <users-page></users-page>
 @endsection
 

@@ -4,7 +4,7 @@
             <div class="columns is-centered">
                 <div class="column is-8">
                     <div class="box">
-
+                        <div class="has-text-weight-bold subtitle is-4">USERS</div>
                         <b-field label="Search">
                             <b-input type="text"
                                         v-model="search.lname" placeholder="Search Lastname"
@@ -161,11 +161,11 @@
                                     </b-field>
                                 </div>
                                 <div class="column">
-                                    <b-field label="Extension" label-position="on-border"
-                                             :type="this.errors.extension ? 'is-danger':''"
-                                             :message="this.errors.extension ? this.errors.extension[0] : ''">
-                                        <b-input v-model="fields.extension"
-                                                 placeholder="Extension">
+                                    <b-field label="Suffix" label-position="on-border"
+                                             :type="this.errors.suffix ? 'is-danger':''"
+                                             :message="this.errors.suffix ? this.errors.suffix[0] : ''">
+                                        <b-input v-model="fields.suffix"
+                                                 placeholder="Suffix">
                                         </b-input>
                                     </b-field>
                                 </div>
@@ -234,10 +234,8 @@
                                              :message="this.errors.role ? this.errors.role[0] : ''">
                                         <b-select v-model="fields.role" expanded>
                                             <option value="ADMINISTRATOR">ADMINISTRATOR</option>
-                                            <option value="CHIEF NURSE">CHIEF NURSE</option>
-                                            <option value="NURSE">NURSE</option>
-                                            <option value="DOCTOR">DOCTOR</option>
-                                            <option value="RECORD OFFICER">RECORD OFFICER</option>
+                                            <option value="STUDENT">STUDENT</option>
+                                            <option value="STAFF">NURSE</option>
                                         </b-select>
                                     </b-field>
                                 </div>
@@ -247,7 +245,7 @@
                         </div>
                     </section>
                     <footer class="modal-card-foot">
-                        <button class="button is-primary">Save Account</button>
+                        <button class="button is-primary">Save User</button>
                     </footer>
                 </div>
             </form><!--close form-->

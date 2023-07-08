@@ -39,12 +39,24 @@ class RegistrationController extends Controller
             'username' => $req->username,
             'password' => Hash::make($req->password),
             'email' => $req->email,
+            'contact_no' => $req->contact_no,
+           
+            'lrn' => $req->lrn,
             'lname' => strtoupper($req->lname),
             'fname' => strtoupper($req->fname),
             'mname' => strtoupper($req->mname),
             'suffix' => strtoupper($req->suffix),
             'sex' => $req->sex,
-            'contact_no' => $req->contact_no,
+            'bdate' => $req->bdate,
+            'age' => $req->age,
+            'birthplace' => $req->birthplace,
+
+            'mother_tongue' => strtoupper($req->mother_tongue),
+            'is_indigenous' => $req->is_indigenous,
+            'if_yes_indigenous' => $req->if_yes_indigenous,
+            'is_4ps' => $req->is_4ps,
+            
+
             'role' => 'STUDENT',
 
             'father_lname' => strtoupper($req->father_lname),

@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
                 'lname' => 'ABAPO',
                 'fname' => 'JADE MARK',
                 'mname' => 'P',
-                'extension' => '',
+                'suffix' => '',
                 'sex' => 'MALE',
                 'email' => 'jademark@dev.com',
                 'contact_no' => '1234',
