@@ -20,13 +20,12 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('contact_no')->nullable();
 
-            $table->string('LRN')->nullable();
+            $table->string('lrn')->nullable();
             $table->string('lname')->nullable();
             $table->string('fname')->nullable();
             $table->string('mname')->nullable();
             $table->string('suffix', 20)->nullable();
             $table->string('sex', 20)->nullable();
-
             $table->date('bdate')->nullable();
             $table->string('age', 10)->nullable();
             $table->string('birthplace')->nullable();
@@ -35,7 +34,8 @@ class CreateUsersTable extends Migration
             $table->tinyInteger('is_indigenous')->default(0);
             $table->string('if_yes_indigenous')->nullable();
             $table->tinyInteger('is_4ps')->default(0);
-          
+            $table->string('household_4ps_id_no')->nullable();
+            
             $table->string('current_province')->nullable();
             $table->string('current_city')->nullable();
             $table->string('current_barangay')->nullable();

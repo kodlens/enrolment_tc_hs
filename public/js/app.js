@@ -9748,6 +9748,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -9842,7 +9863,7 @@ __webpack_require__.r(__webpack_exports__);
         if (res.data.status === 'saved') {
           _this7.$buefy.dialog.alert({
             title: "SAVED!",
-            message: 'Register successfully',
+            message: 'Register successfully. You can login to your account now.',
             type: 'is-success',
             onConfirm: function onConfirm() {
               return window.location = '/';
@@ -10294,6 +10315,25 @@ Vue.filter('formatDateAndTime', function (value) {
 
   return realDate + ' ' + timeString;
 });
+
+Vue.prototype.$formatDate = function (value) {
+  if (!value) return '';
+  var date = new Date(value);
+  var year = date.getFullYear();
+  var month = String(date.getMonth() + 1).padStart(2, '0');
+  var day = String(date.getDate()).padStart(2, '0');
+  return "".concat(year, "-").concat(month, "-").concat(day);
+};
+
+Vue.prototype.$formatTime = function (value) {
+  var timeString = value;
+  var H = +timeString.substr(0, 2);
+  var h = H % 12 || 12;
+  var ampm = H < 12 ? " AM" : " PM";
+  timeString = h + timeString.substr(2, 3) + ampm;
+  return timeString;
+};
+
 var app = new Vue({
   el: '#app'
 });
@@ -51000,6 +51040,7 @@ var render = function () {
                               type: "text",
                               placeholder: "Username",
                               icon: "account",
+                              required: "",
                             },
                             model: {
                               value: _vm.fields.username,
@@ -51040,6 +51081,7 @@ var render = function () {
                               placeholder: "Password",
                               icon: "lock",
                               "password-reveal": "",
+                              required: "",
                             },
                             model: {
                               value: _vm.fields.password,
@@ -51070,6 +51112,7 @@ var render = function () {
                               icon: "lock",
                               placeholder: "Re-type Password",
                               "password-reveal": "",
+                              required: "",
                             },
                             model: {
                               value: _vm.fields.password_confirmation,
@@ -51113,6 +51156,7 @@ var render = function () {
                               type: "email",
                               placeholder: "E-mail",
                               icon: "email",
+                              required: "",
                             },
                             model: {
                               value: _vm.fields.email,
@@ -51231,6 +51275,7 @@ var render = function () {
                               icon: "account",
                               placeholder: "First Lastname",
                               type: "text",
+                              required: "",
                             },
                             model: {
                               value: _vm.fields.lname,
@@ -51268,6 +51313,7 @@ var render = function () {
                               icon: "account",
                               placeholder: "First Name",
                               type: "text",
+                              required: "",
                             },
                             model: {
                               value: _vm.fields.fname,
@@ -51357,6 +51403,7 @@ var render = function () {
                               attrs: {
                                 placeholder: "Sex",
                                 icon: "account",
+                                required: "",
                                 expanded: "",
                               },
                               model: {
@@ -51403,48 +51450,13 @@ var render = function () {
                         },
                         [
                           _c("b-datepicker", {
-                            attrs: { placeholder: "Birthdate" },
+                            attrs: { placeholder: "Birthdate", required: "" },
                             model: {
                               value: _vm.fields.bdate,
                               callback: function ($$v) {
                                 _vm.$set(_vm.fields, "bdate", $$v)
                               },
                               expression: "fields.bdate",
-                            },
-                          }),
-                        ],
-                        1
-                      ),
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "column" },
-                    [
-                      _c(
-                        "b-field",
-                        {
-                          attrs: {
-                            label: "Age",
-                            type: this.errors.age ? "is-danger" : "",
-                            message: this.errors.age ? this.errors.age[0] : "",
-                          },
-                        },
-                        [
-                          _c("b-input", {
-                            attrs: {
-                              type: "number",
-                              max: "120",
-                              placeholder: "Age",
-                            },
-                            model: {
-                              value: _vm.fields.age,
-                              callback: function ($$v) {
-                                _vm.$set(_vm.fields, "age", $$v)
-                              },
-                              expression: "fields.age",
                             },
                           }),
                         ],
@@ -51478,6 +51490,41 @@ var render = function () {
                                 _vm.$set(_vm.fields, "birthplace", $$v)
                               },
                               expression: "fields.birthplace",
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "column is-2" },
+                    [
+                      _c(
+                        "b-field",
+                        {
+                          attrs: {
+                            label: "Age",
+                            type: this.errors.age ? "is-danger" : "",
+                            message: this.errors.age ? this.errors.age[0] : "",
+                          },
+                        },
+                        [
+                          _c("b-input", {
+                            attrs: {
+                              type: "number",
+                              max: "120",
+                              placeholder: "Age",
+                            },
+                            model: {
+                              value: _vm.fields.age,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.fields, "age", $$v)
+                              },
+                              expression: "fields.age",
                             },
                           }),
                         ],
@@ -51912,7 +51959,17 @@ var render = function () {
                     [
                       _c(
                         "b-field",
-                        { attrs: { label: "Zip Code" } },
+                        {
+                          attrs: {
+                            label: "Zip Code",
+                            type: this.errors.current_zipcode
+                              ? "is-danger"
+                              : "",
+                            message: this.errors.current_zipcode
+                              ? this.errors.current_zipcode[0]
+                              : "",
+                          },
+                        },
                         [
                           _c("b-input", {
                             attrs: { type: "text", placeholder: "Zip Code" },
@@ -51936,7 +51993,7 @@ var render = function () {
                 _vm._v(" "),
                 _c(
                   "div",
-                  { staticClass: "buttons" },
+                  { staticClass: "buttons mt-5" },
                   [
                     _c(
                       "b-button",
@@ -52155,7 +52212,17 @@ var render = function () {
                     [
                       _c(
                         "b-field",
-                        { attrs: { label: "Zip Code" } },
+                        {
+                          attrs: {
+                            label: "Zip Code",
+                            type: this.errors.permanent_zipcode
+                              ? "is-danger"
+                              : "",
+                            message: this.errors.permanent_zipcode
+                              ? this.errors.permanent_zipcode[0]
+                              : "",
+                          },
+                        },
                         [
                           _c("b-input", {
                             attrs: { type: "text", placeholder: "Zip Code" },
@@ -52291,7 +52358,17 @@ var render = function () {
                     [
                       _c(
                         "b-field",
-                        { attrs: { label: "Father Contact No." } },
+                        {
+                          attrs: {
+                            label: "Father Contact No.",
+                            type: this.errors.father_contact_no
+                              ? "is-danger"
+                              : "",
+                            message: this.errors.father_contact_no
+                              ? this.errors.father_contact_no[0]
+                              : "",
+                          },
+                        },
                         [
                           _c("b-input", {
                             attrs: {
@@ -52405,7 +52482,17 @@ var render = function () {
                     [
                       _c(
                         "b-field",
-                        { attrs: { label: "Mother Maiden Middle Name" } },
+                        {
+                          attrs: {
+                            label: "Mother Maiden Middle Name",
+                            type: this.errors.mother_maiden_mname
+                              ? "is-danger"
+                              : "",
+                            message: this.errors.mother_maiden_mname
+                              ? this.errors.mother_maiden_mname[0]
+                              : "",
+                          },
+                        },
                         [
                           _c("b-input", {
                             attrs: {

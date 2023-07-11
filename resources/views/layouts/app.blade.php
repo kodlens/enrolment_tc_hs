@@ -39,26 +39,29 @@
             </template>
     
             <template #end>
-                
                 <b-navbar-item href="/">
-                    Home
+                        Home
                 </b-navbar-item>
-
-           
-                <b-navbar-item tag="div">
-                    @auth()
+                @auth()
+                    <b-navbar-item tag="div">
                         <div class="buttons">
                             <b-button label="LOGOUT" icon-left="logout" onclick="document.getElementById('logout').submit()">
                             </b-button>
                         </div>
-                    @else
+                    </b-navbar-item>
+                @else
+                    <b-navbar-item href="/registration">
+                        Register
+                    </b-navbar-item>
+                    
+                    <b-navbar-item tag="div">
                         <div class="buttons">
                             <a class="button is-primary is-outlined" href="/login">
                                 <strong>Login</strong>
                             </a>
                         </div>
-                    @endauth
-                </b-navbar-item>
+                    </b-navbar-item>
+                @endauth
                 
             </template>
         </b-navbar>
