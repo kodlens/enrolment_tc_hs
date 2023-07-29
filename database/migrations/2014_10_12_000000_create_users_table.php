@@ -67,6 +67,10 @@ class CreateUsersTable extends Migration
             $table->string('role')->nullable();
             $table->timestamp('email_verified_at')->nullable();
          
+            $table->string('semester_id')->nullable();
+            $table->string('strand_id')->nullable();
+            $table->string('track_id')->nullable();
+
             $table->rememberToken();
             $table->timestamps();
         });

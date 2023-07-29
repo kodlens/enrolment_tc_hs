@@ -16,7 +16,7 @@
             </div>
 
             <div class="model-img">
-                <img src="/img/model.png" />
+                <img src="/img/front.jpg" />
             </div>
         </div>
     </section>

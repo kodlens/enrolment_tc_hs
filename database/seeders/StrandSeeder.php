@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class TrackSeeder extends Seeder
+class StrandSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,7 +14,6 @@ class TrackSeeder extends Seeder
     public function run()
     {
         //
-
 
         $data = [
             [
@@ -33,8 +32,6 @@ class TrackSeeder extends Seeder
 
         ];
 
-        \App\Models\Track::insertOrIgnore($data);
-
-
+        \App\Models\Strand::insertOrIgnore($data);
     }
 }

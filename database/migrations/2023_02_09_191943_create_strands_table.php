@@ -15,6 +15,11 @@ class CreateStrandsTable extends Migration
     {
         Schema::create('strands', function (Blueprint $table) {
             $table->id('strand_id');
+
+            $table->unsignedBigInteger('track_id');
+            $table->foreign('track_id')->references('track_id')->on('tracks')
+                ->onDelete('cascade')->onUpdate('cascade');
+
             $table->string('strands')->nullable();
             $table->timestamps();
         });

@@ -13,6 +13,6 @@ class Strand extends Model
     protected $table = 'strands';
     protected $primaryKey = 'strand_id';
 
-    protected $fillable = ['strand'];
+    protected $fillable = ['track_id', 'strand'];
     
 }
