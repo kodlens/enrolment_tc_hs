@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Http;
 
+use App\Models\Learner;
+
 class RegistrationController extends Controller
 {
     //
@@ -54,19 +56,16 @@ class RegistrationController extends Controller
         //return $req;
         //$qr_code = substr(md5(time() . $req->lname . $req->fname), -8);
 
-        User::create([
-            'username' => $req->username,
-            'password' => Hash::make($req->password),
-            'email' => $req->email,
-            'contact_no' => $req->contact_no,
+        Learner::create([
            
+            'psa_cert' => $req->psa_cert,
             'lrn' => $req->lrn,
             'lname' => strtoupper($req->lname),
             'fname' => strtoupper($req->fname),
             'mname' => strtoupper($req->mname),
-            'suffix' => strtoupper($req->suffix),
+            'extension' => strtoupper($req->suffix),
             'sex' => $req->sex,
-            'bdate' => date('Y-m-d', strtotime($req->bdate)),
+            'birthdate' => date('Y-m-d', strtotime($req->bdate)),
             'age' => $req->age,
             'birthplace' => $req->birthplace,
 
@@ -88,25 +87,32 @@ class RegistrationController extends Controller
             'permanent_street' => strtoupper($req->permanentt_street),
             'permanent_zipcode' => $req->permanent_zipcode,
 
-            'role' => 'STUDENT',
+            'email' => $req->email,
+            'contact_no' => $req->contact_no,
 
             'father_lname' => strtoupper($req->father_lname),
             'father_fname' => strtoupper($req->father_fname),
             'father_mname' => strtoupper($req->father_mname),
+            'father_extension' => strtoupper($req->father_mname),
             'father_contact_no' => $req->father_contact_no,
 
             'mother_maiden_lname' => strtoupper($req->mother_maiden_lname),
             'mother_maiden_fname' => strtoupper($req->mother_maiden_fname),
             'mother_maiden_mname' => strtoupper($req->mother_maiden_mname),
+            'mother_maiden_extension' => strtoupper($req->mother_maiden_mname),
             'mother_maiden_contact_no' => $req->mother_maiden_contact_no,
 
             'guardian_lname' => strtoupper($req->guardian_lname),
             'guardian_fname' => strtoupper($req->guardian_fname),
             'guardian_mname' => strtoupper($req->guardian_mname),
+            'guardian_extension' => strtoupper($req->guardian_mname),
             'guardian_contact_no' => $req->guardian_contact_no,
 
+            'semester_id' => $req->semester_id,
+            'strand_id' => $req->strand_id,
+            'track_id' => $req->track_id,
+            'section_id' => $req->section_id,
         ]);
-
 
         return response()->json([
             'status' => 'saved'

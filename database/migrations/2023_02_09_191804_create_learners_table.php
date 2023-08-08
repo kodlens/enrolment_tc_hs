@@ -23,16 +23,16 @@ class CreateLearnersTable extends Migration
             $table->string('fname')->nullable();
             $table->string('mname')->nullable();
             $table->string('extension')->nullable();
-
             $table->string('sex')->nullable();
-
             $table->date('birthdate')->nullable();
+            $table->string('age')->nullable();
             $table->string('birthplace')->nullable();
+            
             $table->string('mother_tongue')->nullable();
             $table->string('is_indigenous')->nullable();
-            $table->string('specify_indigenous')->nullable();
+            $table->string('if_yes_indigenous')->nullable();
             $table->string('is_4ps')->nullable();
-            $table->string('household_4ps_no')->nullable();
+            $table->string('household_4ps_id_no')->nullable();
 
             $table->string('current_country')->nullable();
             $table->string('current_province')->nullable();
@@ -71,6 +71,10 @@ class CreateLearnersTable extends Migration
             $table->string('guardian_extension')->nullable();
             $table->string('guardian_contact_no')->nullable();
 
+            $table->unsignedBigInteger('semester_id')->default(0);
+            $table->unsignedBigInteger('strand_id')->default(0);
+            $table->unsignedBigInteger('track_id')->default(0);
+            $table->unsignedBigInteger('section_id')->default(0);
             
             $table->timestamps();
         });

@@ -66,6 +66,25 @@ class Learner extends Model
         'guardian_extension',
         'guardian_contact_no',
 
+        'semester_id',
+        'strand_id',
+        'track_id',
+        'section_id'
+
     ];
+
+
+    public function semester(){
+        return $this->hasOne(Semester::class, 'semester_id', 'semester_id');
+    }
+
+    public function strand(){
+        return $this->hasOne(Strand::class, 'strand_id', 'strand_id');
+    }
+
+    public function track(){
+        return $this->hasOne(Track::class, 'track_id', 'track_id');
+    }
+
 
 }

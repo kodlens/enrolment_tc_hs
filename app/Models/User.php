@@ -64,7 +64,11 @@ class User extends Authenticatable
         'guardian_mname',
         'guardian_contact_no',
 
-        'role', 
+        'role',
+
+        'semester_id',
+        'strand_id',
+        'track_id'
 
     ];
 
@@ -86,4 +90,20 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+
+    public function semester(){
+        return $this->hasOne(Semester::class, 'semester_id', 'semester_id');
+    }
+
+    public function strand(){
+        return $this->hasOne(Strand::class, 'strand_id', 'strand_id');
+    }
+
+    public function track(){
+        return $this->hasOne(Track::class, 'track_id', 'track_id');
+    }
+
+    
 }

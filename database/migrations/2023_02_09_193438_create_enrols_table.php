@@ -16,7 +16,6 @@ class CreateEnrolsTable extends Migration
         Schema::create('enrols', function (Blueprint $table) {
             $table->id('enrol_id');
 
-
             $table->unsignedBigInteger('academic_year_id');
             $table->foreign('academic_year_id')->references('academic_year_id')->on('academic_years')
                 ->onUpdate('cascade')->onDelete('cascade');
@@ -24,8 +23,8 @@ class CreateEnrolsTable extends Migration
             $table->string('grade_level')->nullable();
             $table->tinyInteger('is_returnee')->nullable();
 
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('user_id')->on('learners')
+            $table->unsignedBigInteger('learner_id');
+            $table->foreign('learner_id')->references('learner_id')->on('learners')
                 ->onUpdate('cascade')->onDelete('cascade');
 
             $table->unsignedBigInteger('semester_id')->default(0);
