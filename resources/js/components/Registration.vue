@@ -528,8 +528,8 @@
 
                             <div class="columns">
                                 <div class="column">
-                                    <b-field label="Semester">
-                                        <b-select v-model="fields.semester" 
+                                    <b-field label="Semester" expanded>
+                                        <b-select v-model="fields.semester" expanded
                                             icon="account"
                                             placeholder="Semester"
                                             required>
@@ -550,9 +550,54 @@
                                 </div>
                             </div>
 
+
+                            <div class="columns">
+                                <div class="column">
+                                    <b-field label="Track">
+                                        <b-select v-model="fields.track_id" expanded
+                                            icon="account"
+                                            placeholder="Track"
+                                            @input="loadStrands"
+                                            required>
+                                            <option :value="item.track_id" v-for="(item, ix) in tracks" :key="`track${ix}`">
+                                                {{  item.track }}
+                                            </option>
+                                        </b-select>
+                                    </b-field>
+                                </div>
+
+                                <div class="column">
+                                    <b-field label="Strand">
+                                        <b-select v-model="fields.strand_id" expanded
+                                            icon="account"
+                                            placeholder="Strand"
+                                            required>
+                                            <option :value="item.strand_id" v-for="(item, ix) in strands" :key="`strand${ix}`">
+                                                {{  item.strand }}
+                                            </option>
+                                        </b-select>
+                                    </b-field>
+                                </div>
+                            </div>
+
                             <hr>
+
+                                
+                                <p style="text-indent: 50px;">
+                                    I hereby certify that the above information given are true and correct to the best of my knowledge and I allow
+                                    Department of Education to use my child's details to create and/or update his/her learner profile in the Learner Information Sysmte.    
+                                    The information herein shall be treated as confidential in compliance with the Data Privacy Act of 2012.
+                                </p>
+                                <b-checkbox class="mt-2" 
+                                    :true-value="1"
+                                    :false-value="0"
+                                    v-model="fields.accept_terms">
+                                    Accept
+                                </b-checkbox>
+                            <hr>
+
                             <div class="buttons is-right">
-                                <button class="button is-primary">Register</button>
+                                <button class="button is-primary" :disabled="!fields.accept_terms">Register</button>
                             </div>
 
                         </div> <!--panel -body-->
@@ -571,6 +616,7 @@ export default {
         return{
 
             fields: {
+
                 lrn: '',
                 lname: '',
                 fname: '',
@@ -592,7 +638,12 @@ export default {
                 current_street: '',
                 current_zipcode: '',
 
+                semester: null,
+                track_id: null,
+                strand_id: null,
+
             },
+
             errors: {},
 
             current_provinces: [],
@@ -602,6 +653,10 @@ export default {
             permanent_provinces: [],
             permanent_cities: [],
             permanent_barangays: [],
+
+            semesters: [],
+            tracks: [],
+            strands: [],
         }
     },
     methods: {
@@ -641,6 +696,22 @@ export default {
         },
         //ADDRESS
 
+        loadSemesters(){
+            axios.get('/load-semesters').then(res=>{
+                this.semesters = res.data;
+            })
+        },
+        loadTracks(){
+            axios.get('/load-tracks').then(res=>{
+                this.tracks = res.data;
+            })
+        },
+        loadStrands(){
+            axios.get('/load-strands?trackid=' +  this.fields.track_id).then(res=>{
+                this.strands = res.data;
+            })
+        },
+
         //copy current address
         copyCurrentAddress(){
             this.fields.permanent_province = this.fields.current_province;
@@ -657,7 +728,6 @@ export default {
             this.fields.permanent_street = this.fields.current_street;
             this.fields.permanent_zipcode = this.fields.current_zipcode;
         },
-
 
 
         submit(){
@@ -678,12 +748,22 @@ export default {
                 }
             });
         },
+
+        initData(){
+            this.loadCurrentProvince();
+            this.loadPermanentProvince();
+
+            this.loadSemesters()
+            this.loadTracks()
+
+        }
     },
 
 
     mounted() {
-        this.loadCurrentProvince();
-        this.loadPermanentProvince();
+
+        this.initData();
+
 
     }
 }

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\AcademicYear;
+use App\Models\Semester;
+use App\Models\Track;
+use App\Models\Strand;
 
 class OpenController extends Controller
 {
@@ -15,5 +18,23 @@ class OpenController extends Controller
             ->get();
     }
 
+
+    public function loadSemesters(){
+        return Semester::orderBy('semester', 'asc')
+            ->get();
+    }
+
+    public function loadTracks(){
+        return Track::orderBy('track', 'asc')
+            ->get();
+    }
+
+    public function loadStrands(Request $req){
+        $trackId = $req->trackid;
+
+        return Strand::where('track_id', $trackId)
+            ->orderBy('strand', 'asc')
+            ->get();
+    }
 
 }

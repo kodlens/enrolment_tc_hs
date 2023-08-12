@@ -22,7 +22,6 @@ class SemesterSeeder extends Seeder
             [
                 'semester' => '2ND SEMESTER',
             ],
-
         ];
 
         \App\Models\Semester::insertOrIgnore($data);

@@ -20,7 +20,9 @@ class CreateStrandsTable extends Migration
             $table->foreign('track_id')->references('track_id')->on('tracks')
                 ->onDelete('cascade')->onUpdate('cascade');
 
-            $table->string('strands')->nullable();
+            $table->string('strand')->nullable();
+            $table->string('strand_desc')->nullable();
+
             $table->timestamps();
         });
     }

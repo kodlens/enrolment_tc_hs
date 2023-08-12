@@ -62,6 +62,11 @@ Route::get('/load-barangays', [App\Http\Controllers\AddressController::class, 'l
 
 
 
+Route::get('/load-semesters', [App\Http\Controllers\OpenController::class, 'loadSemesters']);
+Route::get('/load-tracks', [App\Http\Controllers\OpenController::class, 'loadTracks']);
+Route::get('/load-strands', [App\Http\Controllers\OpenController::class, 'loadStrands']);
+
+
 // -----------------------ADMINSITRATOR-------------------------------------------
 
 
