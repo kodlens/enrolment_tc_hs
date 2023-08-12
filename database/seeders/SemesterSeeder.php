@@ -25,6 +25,6 @@ class SemesterSeeder extends Seeder
 
         ];
 
-        \App\Models\Strand::insertOrIgnore($data);
+        \App\Models\Semester::insertOrIgnore($data);
     }
 }
