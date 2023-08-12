@@ -9769,6 +9769,115 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -50996,7 +51105,7 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("section", { staticClass: "section" }, [
     _c("div", { staticClass: "columns is-centered" }, [
-      _c("div", { staticClass: "column is-6" }, [
+      _c("div", { staticClass: "column is-6 is-8-tablet" }, [
         _c(
           "form",
           {
@@ -51016,207 +51125,140 @@ var render = function () {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "panel-body" }, [
-                _c("div", { staticClass: "divider" }, [_vm._v("ACCOUNT")]),
-                _vm._v(" "),
-                _c("div", { staticClass: "columns" }, [
-                  _c(
-                    "div",
-                    { staticClass: "column" },
-                    [
-                      _c(
-                        "b-field",
-                        {
-                          attrs: {
-                            label: "Username",
-                            type: this.errors.username ? "is-danger" : "",
-                            message: this.errors.username
-                              ? this.errors.username[0]
-                              : "",
-                          },
-                        },
-                        [
-                          _c("b-input", {
-                            attrs: {
-                              type: "text",
-                              placeholder: "Username",
-                              icon: "account",
-                              required: "",
-                            },
-                            model: {
-                              value: _vm.fields.username,
-                              callback: function ($$v) {
-                                _vm.$set(_vm.fields, "username", $$v)
-                              },
-                              expression: "fields.username",
-                            },
-                          }),
-                        ],
-                        1
-                      ),
-                    ],
-                    1
-                  ),
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "columns" }, [
-                  _c(
-                    "div",
-                    { staticClass: "column" },
-                    [
-                      _c(
-                        "b-field",
-                        {
-                          attrs: {
-                            label: "Password",
-                            type: this.errors.password ? "is-danger" : "",
-                            message: this.errors.password
-                              ? this.errors.password[0]
-                              : "",
-                          },
-                        },
-                        [
-                          _c("b-input", {
-                            attrs: {
-                              type: "password",
-                              placeholder: "Password",
-                              icon: "lock",
-                              "password-reveal": "",
-                              required: "",
-                            },
-                            model: {
-                              value: _vm.fields.password,
-                              callback: function ($$v) {
-                                _vm.$set(_vm.fields, "password", $$v)
-                              },
-                              expression: "fields.password",
-                            },
-                          }),
-                        ],
-                        1
-                      ),
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "column" },
-                    [
-                      _c(
-                        "b-field",
-                        { attrs: { label: "Re-type Password" } },
-                        [
-                          _c("b-input", {
-                            attrs: {
-                              type: "password",
-                              icon: "lock",
-                              placeholder: "Re-type Password",
-                              "password-reveal": "",
-                              required: "",
-                            },
-                            model: {
-                              value: _vm.fields.password_confirmation,
-                              callback: function ($$v) {
-                                _vm.$set(
-                                  _vm.fields,
-                                  "password_confirmation",
-                                  $$v
-                                )
-                              },
-                              expression: "fields.password_confirmation",
-                            },
-                          }),
-                        ],
-                        1
-                      ),
-                    ],
-                    1
-                  ),
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "columns" }, [
-                  _c(
-                    "div",
-                    { staticClass: "column" },
-                    [
-                      _c(
-                        "b-field",
-                        {
-                          attrs: {
-                            label: "E-mail",
-                            type: this.errors.email ? "is-danger" : "",
-                            message: this.errors.email
-                              ? this.errors.email[0]
-                              : "",
-                          },
-                        },
-                        [
-                          _c("b-input", {
-                            attrs: {
-                              type: "email",
-                              placeholder: "E-mail",
-                              icon: "email",
-                              required: "",
-                            },
-                            model: {
-                              value: _vm.fields.email,
-                              callback: function ($$v) {
-                                _vm.$set(_vm.fields, "email", $$v)
-                              },
-                              expression: "fields.email",
-                            },
-                          }),
-                        ],
-                        1
-                      ),
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "column" },
-                    [
-                      _c(
-                        "b-field",
-                        {
-                          attrs: {
-                            label: "Contact No.",
-                            type: this.errors.contact_no ? "is-danger" : "",
-                            message: this.errors.contact_no
-                              ? this.errors.contact_no[0]
-                              : "",
-                          },
-                        },
-                        [
-                          _c("b-input", {
-                            attrs: {
-                              type: "tel",
-                              pattern: "^(09|\\+639)\\d{9}$",
-                              placeholder: "Format: 09191112222",
-                              icon: "",
-                            },
-                            model: {
-                              value: _vm.fields.contact_no,
-                              callback: function ($$v) {
-                                _vm.$set(_vm.fields, "contact_no", $$v)
-                              },
-                              expression: "fields.contact_no",
-                            },
-                          }),
-                        ],
-                        1
-                      ),
-                    ],
-                    1
-                  ),
-                ]),
-                _vm._v(" "),
                 _c("div", { staticClass: "divider" }, [
                   _vm._v("LEARNER INFORMATION"),
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "columns" }, [
+                  _c(
+                    "div",
+                    { staticClass: "column" },
+                    [
+                      _c(
+                        "b-field",
+                        {
+                          attrs: {
+                            label: "Grade Level",
+                            type: this.errors.grade_level ? "is-danger" : "",
+                            message: this.errors.grade_level
+                              ? this.errors.grade_level[0]
+                              : "",
+                          },
+                        },
+                        [
+                          _c("b-numberinput", {
+                            attrs: {
+                              icon: "account",
+                              placeholder: "Grade Level",
+                              controls: false,
+                              required: "",
+                              type: "text",
+                            },
+                            model: {
+                              value: _vm.fields.grade_level,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.fields, "grade_level", $$v)
+                              },
+                              expression: "fields.grade_level",
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "column" },
+                    [
+                      _c(
+                        "b-field",
+                        {
+                          attrs: {
+                            label: "Returnee (Balik-Aral)",
+                            expanded: "",
+                            type: this.errors.is_returnee ? "is-danger" : "",
+                            message: this.errors.is_returnee
+                              ? this.errors.is_returnee[0]
+                              : "",
+                          },
+                        },
+                        [
+                          _c(
+                            "b-select",
+                            {
+                              attrs: {
+                                expanded: "",
+                                required: "",
+                                icon: "account",
+                                placeholder: "Returnee (Balik-Aral)",
+                              },
+                              model: {
+                                value: _vm.fields.is_returnee,
+                                callback: function ($$v) {
+                                  _vm.$set(_vm.fields, "is_returnee", $$v)
+                                },
+                                expression: "fields.is_returnee",
+                              },
+                            },
+                            [
+                              _c("option", { attrs: { value: "1" } }, [
+                                _vm._v("YES"),
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "0" } }, [
+                                _vm._v("NO"),
+                              ]),
+                            ]
+                          ),
+                        ],
+                        1
+                      ),
+                    ],
+                    1
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "columns" }, [
+                  _c(
+                    "div",
+                    { staticClass: "column" },
+                    [
+                      _c(
+                        "b-field",
+                        {
+                          attrs: {
+                            label: "PSA Birth Certificate No.",
+                            type: this.errors.psa_birth_no ? "is-danger" : "",
+                            message: this.errors.psa_birth_no
+                              ? this.errors.psa_birth_no[0]
+                              : "",
+                          },
+                        },
+                        [
+                          _c("b-input", {
+                            attrs: {
+                              icon: "account",
+                              placeholder: "PSA Certificate No.",
+                              type: "text",
+                            },
+                            model: {
+                              value: _vm.fields.psa_birth_no,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.fields, "psa_birth_no", $$v)
+                              },
+                              expression: "fields.psa_birth_no",
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
                   _c(
                     "div",
                     { staticClass: "column" },
@@ -51363,16 +51405,19 @@ var render = function () {
                     [
                       _c(
                         "b-field",
-                        { attrs: { label: "Suffix" } },
+                        { attrs: { label: "Extension (Jr, III, Sr.)" } },
                         [
                           _c("b-input", {
-                            attrs: { type: "text", placeholder: "Suffix" },
+                            attrs: {
+                              type: "text",
+                              placeholder: "Extension (Jr, III, Sr.)",
+                            },
                             model: {
-                              value: _vm.fields.suffix,
+                              value: _vm.fields.extension,
                               callback: function ($$v) {
-                                _vm.$set(_vm.fields, "suffix", $$v)
+                                _vm.$set(_vm.fields, "extension", $$v)
                               },
-                              expression: "fields.suffix",
+                              expression: "fields.extension",
                             },
                           }),
                         ],
@@ -52677,6 +52722,228 @@ var render = function () {
                                 _vm.$set(_vm.fields, "guardian_contact_no", $$v)
                               },
                               expression: "fields.guardian_contact_no",
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                    ],
+                    1
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "divider" }, [
+                  _vm._v("RETURNING LEARNER (BALIK-ARAL) / TRANSFER / MOVE IN"),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "columns" }, [
+                  _c(
+                    "div",
+                    { staticClass: "column" },
+                    [
+                      _c(
+                        "b-field",
+                        { attrs: { label: "Last Grade Level Completed" } },
+                        [
+                          _c("b-input", {
+                            attrs: {
+                              icon: "account",
+                              type: "text",
+                              placeholder: "Last Grade Level Completed",
+                              required: "",
+                            },
+                            model: {
+                              value: _vm.fields.last_grade_level_completed,
+                              callback: function ($$v) {
+                                _vm.$set(
+                                  _vm.fields,
+                                  "last_grade_level_completed",
+                                  $$v
+                                )
+                              },
+                              expression: "fields.last_grade_level_completed",
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "column" },
+                    [
+                      _c(
+                        "b-field",
+                        { attrs: { label: "Last School Year Completed" } },
+                        [
+                          _c("b-input", {
+                            attrs: {
+                              icon: "calendar",
+                              type: "text",
+                              placeholder: "Last School Year Completed",
+                              required: "",
+                            },
+                            model: {
+                              value: _vm.fields.last_school_year_completed,
+                              callback: function ($$v) {
+                                _vm.$set(
+                                  _vm.fields,
+                                  "last_school_year_completed",
+                                  $$v
+                                )
+                              },
+                              expression: "fields.last_school_year_completed",
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                    ],
+                    1
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "columns" }, [
+                  _c(
+                    "div",
+                    { staticClass: "column" },
+                    [
+                      _c(
+                        "b-field",
+                        { attrs: { label: "Last School Attended" } },
+                        [
+                          _c("b-input", {
+                            attrs: {
+                              icon: "account",
+                              type: "text",
+                              placeholder: "Last School Attended",
+                              required: "",
+                            },
+                            model: {
+                              value: _vm.fields.last_school_attended,
+                              callback: function ($$v) {
+                                _vm.$set(
+                                  _vm.fields,
+                                  "last_school_attended",
+                                  $$v
+                                )
+                              },
+                              expression: "fields.last_school_attended",
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "column" },
+                    [
+                      _c(
+                        "b-field",
+                        { attrs: { label: "School Id" } },
+                        [
+                          _c("b-input", {
+                            attrs: {
+                              icon: "account",
+                              type: "text",
+                              placeholder: "School Id",
+                              required: "",
+                            },
+                            model: {
+                              value: _vm.fields.last_schoold_id,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.fields, "last_schoold_id", $$v)
+                              },
+                              expression: "fields.last_schoold_id",
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                    ],
+                    1
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "divider" }, [
+                  _vm._v("FOR LEARNERS IN SENIOR HIGH SCHOOL"),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "columns" }, [
+                  _c(
+                    "div",
+                    { staticClass: "column" },
+                    [
+                      _c(
+                        "b-field",
+                        { attrs: { label: "Semester" } },
+                        [
+                          _c(
+                            "b-select",
+                            {
+                              attrs: {
+                                icon: "account",
+                                placeholder: "Semester",
+                                required: "",
+                              },
+                              model: {
+                                value: _vm.fields.semester,
+                                callback: function ($$v) {
+                                  _vm.$set(_vm.fields, "semester", $$v)
+                                },
+                                expression: "fields.semester",
+                              },
+                            },
+                            _vm._l(_vm.semesters, function (item, ix) {
+                              return _c(
+                                "option",
+                                { key: ix, attrs: { value: "" } },
+                                [
+                                  _vm._v(
+                                    "\n                                            " +
+                                      _vm._s(item.semester) +
+                                      "\n                                        "
+                                  ),
+                                ]
+                              )
+                            }),
+                            0
+                          ),
+                        ],
+                        1
+                      ),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "column" },
+                    [
+                      _c(
+                        "b-field",
+                        { attrs: { label: "School Id" } },
+                        [
+                          _c("b-input", {
+                            attrs: {
+                              icon: "account",
+                              type: "text",
+                              placeholder: "School Id",
+                              required: "",
+                            },
+                            model: {
+                              value: _vm.fields.last_schoold_id,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.fields, "last_schoold_id", $$v)
+                              },
+                              expression: "fields.last_schoold_id",
                             },
                           }),
                         ],

@@ -16,7 +16,7 @@
             </div>
 
             <div class="model-img">
-                <img src="/img/front.jpg" />
+                <img src="/img/front.jpgphp " />
             </div>
         </div>
     </section>

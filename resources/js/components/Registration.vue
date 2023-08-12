@@ -1,7 +1,7 @@
 <template>
     <section class="section">
         <div class="columns is-centered">
-            <div class="column is-6">
+            <div class="column is-6 is-8-tablet">
                 <form @submit.prevent="submit">
 
                     <div class="box">
@@ -11,7 +11,8 @@
 
                         <div class="panel-body">
 
-                            <div class="divider">ACCOUNT</div>
+                            <!-- <div class="divider">ACCOUNT</div>
+
                             <div class="columns">
                                 <div class="column">
                                     <b-field label="Username"
@@ -61,12 +62,51 @@
                                             placeholder="Format: 09191112222" icon=""></b-input>
                                     </b-field>
                                 </div>
-                            </div>
-
+                            </div> -->
 
                             <div class="divider">LEARNER INFORMATION</div>
-
+                            
                             <div class="columns">
+                                <div class="column">
+                                    <b-field label="Grade Level"
+                                            :type="this.errors.grade_level ? 'is-danger':''"
+                                            :message="this.errors.grade_level ? this.errors.grade_level[0] : ''" >
+                                        <b-numberinput  
+                                            icon="account" 
+                                            placeholder="Grade Level" 
+                                            v-model="fields.grade_level" 
+                                            :controls="false"
+                                            required
+                                            type="text"></b-numberinput >
+                                    </b-field>
+                                </div>
+                                <div class="column">
+                                    <b-field label="Returnee (Balik-Aral)"
+                                        expanded
+                                        :type="this.errors.is_returnee ? 'is-danger':''"
+                                        :message="this.errors.is_returnee ? this.errors.is_returnee[0] : ''">
+                                        <b-select expanded
+                                            required
+                                            icon="account" 
+                                            placeholder="Returnee (Balik-Aral)" 
+                                            v-model="fields.is_returnee">
+                                            <option value="1">YES</option>
+                                            <option value="0">NO</option>
+                                        </b-select>
+                                    </b-field>
+                                </div>
+                            </div>
+                            <div class="columns">
+                                <div class="column">
+                                    <b-field label="PSA Birth Certificate No."
+                                            :type="this.errors.psa_birth_no ? 'is-danger':''"
+                                            :message="this.errors.psa_birth_no ? this.errors.psa_birth_no[0] : ''" >
+                                        <b-input icon="account" placeholder="PSA Certificate No." 
+                                            v-model="fields.psa_birth_no" 
+                                            type="text"></b-input>
+                                    </b-field>
+                                </div>
+
                                 <div class="column">
                                     <b-field label="LRN"
                                             :type="this.errors.lrn ? 'is-danger':''"
@@ -103,8 +143,8 @@
                                 </div>
 
                                 <div class="column">
-                                    <b-field label="Suffix">
-                                        <b-input type="text" v-model="fields.suffix" placeholder="Suffix"></b-input>
+                                    <b-field label="Extension (Jr, III, Sr.)">
+                                        <b-input type="text" v-model="fields.extension" placeholder="Extension (Jr, III, Sr.)"></b-input>
                                     </b-field>
                                 </div>
 
@@ -437,6 +477,75 @@
                                         <b-input type="text" v-model="fields.guardian_contact_no" 
                                             icon="cellphone" 
                                             placeholder="Guardian Contact No."></b-input>
+                                    </b-field>
+                                </div>
+                            </div>
+
+
+                            <div class="divider">RETURNING LEARNER (BALIK-ARAL) / TRANSFER / MOVE IN</div>
+                  
+                            <div class="columns">
+                                <div class="column">
+                                    <b-field label="Last Grade Level Completed">
+                                        <b-input v-model="fields.last_grade_level_completed" 
+                                            icon="account"
+                                            type="text" placeholder="Last Grade Level Completed"
+                                            required></b-input>
+                                    </b-field>
+                                </div>
+
+                                <div class="column">
+                                    <b-field label="Last School Year Completed">
+                                        <b-input v-model="fields.last_school_year_completed" 
+                                            icon="calendar"
+                                            type="text" placeholder="Last School Year Completed"
+                                            required></b-input>
+                                    </b-field>
+                                </div>
+                            </div>
+
+                            <div class="columns">
+                                <div class="column">
+                                    <b-field label="Last School Attended">
+                                        <b-input v-model="fields.last_school_attended" 
+                                            icon="account"
+                                            type="text" placeholder="Last School Attended"
+                                            required></b-input>
+                                    </b-field>
+                                </div>
+
+                                <div class="column">
+                                    <b-field label="School Id">
+                                        <b-input v-model="fields.last_schoold_id" 
+                                            icon="account"
+                                            type="text" placeholder="School Id"
+                                            required></b-input>
+                                    </b-field>
+                                </div>
+                            </div>
+
+                            <div class="divider">FOR LEARNERS IN SENIOR HIGH SCHOOL</div>
+
+                            <div class="columns">
+                                <div class="column">
+                                    <b-field label="Semester">
+                                        <b-select v-model="fields.semester" 
+                                            icon="account"
+                                            placeholder="Semester"
+                                            required>
+                                            <option value="" v-for="(item, ix) in semesters" :key="ix">
+                                                {{  item.semester }}
+                                            </option>
+                                        </b-select>
+                                    </b-field>
+                                </div>
+
+                                <div class="column">
+                                    <b-field label="School Id">
+                                        <b-input v-model="fields.last_schoold_id" 
+                                            icon="account"
+                                            type="text" placeholder="School Id"
+                                            required></b-input>
                                     </b-field>
                                 </div>
                             </div>
