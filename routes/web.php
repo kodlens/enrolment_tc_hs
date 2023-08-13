@@ -61,7 +61,7 @@ Route::get('/load-cities', [App\Http\Controllers\AddressController::class, 'load
 Route::get('/load-barangays', [App\Http\Controllers\AddressController::class, 'loadBarangays']);
 
 
-
+Route::get('/load-grade-levels', [App\Http\Controllers\OpenController::class, 'loadGradeLevels']);
 Route::get('/load-semesters', [App\Http\Controllers\OpenController::class, 'loadSemesters']);
 Route::get('/load-tracks', [App\Http\Controllers\OpenController::class, 'loadTracks']);
 Route::get('/load-strands', [App\Http\Controllers\OpenController::class, 'loadStrands']);
@@ -75,9 +75,13 @@ Route::middleware(['auth', 'admin'])->group(function(){
 
     Route::get('/admin-home', [App\Http\Controllers\Administrator\AdminHomeController::class, 'index']);
 
+    Route::resource('/manage-learners', App\Http\Controllers\Administrator\ManageLearnerController::class);
+    Route::get('/get-learners', [App\Http\Controllers\Administrator\ManageLearnerController::class, 'getLearners']);
 
     Route::resource('/users', App\Http\Controllers\Administrator\UserController::class);
     Route::get('/get-accounts', [App\Http\Controllers\Administrator\UserController::class, 'getAccounts']);
+
+
     Route::post('/user-reset-password/{userid}', [App\Http\Controllers\Administrator\UserController::class, 'resetPassword']);
 
     Route::resource('/academic-year', App\Http\Controllers\Administrator\AcademicYearController::class);

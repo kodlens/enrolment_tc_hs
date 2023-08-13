@@ -8,6 +8,7 @@ use App\Models\AcademicYear;
 use App\Models\Semester;
 use App\Models\Track;
 use App\Models\Strand;
+use App\Models\GradeLevel;
 
 class OpenController extends Controller
 {
@@ -36,5 +37,13 @@ class OpenController extends Controller
             ->orderBy('strand', 'asc')
             ->get();
     }
+
+
+   public function loadGradeLevels(){
+        return GradeLevel::where('active', 1)
+            ->orderBy('id', 'asc')
+            ->get();
+    }
+
 
 }

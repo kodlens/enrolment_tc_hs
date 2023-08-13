@@ -14,6 +14,8 @@ class Learner extends Model
     protected $primaryKey = 'learner_id';
 
     protected $fillable = [
+        'grade_level',
+        'is_returnee',
         'lrn',
         'psa_cert_no',
         'lname',
@@ -24,11 +26,12 @@ class Learner extends Model
         'sex',
         'birthdate',
         'birthplace',
+        'age',
         'mother_tongue',
         'is_indigenous',
-        'specify_indigenous',
+        'if_yes_indigenous',
         'is_4ps',
-        'household_4ps_no',
+        'household_4ps_id_no',
 
         'current_country',
         'current_province',
@@ -46,7 +49,6 @@ class Learner extends Model
 
         'email',
         'contact_no',
-       
 
         'father_lname',
         'father_fname',
@@ -57,7 +59,6 @@ class Learner extends Model
         'mother_maiden_lname',
         'mother_maiden_fname',
         'mother_maiden_mname',
-        'mother_maiden_extension',
         'mother_maiden_contact_no',
 
         'guardian_lname',
@@ -66,10 +67,15 @@ class Learner extends Model
         'guardian_extension',
         'guardian_contact_no',
 
+        'last_grade_level_completed',
+        'last_school_year_completed',
+        'last_school_attended',
+        'last_schoold_id',
+
         'semester_id',
-        'strand_id',
+        'senior_high_school_id',
         'track_id',
-        'section_id'
+        'strand_id',
 
     ];
 
@@ -85,6 +91,28 @@ class Learner extends Model
     public function track(){
         return $this->hasOne(Track::class, 'track_id', 'track_id');
     }
+
+
+    public function current_province(){
+        return $this->hasOne(Province::class, 'provCode', 'current_province');
+    }
+    public function current_city(){
+        return $this->hasOne(City::class, 'citymunCode', 'current_city');
+    }
+    public function current_barangay(){
+        return $this->hasOne(Barangay::class, 'brgyCode', 'current_barangay');
+    }
+
+    public function permanent_province(){
+        return $this->hasOne(Province::class, 'provCode', 'permanent_province');
+    }
+    public function permanent_city(){
+        return $this->hasOne(City::class, 'citymunCode', 'permanent_city');
+    }
+    public function permanent_barangay(){
+        return $this->hasOne(Barangay::class, 'brgyCode', 'permanent_barangay');
+    }
+
 
 
 }

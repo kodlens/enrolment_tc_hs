@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
             AcademicYearSeeder::class,
             TrackSeeder::class,
             SemesterSeeder::class,
-            StrandSeeder::class
+            StrandSeeder::class,
+            GradeLevelSeeder::class
         ]);
     }
 }

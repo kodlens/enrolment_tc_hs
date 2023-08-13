@@ -612,24 +612,10 @@
                             </div>
 
                             <hr>
-
-                                <p style="text-indent: 50px;">
-                                    I hereby certify that the above information given are true and correct to the best of my knowledge and I allow
-                                    Department of Education to use my child's details to create and/or update his/her learner profile in the Learner Information Sysmte.    
-                                    The information herein shall be treated as confidential in compliance with the Data Privacy Act of 2012.
-                                </p>
-                                <b-checkbox class="mt-2" 
-                                    :true-value="1"
-                                    :false-value="0"
-                                    v-model="fields.accept_terms">
-                                    Accept
-                                </b-checkbox>
-                            <hr>
-
                             <div class="buttons is-right">
-                               <!--  <b-button class="button is-info is-outlined"
+                                <!-- <b-button class="button is-info is-outlined"
                                     @click="debug">DEBUG</b-button> -->
-                                <button class="button is-primary" :disabled="!fields.accept_terms">Register</button>
+                                <button class="button is-primary">Register</button>
                             </div>
 
                         </div> <!--panel -body-->
@@ -644,8 +630,12 @@
 <script>
 export default {
 
+    props: ['propData'],
+
     data(){
         return{
+
+            id: 0,
 
             fields: {
 
@@ -654,7 +644,7 @@ export default {
                 fname: '',
                 mname: '',
                 sex:'',
-                age: '',
+                age: null,
                 birthdate: null,
                 birthplace: '',
 
@@ -776,31 +766,61 @@ export default {
         submit(){
             this.errors = {}; //clear all errors, to refresh errors
 
-            axios.post('/registration', this.fields).then(res=>{
-                if(res.data.status === 'saved'){
-                    this.$buefy.dialog.alert({
-                        title: "SAVED!",
-                        message: 'Data successfully saved.',
-                        type: 'is-success',
-                        onConfirm: ()=>  window.location = '/'
-                    });
-                }
-            }).catch(err=>{
-                if(err.response.status === 422){
-                    this.errors = err.response.data.errors;
-                    this.$buefy.dialog.alert({
-                        title: 'Error!',
-                        hasIcon: true,
-                        message: 'Some fields are required. Please check fields marked red.',
-                        type: 'is-danger',
-                    })
-                }else{
-                    alert('An error occured.');
-                }
-            });
+            if(this.id > 0){
+                /* update */
+                axios.post('/manage-learners/' + this.id, this.fields).then(res=>{
+                    if(res.data.status === 'updated'){
+                        this.$buefy.dialog.alert({
+                            title: "SAVED!",
+                            message: 'Data successfully saved.',
+                            type: 'is-success',
+                            onConfirm: ()=>  window.location = '/'
+                        });
+                    }
+                }).catch(err=>{
+                    if(err.response.status === 422){
+                        this.errors = err.response.data.errors;
+                        this.$buefy.dialog.alert({
+                            title: 'Error!',
+                            hasIcon: true,
+                            message: 'Some fields are required. Please check fields marked red.',
+                            type: 'is-danger',
+                        })
+                    }else{
+                        alert('An error occured.');
+                    }
+                });
+            }else{
+                /* insert */
+                axios.post('/manage-learners', this.fields).then(res=>{
+                    if(res.data.status === 'saved'){
+                        this.$buefy.dialog.alert({
+                            title: "SAVED!",
+                            message: 'Data successfully saved.',
+                            type: 'is-success',
+                            onConfirm: ()=>  window.location = '/'
+                        });
+                    }
+                }).catch(err=>{
+                    if(err.response.status === 422){
+                        this.errors = err.response.data.errors;
+                        this.$buefy.dialog.alert({
+                            title: 'Error!',
+                            hasIcon: true,
+                            message: 'Some fields are required. Please check fields marked red.',
+                            type: 'is-danger',
+                        })
+                    }else{
+                        alert('An error occured.');
+                    }
+                });
+            }
+            
         },
 
         initData(){
+           
+
             this.loadCurrentProvince();
             this.loadPermanentProvince();
 
@@ -808,56 +828,80 @@ export default {
             this.loadTracks()
             this.loadGradeLevels()
 
+            if(this.propData){
+                this.setData();
+            }
+            
         },
 
-        debug(){
-            this.fields.grade_level = 12
-            this.fields.is_returnee = 1
-            this.fields.psa = 'PSACERT-12231'
-            this.fields.lrn = '20221123231'
-            this.fields.lname = 'Abapo'
-            this.fields.fname = 'Wayne'
-            this.fields.mname = 'Yes'
-            this.fields.extension = ''
-            this.fields.sex = 'MALE'
-            this.fields.birthdate = new Date('1988-08-08')
-            this.fields.birthplace = 'Baroy Lanao del Norte'
-            this.fields.age = '17'
-            this.fields.mother_tongue = 'Cebuano'
-            this.fields.is_indigenous = 1
-            this.fields.if_yes_indigenous = 'IGOROT'
-            this.fields.is_4ps = 1
-            this.fields.household_4ps_id_no = '4PS-11234'
+        setData(){
 
-            this.fields.current_street = 'Juan Luna St.'
-            this.fields.current_zipcode = '9210'
+            let data = JSON.parse(this.propData)
+            this.id = data.learner_id
 
-            this.fields.father_lname = 'FATHERLNAME'
-            this.fields.father_fname = 'FATHERFNAME'
-            this.fields.father_mname = 'FATHERMNAME'
-            this.fields.father_contact_no = '09161234567'
+            console.log(data)
 
-            this.fields.mother_maiden_lname = 'MAIDENLAST'
-            this.fields.mother_maiden_fname = 'MAIDENFIRST'
-            this.fields.mother_maiden_mname = 'MAIDENTEST'
-            this.fields.mother_maiden_contact_no = '09161234567'
+            this.fields.grade_level = data.grade_level
+            this.fields.is_returnee = data.is_returnee
+            this.fields.psa = data.psa
+            this.fields.lrn = data.lrn
+            this.fields.lname = data.lname
+            this.fields.fname = data.fname
+            this.fields.mname = data.mname
+            this.fields.extension = data.extension
+            this.fields.sex = data.sex
+            this.fields.birthdate = new Date(data.birthdate)
+            this.fields.birthplace = data.birthplace
+            this.fields.age = data.age
+            this.fields.mother_tongue = data.mother_tongue
+            this.fields.is_indigenous = data.is_indigenous
+            this.fields.if_yes_indigenous = data.if_yes_indigenous
+            this.fields.is_4ps = data.is_4ps
+            this.fields.household_4ps_id_no = data.household_4ps_id_no
 
-            this.fields.guardian_lname = 'GLASTNAME'
-            this.fields.guardian_fname = 'GFNAME'
-            this.fields.guardian_mname = 'GMNAME'
-            this.fields.guardian_contact_no = '09161234567'
 
-            this.fields.last_grade_level_completed = 'GRADE 11'
-            this.fields.last_school_year_completed = '2021-2022'
+            this.fields.current_province = data.current_province ? data.current_province.provCode : null
+            this.loadCurrentCity()
+            this.fields.current_city = data.current_city ? data.current_city.citymunCode : null
+            this.loadCurrentBarangay()
+            this.fields.current_barangay = data.current_barangay ? data.current_barangay.brgyCode : null
+            this.fields.current_street = data.current_street
+            this.fields.current_zipcode = data.current_zipcode
 
-            this.fields.last_school_attended = 'LNNCHS'
-            this.fields.last_schoold_id = '2022-2211'
+            this.fields.permanent_province = data.permanent_province ? data.permanent_province.provCode : null
+            this.loadPermanentCity()
+            this.fields.permanent_city = data.permanent_city ? data.permanent_city.citymunCode : null
+            this.loadPermanentBarangay()
+            this.fields.permanent_barangay = data.permanent_barangay ? data.permanent_barangay.brgyCode : null
+            this.fields.permanent_street = data.permanent_street
+            this.fields.permanent_zipcode = data.permanent_zipcode
 
-            this.fields.semester_id = 1
-            this.fields.senior_high_school_id = '200222'
+            this.fields.father_lname = data.father_lname
+            this.fields.father_fname = data.father_fname
+            this.fields.father_mname = data.father_mname
+            this.fields.father_contact_no = data.father_contact_no
+            this.fields.father_extension = data.father_extension
 
-            this.fields.track_id = 1
-            this.fields.strand_id = 1
+            this.fields.mother_maiden_lname = data.mother_maiden_lname
+            this.fields.mother_maiden_fname = data.mother_maiden_fname
+            this.fields.mother_maiden_mname = data.mother_maiden_mname
+            this.fields.mother_maiden_contact_no = data.mother_maiden_contact_no
+
+            this.fields.guardian_lname = data.guardian_lname
+            this.fields.guardian_fname = data.guardian_fname
+            this.fields.guardian_mname = data.guardian_mname
+            this.fields.guardian_contact_no = data.guardian_contact_no
+
+            this.fields.last_grade_level_completed = data.last_grade_level_completed
+            this.fields.last_school_year_completed = data.last_school_year_completed
+            this.fields.last_school_attended = data.last_school_attended
+            this.fields.last_schoold_id = data.last_schoold_id
+
+            this.fields.semester_id = data.semester_id
+            this.fields.senior_high_school_id = data.senior_high_school_id
+
+            this.fields.track_id = data.track_id
+            this.fields.strand_id = data.strand_id
 
         }
     },

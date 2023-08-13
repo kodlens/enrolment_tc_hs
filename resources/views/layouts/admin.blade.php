@@ -48,6 +48,10 @@
                     Home
                 </b-navbar-item>
 
+                <b-navbar-item href="/manage-learners">
+                    Learners
+                </b-navbar-item>
+
                 <b-navbar-item href="/users">
                     Users
                 </b-navbar-item>

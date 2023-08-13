@@ -16,20 +16,23 @@ class CreateLearnersTable extends Migration
         Schema::create('learners', function (Blueprint $table) {
             $table->id('learner_id');
  
-            $table->string('psa_cert')->nullable();
 
-            $table->string('lrn')->nullable();
-            $table->string('lname')->nullable();
-            $table->string('fname')->nullable();
-            $table->string('mname')->nullable();
-            $table->string('extension')->nullable();
-            $table->string('sex')->nullable();
+            $table->string('grade_level')->nullable();
+            $table->tinyInteger('is_returnee')->default(0);
+
+            $table->string('psa_cert')->nullable();
+            $table->string('lrn', 30)->nullable();
+            $table->string('lname', 50)->nullable();
+            $table->string('fname', 50)->nullable();
+            $table->string('mname', 50)->nullable();
+            $table->string('extension', 10)->nullable();
+            $table->string('sex', 10)->nullable();
             $table->date('birthdate')->nullable();
-            $table->string('age')->nullable();
-            $table->string('birthplace')->nullable();
+            $table->string('birthplace', 100)->nullable();
+            $table->string('age', 3)->nullable();
             
-            $table->string('mother_tongue')->nullable();
-            $table->string('is_indigenous')->nullable();
+            $table->string('mother_tongue', 100)->nullable();
+            $table->tinyInteger('is_indigenous')->default(0);
             $table->string('if_yes_indigenous')->nullable();
             $table->string('is_4ps')->nullable();
             $table->string('household_4ps_id_no')->nullable();
@@ -62,7 +65,6 @@ class CreateLearnersTable extends Migration
             $table->string('mother_maiden_lname')->nullable();
             $table->string('mother_maiden_fname')->nullable();
             $table->string('mother_maiden_mname')->nullable();
-            $table->string('mother_maiden_extension')->nullable();
             $table->string('mother_maiden_contact_no')->nullable();
 
             $table->string('guardian_lname')->nullable();
@@ -71,11 +73,18 @@ class CreateLearnersTable extends Migration
             $table->string('guardian_extension')->nullable();
             $table->string('guardian_contact_no')->nullable();
 
+
+            $table->string('last_grade_level_completed', 30)->nullable();
+            $table->string('last_school_year_completed', 30)->nullable();
+            $table->string('last_school_attended', 100)->nullable();
+            $table->string('last_schoold_id', 30)->nullable();
+
             $table->unsignedBigInteger('semester_id')->default(0);
-            $table->unsignedBigInteger('strand_id')->default(0);
+            $table->string('senior_high_school_id', 30)->nullable();
+
             $table->unsignedBigInteger('track_id')->default(0);
-            $table->unsignedBigInteger('section_id')->default(0);
-            
+            $table->unsignedBigInteger('strand_id')->default(0);
+
             $table->timestamps();
         });
     }
