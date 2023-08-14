@@ -27,15 +27,17 @@ class CreateEnrolsTable extends Migration
             $table->foreign('learner_id')->references('learner_id')->on('learners')
                 ->onUpdate('cascade')->onDelete('cascade');
 
-            $table->unsignedBigInteger('section_id');
-            $table->foreign('section_id')->references('section_id')->on('sections')
-                ->onUpdate('cascade')->onDelete('cascade');
 
             $table->unsignedBigInteger('semester_id')->default(0);
             $table->unsignedBigInteger('track_id')->default(0);
             $table->unsignedBigInteger('strand_id')->default(0);
 
-            $table->date('date_enroled')->default();
+            $table->date('date_enroled')->nullable();
+
+            $table->unsignedBigInteger('section_id');
+            $table->foreign('section_id')->references('section_id')->on('sections')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->string('section')->default(0);
 
             $table->timestamps();
 

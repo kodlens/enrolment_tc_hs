@@ -9,7 +9,7 @@
 
                         <b-field label="Search" label-position="on-border">
                             <b-input type="text"
-                                        v-model="search.designation" placeholder="Search Academic Year"
+                                        v-model="search.academic_year" placeholder="Search Academic Year"
                                         @keyup.native.enter="loadAsyncData"/>
                             <p class="control">
                                     <b-tooltip label="Search" type="is-success">
@@ -44,7 +44,11 @@
                             </b-table-column>
 
                             <b-table-column field="academic_year" label="Academic Year" sortable v-slot="props">
-                                {{ props.row.academic_year }}
+                                {{ props.row.academic_year_code }}
+                            </b-table-column>
+
+                            <b-table-column field="academic_year_desc" label="Description" sortable v-slot="props">
+                                {{ props.row.academic_year_desc }}
                             </b-table-column>
 
                             <b-table-column field="is_active" label="Active" sortable v-slot="props">
@@ -116,14 +120,23 @@
                             <div class="columns">
                                 <div class="column">
                                     <b-field label="Academic Year" label-position="on-border"
-                                            :type="this.errors.academic_year ? 'is-danger':''"
-                                            :message="this.errors.academic_year ? this.errors.academic_year[0] : ''">
-                                        <b-input v-model="fields.academic_year"
+                                            :type="this.errors.academic_year_code ? 'is-danger':''"
+                                            :message="this.errors.academic_year_code ? this.errors.academic_year_code[0] : ''">
+                                        <b-input v-model="fields.academic_year_code"
                                                  placeholder="Academic Year" required>
                                         </b-input>
                                     </b-field>
-
-                                    
+                                </div>
+                            </div>
+                            <div class="columns">
+                                <div class="column">
+                                    <b-field label="Description" label-position="on-border"
+                                             :type="this.errors.academic_year_desc ? 'is-danger':''"
+                                             :message="this.errors.academic_year_desc ? this.errors.academic_year_desc[0] : ''">
+                                        <b-input v-model="fields.academic_year_desc"
+                                                 placeholder="Academic Year" required>
+                                        </b-input>
+                                    </b-field>
                                 </div>
                             </div>
                         </div>
@@ -135,8 +148,6 @@
             </form><!--close form-->
         </b-modal>
         <!--close modal-->
-
-
 
     </div>
 </template>
@@ -235,7 +246,7 @@ export default{
         submit: function(){
             if(this.global_id > 0){
                 //update
-                axios.put('/academic-year/'+this.global_id, this.fields).then(res=>{
+                axios.put('/academic-years/'+this.global_id, this.fields).then(res=>{
                     if(res.data.status === 'updated'){
                         this.$buefy.dialog.alert({
                             title: 'UPDATED!',
@@ -256,7 +267,7 @@ export default{
                 })
             }else{
                 //INSERT HERE
-                axios.post('/academic-year', this.fields).then(res=>{
+                axios.post('/academic-years', this.fields).then(res=>{
                     if(res.data.status === 'saved'){
                         this.$buefy.dialog.alert({
                             title: 'SAVED!',
@@ -293,7 +304,7 @@ export default{
         },
         //execute delete after confirming
         deleteSubmit(delete_id) {
-            axios.delete('/academic-year/' + delete_id).then(res => {
+            axios.delete('/academic-years/' + delete_id).then(res => {
                 this.loadAsyncData();
                 this.clearFields()
             }).catch(err => {
@@ -325,7 +336,7 @@ export default{
             this.isModalCreate = true;
 
             //nested axios for getting the address 1 by 1 or request by request
-            axios.get('/academic-year/'+data_id).then(res=>{
+            axios.get('/academic-years/'+data_id).then(res=>{
                 this.fields = res.data;
             });
         },

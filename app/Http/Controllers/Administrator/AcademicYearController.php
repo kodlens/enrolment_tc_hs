@@ -17,7 +17,7 @@ class AcademicYearController extends Controller
 
         $sort = explode('.', $req->sort_by);
 
-        $data = AcademicYear::where('academic_year', 'like', $req->academic_year . '%')
+        $data = AcademicYear::where('academic_year_code', 'like', $req->academic_year . '%')
             ->orderBy($sort[0], $sort[1])
             ->paginate($req->perpage);
 
@@ -31,11 +31,13 @@ class AcademicYearController extends Controller
 
     public function store(Request $req){
         $req->validate([
-            'academic_year' => ['required', 'unique:academic_years']
+            'academic_year_code' => ['required', 'unique:academic_years'],
+            'academic_year_desc' => ['required']
         ]);
 
         AcademicYear::create([
-            'academic_year' => strtoupper($req->academic_year),
+            'academic_year_code' => strtoupper($req->academic_year_code),
+            'academic_year_desc' => strtoupper($req->academic_year_desc)
         ]);
 
         return response()->json([
@@ -47,11 +49,15 @@ class AcademicYearController extends Controller
     public function update(Request $req, $id){
        
         $req->validate([
-            'academic_year' => ['required', 'unique:academic_years,academic_year,' .$id.',academic_year_id']
+            'academic_year_code' => ['required', 'unique:academic_years,academic_year_code,' .$id.',academic_year_id'],
+            'academic_year_desc' => ['required']
+
         ]);
 
         $data = AcademicYear::find($id);
-        $data->academic_year = strtoupper($req->academic_year);
+        $data->academic_year_code = strtoupper($req->academic_year_code);
+        $data->academic_year_desc = strtoupper($req->academic_year_desc);
+
         $data->save();
 
         return response()->json([

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Learner;
+use Illuminate\Validation\Rule;
 
 
 class ManageLearnerController extends Controller
@@ -30,7 +31,9 @@ class ManageLearnerController extends Controller
     }
 
     public function create(){
-        return view('administrator.manage-learner.manage-learner-create-edit');
+        return view('administrator.manage-learner.manage-learner-create-edit')
+            ->with('id', 0)
+            ->with('data', '');
     }
 
     public function edit($id){
@@ -48,6 +51,7 @@ class ManageLearnerController extends Controller
 
 
         return view('administrator.manage-learner.manage-learner-create-edit')
+            ->with('id', $data->learner_id)
             ->with('data', $data);
     }
 
@@ -257,7 +261,9 @@ class ManageLearnerController extends Controller
             'strand_id' => $strandId,
         ]);
 
-
+        return response()->json([
+            'status' => 'saved'
+        ], 200);
     }
 
     
@@ -399,72 +405,75 @@ class ManageLearnerController extends Controller
 
 
         /*inserting data to database*/
-        $data = Learner::create([
+        $data = Learner::where('learner_id', $id)
+            ->update([
 
-            'grade_level' => $req->grade_level,
-            'is_returnee' => $req->is_returnee,
+                'grade_level' => $req->grade_level,
+                'is_returnee' => $req->is_returnee,
 
-            'psa_cert' => $req->psa_cert,
-            'lrn' => $req->lrn,
-            'lname' => strtoupper($req->lname),
-            'fname' => strtoupper($req->fname),
-            'mname' => strtoupper($req->mname),
-            'extension' => strtoupper($req->suffix),
-            'sex' => $req->sex,
-            'birthdate' => date('Y-m-d', strtotime($req->birthdate)),
-            'age' => $req->age,
-            'birthplace' => strtoupper($req->birthplace),
+                'psa_cert' => $req->psa_cert,
+                'lrn' => $req->lrn,
+                'lname' => strtoupper($req->lname),
+                'fname' => strtoupper($req->fname),
+                'mname' => strtoupper($req->mname),
+                'extension' => strtoupper($req->suffix),
+                'sex' => $req->sex,
+                'birthdate' => date('Y-m-d', strtotime($req->birthdate)),
+                'age' => $req->age,
+                'birthplace' => strtoupper($req->birthplace),
 
-            'mother_tongue' => strtoupper($req->mother_tongue),
-            'is_indigenous' => $req->is_indigenous,
-            'if_yes_indigenous' => $req->is_indigenous ? $req->if_yes_indigenous : null,
-            'is_4ps' => $req->is_4ps,
-            'household_4ps_id_no' => $req->is_4ps ? $req->household_4ps_id_no : null,
+                'mother_tongue' => strtoupper($req->mother_tongue),
+                'is_indigenous' => $req->is_indigenous,
+                'if_yes_indigenous' => $req->is_indigenous ? $req->if_yes_indigenous : null,
+                'is_4ps' => $req->is_4ps,
+                'household_4ps_id_no' => $req->is_4ps ? $req->household_4ps_id_no : null,
 
-            'current_province' => $req->current_province,
-            'current_city' => $req->current_city,
-            'current_barangay' => $req->current_barangay,
-            'current_street' => strtoupper($req->current_street),
-            'current_zipcode' => $req->current_zipcode,
+                'current_province' => $req->current_province,
+                'current_city' => $req->current_city,
+                'current_barangay' => $req->current_barangay,
+                'current_street' => strtoupper($req->current_street),
+                'current_zipcode' => $req->current_zipcode,
 
-            'permanent_province' => $req->permanent_province,
-            'permanent_city' => $req->permanent_city,
-            'permanent_barangay' => $req->permanent_barangay,
-            'permanent_street' => strtoupper($req->permanent_street),
-            'permanent_zipcode' => $req->permanent_zipcode,
+                'permanent_province' => $req->permanent_province,
+                'permanent_city' => $req->permanent_city,
+                'permanent_barangay' => $req->permanent_barangay,
+                'permanent_street' => strtoupper($req->permanent_street),
+                'permanent_zipcode' => $req->permanent_zipcode,
 
-            //'email' => $req->email,
-            //'contact_no' => $req->contact_no,
+                //'email' => $req->email,
+                //'contact_no' => $req->contact_no,
 
-            'father_lname' => strtoupper($req->father_lname),
-            'father_fname' => strtoupper($req->father_fname),
-            'father_mname' => strtoupper($req->father_mname),
-            'father_extension' => strtoupper($req->father_mname),
-            'father_contact_no' => $req->father_contact_no,
+                'father_lname' => strtoupper($req->father_lname),
+                'father_fname' => strtoupper($req->father_fname),
+                'father_mname' => strtoupper($req->father_mname),
+                'father_extension' => strtoupper($req->father_mname),
+                'father_contact_no' => $req->father_contact_no,
 
-            'mother_maiden_lname' => strtoupper($req->mother_maiden_lname),
-            'mother_maiden_fname' => strtoupper($req->mother_maiden_fname),
-            'mother_maiden_mname' => strtoupper($req->mother_maiden_mname),
-            'mother_maiden_contact_no' => $req->mother_maiden_contact_no,
+                'mother_maiden_lname' => strtoupper($req->mother_maiden_lname),
+                'mother_maiden_fname' => strtoupper($req->mother_maiden_fname),
+                'mother_maiden_mname' => strtoupper($req->mother_maiden_mname),
+                'mother_maiden_contact_no' => $req->mother_maiden_contact_no,
 
-            'guardian_lname' => strtoupper($req->guardian_lname),
-            'guardian_fname' => strtoupper($req->guardian_fname),
-            'guardian_mname' => strtoupper($req->guardian_mname),
-            'guardian_extension' => strtoupper($req->guardian_mname),
-            'guardian_contact_no' => $req->guardian_contact_no,
+                'guardian_lname' => strtoupper($req->guardian_lname),
+                'guardian_fname' => strtoupper($req->guardian_fname),
+                'guardian_mname' => strtoupper($req->guardian_mname),
+                'guardian_extension' => strtoupper($req->guardian_mname),
+                'guardian_contact_no' => $req->guardian_contact_no,
 
+                'last_grade_level_completed' => $lastGradeLevelCompleted,
+                'last_school_year_completed' => $lastSchoolYearCompleted,
+                'last_school_attended' => $lastSchoolAttended,
+                'last_schoold_id' => $lastSchoolId,
 
-            'last_grade_level_completed' => $lastGradeLevelCompleted,
-            'last_school_year_completed' => $lastSchoolYearCompleted,
-            'last_school_attended' => $lastSchoolAttended,
-            'last_schoold_id' => $lastSchoolId,
+                'semester_id' => $semesterId,
+                'senior_high_school_id' => $seniorHighSchoolId,
+                'track_id' => $trackId,
+                'strand_id' => $strandId,
+            ]);
 
-            
-            'semester_id' => $semesterId,
-            'senior_high_school_id' => $seniorHighSchoolId,
-            'track_id' => $trackId,
-            'strand_id' => $strandId,
-        ]);
+        return response()->json([
+            'status' => 'updated'
+        ],200);
     }
 
 

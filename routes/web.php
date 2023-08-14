@@ -75,6 +75,19 @@ Route::middleware(['auth', 'admin'])->group(function(){
 
     Route::get('/admin-home', [App\Http\Controllers\Administrator\AdminHomeController::class, 'index']);
 
+    Route::resource('/academic-years', App\Http\Controllers\Administrator\AcademicYearController::class);
+    Route::get('/get-academic-years', [App\Http\Controllers\Administrator\AcademicYearController::class, 'getAcademicYears']);
+
+    Route::resource('/tracks', App\Http\Controllers\Administrator\TrackController::class);
+    Route::get('/get-tracks', [App\Http\Controllers\Administrator\TrackController::class, 'getTracks']);
+
+    Route::resource('/strands', App\Http\Controllers\Administrator\StrandController::class);
+    Route::get('/get-strands', [App\Http\Controllers\Administrator\StrandController::class, 'getStrands']);
+
+
+    Route::resource('/sections', App\Http\Controllers\Administrator\SectionController::class);
+    Route::get('/get-sections', [App\Http\Controllers\Administrator\SectionController::class, 'getSections']);
+
     Route::resource('/manage-learners', App\Http\Controllers\Administrator\ManageLearnerController::class);
     Route::get('/get-learners', [App\Http\Controllers\Administrator\ManageLearnerController::class, 'getLearners']);
 
@@ -84,16 +97,13 @@ Route::middleware(['auth', 'admin'])->group(function(){
 
     Route::post('/user-reset-password/{userid}', [App\Http\Controllers\Administrator\UserController::class, 'resetPassword']);
 
-    Route::resource('/academic-year', App\Http\Controllers\Administrator\AcademicYearController::class);
-    Route::get('/get-academic-years', [App\Http\Controllers\Administrator\AcademicYearController::class, 'getAcademicYears']);
+
     Route::post('/academic-year-active/{id}', [App\Http\Controllers\Administrator\AcademicYearController::class, 'active']);
 
 
 });
 
 
-Route::resource('/track', App\Http\Controllers\Administrator\TrackController::class);
-Route::get('/get-tracks', [App\Http\Controllers\Administrator\TrackController::class, 'getTracks']);
 
 // -----------------------ADMINSITRATOR-------------------------------------------
 

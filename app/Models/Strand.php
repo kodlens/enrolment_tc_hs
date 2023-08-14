@@ -14,5 +14,9 @@ class Strand extends Model
     protected $primaryKey = 'strand_id';
 
     protected $fillable = ['track_id', 'strand', 'strand_desc'];
-    
+
+    public function track(){
+        return $this->belongsTo(Track::class, 'track_id', 'track_id');
+    }
+
 }

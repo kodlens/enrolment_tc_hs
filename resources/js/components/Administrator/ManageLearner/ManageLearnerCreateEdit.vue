@@ -613,8 +613,8 @@
 
                             <hr>
                             <div class="buttons is-right">
-                                <!-- <b-button class="button is-info is-outlined"
-                                    @click="debug">DEBUG</b-button> -->
+                                <b-button class="button is-info is-outlined"
+                                    @click="debug">DEBUG</b-button>
                                 <button class="button is-primary">Register</button>
                             </div>
 
@@ -630,7 +630,7 @@
 <script>
 export default {
 
-    props: ['propData'],
+    props: ['propData', 'propDataId'],
 
     data(){
         return{
@@ -768,13 +768,13 @@ export default {
 
             if(this.id > 0){
                 /* update */
-                axios.post('/manage-learners/' + this.id, this.fields).then(res=>{
+                axios.put('/manage-learners/' + this.id, this.fields).then(res=>{
                     if(res.data.status === 'updated'){
                         this.$buefy.dialog.alert({
-                            title: "SAVED!",
-                            message: 'Data successfully saved.',
+                            title: "UPDATED!",
+                            message: 'Data successfully updated.',
                             type: 'is-success',
-                            onConfirm: ()=>  window.location = '/'
+                            onConfirm: ()=>  window.location = '/manage-learners'
                         });
                     }
                 }).catch(err=>{
@@ -798,7 +798,7 @@ export default {
                             title: "SAVED!",
                             message: 'Data successfully saved.',
                             type: 'is-success',
-                            onConfirm: ()=>  window.location = '/'
+                            onConfirm: ()=>  window.location = '/manage-learners'
                         });
                     }
                 }).catch(err=>{
@@ -828,7 +828,7 @@ export default {
             this.loadTracks()
             this.loadGradeLevels()
 
-            if(this.propData){
+            if(this.propDataId > 0){
                 this.setData();
             }
             
@@ -902,6 +902,58 @@ export default {
 
             this.fields.track_id = data.track_id
             this.fields.strand_id = data.strand_id
+
+        },
+
+        debug(){
+
+            this.fields.grade_level = 12
+            this.fields.is_returnee = 1
+            this.fields.psa = 'PSACERT-12231'
+            this.fields.lrn = '20221123231'
+            this.fields.lname = 'Abapo'
+            this.fields.fname = 'Wayne'
+            this.fields.mname = 'Yes'
+            this.fields.extension = ''
+            this.fields.sex = 'MALE'
+            this.fields.birthdate = new Date('1988-08-08')
+            this.fields.birthplace = 'Baroy Lanao del Norte'
+            this.fields.age = '17'
+            this.fields.mother_tongue = 'Cebuano'
+            this.fields.is_indigenous = 1
+            this.fields.if_yes_indigenous = 'IGOROT'
+            this.fields.is_4ps = 1
+            this.fields.household_4ps_id_no = '4PS-11234'
+
+            this.fields.current_street = 'Juan Luna St.'
+            this.fields.current_zipcode = '9210'
+
+            this.fields.father_lname = 'FATHERLNAME'
+            this.fields.father_fname = 'FATHERFNAME'
+            this.fields.father_mname = 'FATHERMNAME'
+            this.fields.father_contact_no = '09161234567'
+
+            this.fields.mother_maiden_lname = 'MAIDENLAST'
+            this.fields.mother_maiden_fname = 'MAIDENFIRST'
+            this.fields.mother_maiden_mname = 'MAIDENTEST'
+            this.fields.mother_maiden_contact_no = '09161234567'
+
+            this.fields.guardian_lname = 'GLASTNAME'
+            this.fields.guardian_fname = 'GFNAME'
+            this.fields.guardian_mname = 'GMNAME'
+            this.fields.guardian_contact_no = '09161234567'
+
+            this.fields.last_grade_level_completed = 'GRADE 11'
+            this.fields.last_school_year_completed = '2021-2022'
+
+            this.fields.last_school_attended = 'LNNCHS'
+            this.fields.last_schoold_id = '2022-2211'
+
+            this.fields.semester_id = 1
+            this.fields.senior_high_school_id = '200222'
+
+            this.fields.track_id = 1
+            this.fields.strand_id = 1
 
         }
     },

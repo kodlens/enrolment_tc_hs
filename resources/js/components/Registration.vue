@@ -627,8 +627,8 @@
                             <hr>
 
                             <div class="buttons is-right">
-                               <!--  <b-button class="button is-info is-outlined"
-                                    @click="debug">DEBUG</b-button> -->
+                               <b-button class="button is-info is-outlined"
+                                    @click="debug">DEBUG</b-button>
                                 <button class="button is-primary" :disabled="!fields.accept_terms">Register</button>
                             </div>
 
@@ -780,20 +780,39 @@ export default {
                 if(res.data.status === 'saved'){
                     this.$buefy.dialog.alert({
                         title: "SAVED!",
-                        message: 'Data successfully saved.',
+                        message: 'Information successfully saved.',
                         type: 'is-success',
+                        onConfirm: ()=>  window.location = '/'
+                    });
+                }
+
+                if(res.data.status === 'reg'){
+                    this.$buefy.dialog.alert({
+                        title: "SAVED!",
+                        message: 'Information was successfully saved but the system cannot enrol due to no section was set by the admin or all sections are full.',
+                        type: 'is-info',
                         onConfirm: ()=>  window.location = '/'
                     });
                 }
             }).catch(err=>{
                 if(err.response.status === 422){
                     this.errors = err.response.data.errors;
-                    this.$buefy.dialog.alert({
-                        title: 'Error!',
-                        hasIcon: true,
-                        message: 'Some fields are required. Please check fields marked red.',
-                        type: 'is-danger',
-                    })
+                    if(this.errors.exist){
+                        this.$buefy.dialog.alert({
+                            title: 'Exist!',
+                            hasIcon: true,
+                            message: this.errors.exist[0],
+                            type: 'is-danger',
+                        })
+                    }else{
+                        this.$buefy.dialog.alert({
+                            title: 'Error!',
+                            hasIcon: true,
+                            message: 'Some fields are required. Please check fields marked red.',
+                            type: 'is-danger',
+                        })
+                    }
+
                 }else{
                     alert('An error occured.');
                 }

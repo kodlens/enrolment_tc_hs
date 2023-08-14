@@ -48,6 +48,24 @@
                     Home
                 </b-navbar-item>
 
+                <b-navbar-dropdown label="Settings">
+
+                    <b-navbar-item href="/academic-years">
+                        Academic Years
+                    </b-navbar-item>
+
+                    <b-navbar-item href="/tracks">
+                        Tracks
+                    </b-navbar-item>
+                    <b-navbar-item href="/strands">
+                        Strands
+                    </b-navbar-item>
+                    <b-navbar-item href="/sections">
+                        Sections
+                    </b-navbar-item>
+
+                </b-navbar-dropdown>
+
                 <b-navbar-item href="/manage-learners">
                     Learners
                 </b-navbar-item>
@@ -75,9 +93,7 @@
 
         <form id="logout" action="/logout" method="post"> @csrf </form>
 
-        <div>
-            @yield('content')
-        </div>
+        @yield('content')
         
     </div>
 

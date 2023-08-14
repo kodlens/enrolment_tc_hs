@@ -13,6 +13,9 @@ class AcademicYear extends Model
     protected $table = 'academic_years';
     protected $primaryKey = 'academic_year_id';
 
-    protected $fillable = ['academic_year', 'is_active'];
+    protected $fillable = ['academic_year_code',
+        'academic_year_desc',
+        'is_active'
+    ];
 
 }
