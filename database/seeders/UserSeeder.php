@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
                 'email' => 'jademark@dev.com',
                 'contact_no' => '1234',
                 'role' => 'ADMINISTRATOR',
-                'password' => Hash::make('a')
+                'password' => Hash::make('cka!dmin')
             ],
 
           
