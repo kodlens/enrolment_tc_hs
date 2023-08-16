@@ -35,9 +35,7 @@ class CreateEnrolsTable extends Migration
             $table->date('date_enroled')->nullable();
 
             $table->unsignedBigInteger('section_id');
-            $table->foreign('section_id')->references('section_id')->on('sections')
-                ->onUpdate('cascade')->onDelete('cascade');
-            $table->string('section')->default(0);
+            $table->string('section')->nullable();
 
             $table->timestamps();
 

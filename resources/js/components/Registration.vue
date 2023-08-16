@@ -627,7 +627,7 @@
                             <hr>
 
                             <div class="buttons is-right">
-                               <b-button class="button is-info is-outlined"
+                               <b-button :class="btnClass"
                                     @click="debug">DEBUG</b-button>
                                 <button class="button is-primary" :disabled="!fields.accept_terms">Register</button>
                             </div>
@@ -695,6 +695,13 @@ export default {
             semesters: [],
             tracks: [],
             strands: [],
+
+            btnClass: {
+                'button' : true,
+                'is-loading': false,
+                'is-info': true,
+                'is-outlined': true
+            }
         }
     },
     methods: {
@@ -775,12 +782,15 @@ export default {
 
         submit(){
             this.errors = {}; //clear all errors, to refresh errors
+            this.btnClass['is-loading'] = true;
 
             axios.post('/registration', this.fields).then(res=>{
                 if(res.data.status === 'saved'){
+                    this.btnClass['is-loading'] = false;
+
                     this.$buefy.dialog.alert({
                         title: "SAVED!",
-                        message: 'Information successfully saved.',
+                        message: 'Information successfully saved and enrolled.',
                         type: 'is-success',
                         onConfirm: ()=>  window.location = '/'
                     });
@@ -789,12 +799,18 @@ export default {
                 if(res.data.status === 'reg'){
                     this.$buefy.dialog.alert({
                         title: "SAVED!",
-                        message: 'Information was successfully saved but the system cannot enrol due to no section was set by the admin or all sections are full.',
+                        message: 'Information was successfully saved but the system cannot enrol due to no section ' +
+                            'was set by the admin or all sections are full. Please refer this to the in-charge of the enrollment so ' +
+                            'that the student will be enrolled manually to the system.',
                         type: 'is-info',
                         onConfirm: ()=>  window.location = '/'
                     });
                 }
+                this.btnClass['is-loading'] = false;
+
             }).catch(err=>{
+                this.btnClass['is-loading'] = false;
+
                 if(err.response.status === 422){
                     this.errors = err.response.data.errors;
                     if(this.errors.exist){
@@ -830,7 +846,7 @@ export default {
         },
 
         debug(){
-            this.fields.grade_level = 12
+            this.fields.grade_level = 'GRADE 11'
             this.fields.is_returnee = 1
             this.fields.psa = 'PSACERT-12231'
             this.fields.lrn = '20221123231'
@@ -877,6 +893,8 @@ export default {
 
             this.fields.track_id = 1
             this.fields.strand_id = 1
+
+            this.accept_terms = 1
 
         }
     },

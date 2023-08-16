@@ -21,7 +21,8 @@ class DatabaseSeeder extends Seeder
             TrackSeeder::class,
             SemesterSeeder::class,
             StrandSeeder::class,
-            GradeLevelSeeder::class
+            GradeLevelSeeder::class,
+            SectionSeeder::class
         ]);
     }
 }

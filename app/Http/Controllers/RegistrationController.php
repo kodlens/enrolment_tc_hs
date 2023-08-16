@@ -251,33 +251,58 @@ class RegistrationController extends Controller
 
 
             $ay = AcademicYear::where('is_active', 1)->first();
-            $sections = Section::where('track_id', $trackId)
-                ->where('strand_id', $strandId)
-                ->get();
 
-            $enrolCount = Enrol::where('track_id', $trackId)
-                ->where('strand_id', $strandId)
-                ->count();
-            $flag = 0;
-            foreach ($sections as $item){
-                if($enrolCount < $item['max']){
-                    /* add to enrolment */
-                    $flag = 1;
-                    Enrol::create([
-                        'academic_year_id' => $ay->academic_year_id,
-                        'grade_level' => $req->grade_level,
-                        'is_returnee' => $req->is_returnee,
-                        'learner_id' => $data->learner_id,
-                        'semester_id' => $semesterId,
-                        'track_id' => $trackId,
-                        'strand_id' => $strandId,
-                        'section_id' => $item['section_id'],
-                        'section' => $item['section']
-                    ]);
-                    break;
-                    //exit loop
+            if($req->grade_level == 'GRADE 11' || $req->grade_level == 'GRADE 12'){
+                $sections = Section::where('track_id', $trackId)
+                    ->where('strand_id', $strandId)
+                    ->get();
+
+                $flag = 0;
+
+                foreach ($sections as $item){
+                    $enrolCount = Enrol::where('track_id', $trackId)
+                        ->where('strand_id', $strandId)
+                        ->where('academic_year_id', $ay->academic_year_id)
+                        ->where('section_id', $item['section_id'])
+                        ->count();
+
+                    if($enrolCount < $item['max']){
+                        /* add to enrolment */
+                        $flag = 1;
+                        Enrol::create([
+                            'academic_year_id' => $ay->academic_year_id,
+                            'grade_level' => $req->grade_level,
+                            'is_returnee' => $req->is_returnee,
+                            'learner_id' => $data->learner_id,
+                            'semester_id' => $semesterId,
+                            'track_id' => $trackId,
+                            'strand_id' => $strandId,
+                            'section_id' => $item['section_id'],
+                            'section' => $item['section'],
+                            'date_enroled' => date('Y-m-d')
+                        ]);
+                        break;
+                        //exit loop
+                    }
                 }
+            }else{
+                //not grade 11 and not grade 12
+                Enrol::create([
+                    'academic_year_id' => $ay->academic_year_id,
+                    'grade_level' => $req->grade_level,
+                    'is_returnee' => $req->is_returnee,
+                    'learner_id' => $data->learner_id,
+                    'semester_id' => $semesterId,
+                    'track_id' => $trackId,
+                    'strand_id' => $strandId,
+                    'section_id' => 0,
+                    'section' => $req->grade_level,
+                    'date_enroled' => date('Y-m-d')
+                ]);
             }
+            //if grade 11 and grade 12 for sectioning
+
+
 
             // If all operations are successful, commit the transaction
             DB::commit();

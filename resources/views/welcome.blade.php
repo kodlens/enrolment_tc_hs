@@ -5,8 +5,8 @@
 
 <div class="container is-max-desktop">
     <section class="section">
-        <div class="">
-            <div class="welcome-text">
+        <div class="is-flex justify-content-center is-flex-direction-column">
+            <div class="welcome-text mb-2">
                 <p class="title">
                     EnSys
                 </p>
@@ -15,10 +15,20 @@
                 </p>
             </div>
 
-            <div class="model-img">
-                <img src="/img/front.jpgphp " />
+            <div class="model-img" style="margin: auto;">
+                <img src="/img/front.jpg" />
             </div>
+
+
         </div>
+        <div class="buttons is-centered">
+            <b-button class="is-info"
+                  label="REGISTER HERE"
+                  icon-right="home"
+                tag="a"
+                href="/registration"></b-button>
+        </div>
+
     </section>
 </div>
     
