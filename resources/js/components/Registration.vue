@@ -627,9 +627,9 @@
                             <hr>
 
                             <div class="buttons is-right">
-<!--                               <b-button :class="btnClass"-->
+<!--                               <b-button class="button is-outlined is-info"-->
 <!--                                    @click="debug">DEBUG</b-button>-->
-                                <button class="button is-primary" :disabled="!fields.accept_terms">Register</button>
+                                <button :class="btnClass" :disabled="!fields.accept_terms">Register</button>
                             </div>
 
                         </div> <!--panel -body-->
@@ -699,8 +699,7 @@ export default {
             btnClass: {
                 'button' : true,
                 'is-loading': false,
-                'is-info': true,
-                'is-outlined': true
+                'is-primary': true,
             }
         }
     },
