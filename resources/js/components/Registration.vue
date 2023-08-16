@@ -627,8 +627,8 @@
                             <hr>
 
                             <div class="buttons is-right">
-                               <b-button :class="btnClass"
-                                    @click="debug">DEBUG</b-button>
+<!--                               <b-button :class="btnClass"-->
+<!--                                    @click="debug">DEBUG</b-button>-->
                                 <button class="button is-primary" :disabled="!fields.accept_terms">Register</button>
                             </div>
 
