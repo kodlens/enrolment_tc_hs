@@ -303,16 +303,17 @@ class RegistrationController extends Controller
             }
             //if grade 11 and grade 12 for sectioning
 
-
-
             // If all operations are successful, commit the transaction
             DB::commit();
 
-            if($flag == 0){
-                return response()->json([
-                    'status' => 'reg'
-                ],200);
+            if($req->grade_level == 'GRADE 11' || $req->grade_level == 'GRADE 12'){
+                if($flag == 0){
+                    return response()->json([
+                        'status' => 'reg'
+                    ],200);
+                }
             }
+
 
             return response()->json([
                 'status' => 'saved'
