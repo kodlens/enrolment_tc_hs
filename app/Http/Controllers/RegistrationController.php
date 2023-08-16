@@ -41,6 +41,9 @@ class RegistrationController extends Controller
             'age' => ['required'],
             'mother_tongue' => ['required'],
 
+            'is_indigenous' => ['required'],
+            'is_4ps' => ['required'],
+
             'current_province' => ['required'],
             'current_city' => ['required'],
             'current_barangay' => ['required'],
