@@ -26,11 +26,8 @@ class UserSeeder extends Seeder
                 'email' => 'jademark@dev.com',
                 'contact_no' => '1234',
                 'role' => 'ADMINISTRATOR',
-                'password' => Hash::make('cka!dmin')
+                'password' => Hash::make('aa')
             ],
-
-          
-
         ];
 
         \App\Models\User::insertOrIgnore($data);
