@@ -70,6 +70,10 @@
                     Learners
                 </b-navbar-item>
 
+                <b-navbar-item href="/enrollee">
+                    Enrollee
+                </b-navbar-item>
+
                 <b-navbar-item href="/users">
                     Users
                 </b-navbar-item>
