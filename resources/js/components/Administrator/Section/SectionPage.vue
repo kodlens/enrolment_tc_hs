@@ -7,7 +7,7 @@
                         <div class="has-text-weight-bold subtitle is-4">SECTIONS</div>
                         <b-field label="Search">
                             <b-input type="text"
-                                     v-model="search.lname" placeholder="Search Section"
+                                     v-model="search.section" placeholder="Search Section"
                                      @keyup.native.enter="loadAsyncData"/>
                             <p class="control">
                                 <b-tooltip label="Search" type="is-success">
