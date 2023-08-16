@@ -254,13 +254,11 @@ class RegistrationController extends Controller
 
 
             $ay = AcademicYear::where('is_active', 1)->first();
-
+            $flag = 0;
             if($req->grade_level == 'GRADE 11' || $req->grade_level == 'GRADE 12'){
                 $sections = Section::where('track_id', $trackId)
                     ->where('strand_id', $strandId)
                     ->get();
-
-                $flag = 0;
 
                 foreach ($sections as $item){
                     $enrolCount = Enrol::where('track_id', $trackId)
