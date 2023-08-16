@@ -613,9 +613,9 @@
 
                             <hr>
                             <div class="buttons is-right">
-                                <b-button class="button is-info is-outlined"
-                                    @click="debug">DEBUG</b-button>
-                                <button class="button is-primary">Register</button>
+<!--                                <b-button class="button is-info is-outlined"-->
+<!--                                    @click="debug">DEBUG</b-button>-->
+                                <button :class="btnClass">Register</button>
                             </div>
 
                         </div> <!--panel -body-->
@@ -685,6 +685,12 @@ export default {
             semesters: [],
             tracks: [],
             strands: [],
+
+            btnClass: {
+                'is-loading': false,
+                'button': true,
+                'is-primary': true
+            }
         }
     },
     methods: {
@@ -764,11 +770,14 @@ export default {
 
 
         submit(){
+            this.btnClass['is-loading'] = true
             this.errors = {}; //clear all errors, to refresh errors
 
             if(this.id > 0){
                 /* update */
                 axios.put('/manage-learners/' + this.id, this.fields).then(res=>{
+                    this.btnClass['is-loading'] = false
+
                     if(res.data.status === 'updated'){
                         this.$buefy.dialog.alert({
                             title: "UPDATED!",
@@ -778,6 +787,8 @@ export default {
                         });
                     }
                 }).catch(err=>{
+                    this.btnClass['is-loading'] = false
+
                     if(err.response.status === 422){
                         this.errors = err.response.data.errors;
                         this.$buefy.dialog.alert({
@@ -792,6 +803,8 @@ export default {
                 });
             }else{
                 /* insert */
+                this.btnClass['is-loading'] = false
+
                 axios.post('/manage-learners', this.fields).then(res=>{
                     if(res.data.status === 'saved'){
                         this.$buefy.dialog.alert({
@@ -802,6 +815,8 @@ export default {
                         });
                     }
                 }).catch(err=>{
+                    this.btnClass['is-loading'] = false
+
                     if(err.response.status === 422){
                         this.errors = err.response.data.errors;
                         this.$buefy.dialog.alert({
@@ -835,6 +850,7 @@ export default {
         },
 
         setData(){
+            this.btnClass['is-loading'] = true
 
             let data = JSON.parse(this.propData)
             this.id = data.learner_id
@@ -902,6 +918,7 @@ export default {
 
             this.fields.track_id = data.track_id
             this.fields.strand_id = data.strand_id
+            this.btnClass['is-loading'] = false
 
         },
 

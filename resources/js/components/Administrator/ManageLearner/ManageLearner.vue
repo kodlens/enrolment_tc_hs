@@ -245,62 +245,6 @@ export default{
             this.loadAsyncData()
         },
 
-        openModal(){
-            this.isModalCreate=true;
-            this.fields = {};
-            this.errors = {};
-        },
-
-      
-
-
-        submit: function(){
-            if(this.global_id > 0){
-                //update
-                axios.put('/accounts/'+this.global_id, this.fields).then(res=>{
-                    if(res.data.status === 'updated'){
-                        this.$buefy.dialog.alert({
-                            title: 'UPDATED!',
-                            message: 'Successfully updated.',
-                            type: 'is-success',
-                            onConfirm: () => {
-                                this.loadAsyncData();
-                                this.clearFields();
-                                this.global_id = 0;
-                                this.isModalCreate = false;
-                            }
-                        })
-                    }
-                }).catch(err=>{
-                    if(err.response.status === 422){
-                        this.errors = err.response.data.errors;
-                    }
-                })
-            }else{
-                //INSERT HERE
-                axios.post('/accounts', this.fields).then(res=>{
-                    if(res.data.status === 'saved'){
-                        this.$buefy.dialog.alert({
-                            title: 'SAVED!',
-                            message: 'Successfully saved.',
-                            type: 'is-success',
-                            confirmText: 'OK',
-                            onConfirm: () => {
-                                this.isModalCreate = false;
-                                this.loadAsyncData();
-                                this.clearFields();
-                                this.global_id = 0;
-                            }
-                        })
-                    }
-                }).catch(err=>{
-                    if(err.response.status === 422){
-                        this.errors = err.response.data.errors;
-                    }
-                });
-            }
-        },
-
 
         //alert box ask for deletion
         confirmDelete(delete_id) {
@@ -309,15 +253,14 @@ export default{
                 type: 'is-danger',
                 message: 'Are you sure you want to delete this data?',
                 cancelText: 'Cancel',
-                confirmText: 'Delete user account?',
+                confirmText: 'Delete',
                 onConfirm: () => this.deleteSubmit(delete_id)
             });
         },
         //execute delete after confirming
         deleteSubmit(delete_id) {
-            axios.delete('/accounts/' + delete_id).then(res => {
+            axios.delete('/manage-learners/' + delete_id).then(res => {
                 this.loadAsyncData();
-                this.clearFields()
             }).catch(err => {
                 if (err.response.status === 422) {
                     this.errors = err.response.data.errors;
@@ -325,60 +268,12 @@ export default{
             });
         },
 
-        clearFields(){
-            this.global_id = 0;
-
-            this.fields = {
-                username: '',
-                lname: '', 
-                fname: '',
-                mname: '',
-                extension: '',
-             
-                password: '', 
-                password_confirmation : '',
-                sex : '', role: '', 
-                contact_no : '',
-                email : ''
-            };
-        },
-
-
         //update code here
         getData: function(data_id){
-        
            window.location = '/manage-learners/' + data_id + '/edit'
         },
 
-        //CHANGE PASSWORD
-        openModalResetPassword(dataId){
-            this.modalResetPassword = true;
-            this.fields = {};
-            this.errors = {};
-            this.global_id = dataId;
-        },
-        resetPassword(){
-            axios.post('/user-reset-password/' + this.global_id, this.fields).then(res=>{
 
-                if(res.data.status === 'changed'){
-                    this.$buefy.dialog.alert({
-                        title: 'PASSWORD CHANGED',
-                        type: 'is-success',
-                        message: 'Password changed successfully.',
-                        confirmText: 'OK',
-                        onConfirm: () => {
-                            this.modalResetPassword = false;
-                            this.fields = {};
-                            this.errors = {};
-                            this.loadAsyncData()
-                        }
-                    });
-                }
-
-            }).catch(err=>{
-                this.errors = err.response.data.errors;
-            })
-        },
 
       
     },
