@@ -39,7 +39,7 @@ class RegistrationController extends Controller
             'birthdate' => ['required'],
             
             'age' => ['required'],
-            'mother_tongue' => ['required'],
+            //'mother_tongue' => ['required'],
 
             'is_indigenous' => ['required'],
             'is_4ps' => ['required'],
@@ -49,9 +49,9 @@ class RegistrationController extends Controller
             'current_barangay' => ['required'],
             'current_zipcode' => ['max:15'],
 
-            'guardian_lname' => ['required'],
-            'guardian_fname' => ['required'],
-            'guardian_contact_no' => ['required', 'regex:/^(09|\+639)\d{9}$/'],
+            //'guardian_lname' => ['required'],
+            //'guardian_fname' => ['required'],
+            //'guardian_contact_no' => ['required', 'regex:/^(09|\+639)\d{9}$/'],
 
             'if_yes_indigenous' => Rule::requiredIf(function () use ($req){
                 return $req->is_indigenous == 1 ? true : false;
