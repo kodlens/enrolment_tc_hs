@@ -20,6 +20,7 @@ class EnrolleeController extends Controller
                 $q->where('lname', 'like', '%' . $req->name . '%')
                     ->orWhere('fname', 'like', '%' . $req->name . '%');
             })
+            ->where('grade_level', 'like', $req->grade . '%')
             ->orderBy($sort[0], $sort[1])
             ->paginate($req->perpage);
         return $data;

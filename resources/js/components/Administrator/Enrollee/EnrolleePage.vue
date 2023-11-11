@@ -5,23 +5,52 @@
                 <div class="column is-8-dekstop is-10-tablet">
                     <div class="box">
                         <div class="has-text-weight-bold subtitle is-4">LEARNERS</div>
-                        <b-field label="Search">
-                            <b-input type="text"
-                                     v-model="search.name" placeholder="Search Lastname"
-                                     @keyup.native.enter="loadAsyncData"/>
-                            <p class="control">
-                                <b-tooltip label="Search" type="is-success">
-                                    <b-button type="is-primary" icon-right="account-filter" @click="loadAsyncData"/>
-                                </b-tooltip>
-                            </p>
-                        </b-field>
+
+                        <div class="columns">
+                            <div class="column">
+                                <b-field>
+                                    <b-field label="Search">
+                                        <b-input type="text"
+                                            v-model="search.lname" placeholder="Search Lastname"
+                                            @keyup.native.enter="loadAsyncData"/>
+                                    </b-field>
+
+                                    <b-field label="Grade Level">
+                                        <b-select
+                                            v-model="search.grade">
+                                            <option selected value="">ALL</option>
+                                        <option v-for="(item, ix) in gradeLevels" 
+                                            :key="ix"
+                                            :value="item.grade_level">{{ item.grade_level }}</option>
+                                        </b-select>
+                                    </b-field>
+                                </b-field>
+                                
+                            </div>
+                         
+
+                            <div class="column">
+                                <div class="buttons is-right">
+                                    <b-button
+                                        label="Search"
+                                        icon-left="magnify"
+                                        @click="loadAsyncData"
+                                        type="is-primary"></b-button>
+                                </div>
+                            </div>
+                        </div>
+                       
 
                         <div class="buttons is-right mt-3">
                             <b-button tag="a" href="/manage-learners/create"
-                                  icon-left="plus"
-                                  class="is-primary is-small">ADD LEARNER</b-button>
+                                icon-left="plus"
+                                class="is-primary is-small">ADD LEARNER</b-button>
                         </div>
 
+
+                        <div>
+                            <span>TOTAL : {{  total }}</span>
+                        </div>
                         <b-table
                             :data="data"
                             :loading="loading"
@@ -44,11 +73,11 @@
                             </b-table-column>
 
                             <b-table-column field="lname" label="Name" sortable v-slot="props">
-                                {{ props.row.lname }}, {{ props.row.fname }} {{ props.row.mname }}
+                                {{ props.row.learner.lname }}, {{ props.row.learner.fname }} {{ props.row.learner.mname }}
                             </b-table-column>
 
                             <b-table-column field="sex" label="Sex" v-slot="props">
-                                {{ props.row.sex }}
+                                {{ props.row.learner.sex }}
                             </b-table-column>
 
                             <b-table-column field="grade_level" label="Grade Level" v-slot="props">
@@ -67,18 +96,21 @@
 
                             </b-table-column>
 
+                            <b-table-column field="section" label="Section" v-slot="props">
+                                {{ props.row.section.section }}
+                            </b-table-column>
+
+
                             <b-table-column label="Action" v-slot="props">
-                                <div class="is-flex">
+                                <!-- <div class="is-flex">
                                     <b-tooltip label="Edit" type="is-warning">
                                         <b-button class="button is-small mr-1" tag="a" icon-right="pencil" @click="getData(props.row.learner_id)"></b-button>
                                     </b-tooltip>
                                     <b-tooltip label="Delete" type="is-danger">
                                         <b-button class="button is-small mr-1" icon-right="delete" @click="confirmDelete(props.row.learner_id)"></b-button>
                                     </b-tooltip>
-                                    <!--                                    <b-tooltip label="Reset Password" type="is-info">-->
-                                    <!--                                        <b-button class="button is-small mr-1" icon-right="lock" @click="openModalResetPassword(props.row.learner_id)"></b-button>-->
-                                    <!--                                    </b-tooltip>-->
-                                </div>
+                
+                                </div> -->
                             </b-table-column>
                         </b-table>
 
@@ -102,55 +134,6 @@
 
 
 
-        <!--modal reset password-->
-        <b-modal v-model="modalResetPassword" has-modal-card
-                 trap-focus
-                 :width="640"
-                 aria-role="dialog"
-                 aria-label="Modal"
-                 aria-modal>
-
-            <form @submit.prevent="resetPassword">
-                <div class="modal-card">
-                    <header class="modal-card-head">
-                        <p class="modal-card-title">Change Password</p>
-                        <button
-                            type="button"
-                            class="delete"
-                            @click="modalResetPassword = false"/>
-                    </header>
-
-                    <section class="modal-card-body">
-                        <div class="">
-                            <div class="columns">
-                                <div class="column">
-                                    <b-field label="Password" label-position="on-border"
-                                             :type="this.errors.password ? 'is-danger':''"
-                                             :message="this.errors.password ? this.errors.password[0] : ''">
-                                        <b-input type="password" v-model="fields.password" password-reveal
-                                                 placeholder="Password" required>
-                                        </b-input>
-                                    </b-field>
-                                    <b-field label="Confirm Password" label-position="on-border"
-                                             :type="this.errors.password_confirmation ? 'is-danger':''"
-                                             :message="this.errors.password_confirmation ? this.errors.password_confirmation[0] : ''">
-                                        <b-input type="password" v-model="fields.password_confirmation"
-                                                 password-reveal
-                                                 placeholder="Confirm Password" required>
-                                        </b-input>
-                                    </b-field>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <footer class="modal-card-foot">
-                        <button
-                            class="button is-primary">SAVE</button>
-                    </footer>
-                </div>
-            </form><!--close form-->
-        </b-modal>
-        <!--close modal-->
 
 
     </div>
@@ -168,7 +151,7 @@ export default{
             sortField: 'enrol_id',
             sortOrder: 'desc',
             page: 1,
-            perPage: 10,
+            perPage: 20,
             defaultSortDirection: 'asc',
 
 
@@ -176,16 +159,14 @@ export default{
 
             search: {
                 lname: '',
+                grade: '',
             },
 
-            isModalCreate: false,
-            modalResetPassword: false,
-
-            fields: {
-                password: null,
-                password_confirmation: null
-            },
+   
+            fields: {},
             errors: {},
+
+            gradeLevels: [],
         }
 
     },
@@ -198,12 +179,13 @@ export default{
             const params = [
                 `sort_by=${this.sortField}.${this.sortOrder}`,
                 `lname=${this.search.lname}`,
+                `grade=${this.search.grade}`,
                 `perpage=${this.perPage}`,
                 `page=${this.page}`
             ].join('&')
 
             this.loading = true
-            axios.get(`/get-enrolees?${params}`)
+            axios.get(`/get-enrollees?${params}`)
                 .then(({ data }) => {
                     this.data = [];
                     let currentTotal = data.total
@@ -272,11 +254,21 @@ export default{
         },
 
 
+        loadGradeLevels(){
+            axios.get('/load-grade-levels').then(res=>{
+                this.gradeLevels = res.data
+            }).catch(err=>{
+            
+            })
+        }
+
+
 
 
     },
 
     mounted() {
+        this.loadGradeLevels()
         this.loadAsyncData()
     }
 

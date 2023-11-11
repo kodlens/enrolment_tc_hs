@@ -22,6 +22,10 @@
                                 class="is-primary is-small">ADD LEARNER</b-button>
                         </div>
 
+                        <div>
+                            <span>TOTAL : {{ total }}</span>
+                        </div>
+
                         <b-table
                             :data="data"
                             :loading="loading"

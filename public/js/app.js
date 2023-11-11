@@ -8475,23 +8475,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -8501,19 +8484,16 @@ __webpack_require__.r(__webpack_exports__);
       sortField: 'enrol_id',
       sortOrder: 'desc',
       page: 1,
-      perPage: 10,
+      perPage: 20,
       defaultSortDirection: 'asc',
       global_id: 0,
       search: {
-        lname: ''
+        lname: '',
+        grade: ''
       },
-      isModalCreate: false,
-      modalResetPassword: false,
-      fields: {
-        password: null,
-        password_confirmation: null
-      },
-      errors: {}
+      fields: {},
+      errors: {},
+      gradeLevels: []
     };
   },
   methods: {
@@ -8523,9 +8503,9 @@ __webpack_require__.r(__webpack_exports__);
     loadAsyncData: function loadAsyncData() {
       var _this = this;
 
-      var params = ["sort_by=".concat(this.sortField, ".").concat(this.sortOrder), "lname=".concat(this.search.lname), "perpage=".concat(this.perPage), "page=".concat(this.page)].join('&');
+      var params = ["sort_by=".concat(this.sortField, ".").concat(this.sortOrder), "lname=".concat(this.search.lname), "grade=".concat(this.search.grade), "perpage=".concat(this.perPage), "page=".concat(this.page)].join('&');
       this.loading = true;
-      axios.get("/get-enrolees?".concat(params)).then(function (_ref) {
+      axios.get("/get-enrollees?".concat(params)).then(function (_ref) {
         var data = _ref.data;
         _this.data = [];
         var currentTotal = data.total;
@@ -8593,9 +8573,17 @@ __webpack_require__.r(__webpack_exports__);
     //update code here
     getData: function getData(data_id) {
       window.location = '/manage-learners/' + data_id + '/edit';
+    },
+    loadGradeLevels: function loadGradeLevels() {
+      var _this4 = this;
+
+      axios.get('/load-grade-levels').then(function (res) {
+        _this4.gradeLevels = res.data;
+      })["catch"](function (err) {});
     }
   },
   mounted: function mounted() {
+    this.loadGradeLevels();
     this.loadAsyncData();
   }
 });
@@ -8613,6 +8601,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
 //
 //
 //
@@ -52805,69 +52797,102 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("div", { staticClass: "section" }, [
-        _c("div", { staticClass: "columns is-centered" }, [
-          _c("div", { staticClass: "column is-8-dekstop is-10-tablet" }, [
-            _c(
-              "div",
-              { staticClass: "box" },
-              [
+  return _c("div", [
+    _c("div", { staticClass: "section" }, [
+      _c("div", { staticClass: "columns is-centered" }, [
+        _c("div", { staticClass: "column is-8-dekstop is-10-tablet" }, [
+          _c(
+            "div",
+            { staticClass: "box" },
+            [
+              _c("div", { staticClass: "has-text-weight-bold subtitle is-4" }, [
+                _vm._v("LEARNERS"),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "columns" }, [
                 _c(
                   "div",
-                  { staticClass: "has-text-weight-bold subtitle is-4" },
-                  [_vm._v("LEARNERS")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "b-field",
-                  { attrs: { label: "Search" } },
+                  { staticClass: "column" },
                   [
-                    _c("b-input", {
-                      attrs: { type: "text", placeholder: "Search Lastname" },
-                      nativeOn: {
-                        keyup: function ($event) {
-                          if (
-                            !$event.type.indexOf("key") &&
-                            _vm._k(
-                              $event.keyCode,
-                              "enter",
-                              13,
-                              $event.key,
-                              "Enter"
-                            )
-                          ) {
-                            return null
-                          }
-                          return _vm.loadAsyncData.apply(null, arguments)
-                        },
-                      },
-                      model: {
-                        value: _vm.search.name,
-                        callback: function ($$v) {
-                          _vm.$set(_vm.search, "name", $$v)
-                        },
-                        expression: "search.name",
-                      },
-                    }),
-                    _vm._v(" "),
                     _c(
-                      "p",
-                      { staticClass: "control" },
+                      "b-field",
                       [
                         _c(
-                          "b-tooltip",
-                          { attrs: { label: "Search", type: "is-success" } },
+                          "b-field",
+                          { attrs: { label: "Search" } },
                           [
-                            _c("b-button", {
+                            _c("b-input", {
                               attrs: {
-                                type: "is-primary",
-                                "icon-right": "account-filter",
+                                type: "text",
+                                placeholder: "Search Lastname",
                               },
-                              on: { click: _vm.loadAsyncData },
+                              nativeOn: {
+                                keyup: function ($event) {
+                                  if (
+                                    !$event.type.indexOf("key") &&
+                                    _vm._k(
+                                      $event.keyCode,
+                                      "enter",
+                                      13,
+                                      $event.key,
+                                      "Enter"
+                                    )
+                                  ) {
+                                    return null
+                                  }
+                                  return _vm.loadAsyncData.apply(
+                                    null,
+                                    arguments
+                                  )
+                                },
+                              },
+                              model: {
+                                value: _vm.search.lname,
+                                callback: function ($$v) {
+                                  _vm.$set(_vm.search, "lname", $$v)
+                                },
+                                expression: "search.lname",
+                              },
                             }),
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "b-field",
+                          { attrs: { label: "Grade Level" } },
+                          [
+                            _c(
+                              "b-select",
+                              {
+                                model: {
+                                  value: _vm.search.grade,
+                                  callback: function ($$v) {
+                                    _vm.$set(_vm.search, "grade", $$v)
+                                  },
+                                  expression: "search.grade",
+                                },
+                              },
+                              [
+                                _c(
+                                  "option",
+                                  { attrs: { selected: "", value: "" } },
+                                  [_vm._v("ALL")]
+                                ),
+                                _vm._v(" "),
+                                _vm._l(_vm.gradeLevels, function (item, ix) {
+                                  return _c(
+                                    "option",
+                                    {
+                                      key: ix,
+                                      domProps: { value: item.grade_level },
+                                    },
+                                    [_vm._v(_vm._s(item.grade_level))]
+                                  )
+                                }),
+                              ],
+                              2
+                            ),
                           ],
                           1
                         ),
@@ -52878,431 +52903,265 @@ var render = function () {
                   1
                 ),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "buttons is-right mt-3" },
-                  [
-                    _c(
-                      "b-button",
-                      {
-                        staticClass: "is-primary is-small",
-                        attrs: {
-                          tag: "a",
-                          href: "/manage-learners/create",
-                          "icon-left": "plus",
-                        },
-                      },
-                      [_vm._v("ADD LEARNER")]
-                    ),
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "b-table",
-                  {
-                    attrs: {
-                      data: _vm.data,
-                      loading: _vm.loading,
-                      paginated: "",
-                      "backend-pagination": "",
-                      total: _vm.total,
-                      "pagination-rounded": true,
-                      "per-page": _vm.perPage,
-                      "aria-next-label": "Next page",
-                      "aria-previous-label": "Previous page",
-                      "aria-page-label": "Page",
-                      "aria-current-label": "Current page",
-                      "backend-sorting": "",
-                      "default-sort-direction": _vm.defaultSortDirection,
-                    },
-                    on: { "page-change": _vm.onPageChange, sort: _vm.onSort },
-                  },
-                  [
-                    _c("b-table-column", {
-                      attrs: { field: "learner_id", label: "ID", sortable: "" },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "default",
-                          fn: function (props) {
-                            return [
-                              _vm._v(
-                                "\n                            " +
-                                  _vm._s(props.row.learner_id) +
-                                  "\n                        "
-                              ),
-                            ]
-                          },
-                        },
-                      ]),
-                    }),
-                    _vm._v(" "),
-                    _c("b-table-column", {
-                      attrs: { field: "lname", label: "Name", sortable: "" },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "default",
-                          fn: function (props) {
-                            return [
-                              _vm._v(
-                                "\n                            " +
-                                  _vm._s(props.row.lname) +
-                                  ", " +
-                                  _vm._s(props.row.fname) +
-                                  " " +
-                                  _vm._s(props.row.mname) +
-                                  "\n                        "
-                              ),
-                            ]
-                          },
-                        },
-                      ]),
-                    }),
-                    _vm._v(" "),
-                    _c("b-table-column", {
-                      attrs: { field: "sex", label: "Sex" },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "default",
-                          fn: function (props) {
-                            return [
-                              _vm._v(
-                                "\n                            " +
-                                  _vm._s(props.row.sex) +
-                                  "\n                        "
-                              ),
-                            ]
-                          },
-                        },
-                      ]),
-                    }),
-                    _vm._v(" "),
-                    _c("b-table-column", {
-                      attrs: { field: "grade_level", label: "Grade Level" },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "default",
-                          fn: function (props) {
-                            return [
-                              _vm._v(
-                                "\n                            " +
-                                  _vm._s(props.row.grade_level) +
-                                  "\n                        "
-                              ),
-                            ]
-                          },
-                        },
-                      ]),
-                    }),
-                    _vm._v(" "),
-                    _c("b-table-column", {
-                      attrs: { field: "track_strand", label: "Track/Strand" },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "default",
-                          fn: function (props) {
-                            return [
-                              props.row.track
-                                ? _c("span", [
-                                    _vm._v(
-                                      "\n                                " +
-                                        _vm._s(props.row.track.track) +
-                                        "\n                            "
-                                    ),
-                                  ])
-                                : _vm._e(),
-                              _vm._v(" "),
-                              props.row.strand
-                                ? _c("span", [
-                                    _vm._v(
-                                      "\n                                / " +
-                                        _vm._s(props.row.strand.strand) +
-                                        "\n\n                            "
-                                    ),
-                                  ])
-                                : _vm._e(),
-                            ]
-                          },
-                        },
-                      ]),
-                    }),
-                    _vm._v(" "),
-                    _c("b-table-column", {
-                      attrs: { label: "Action" },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "default",
-                          fn: function (props) {
-                            return [
-                              _c(
-                                "div",
-                                { staticClass: "is-flex" },
-                                [
-                                  _c(
-                                    "b-tooltip",
-                                    {
-                                      attrs: {
-                                        label: "Edit",
-                                        type: "is-warning",
-                                      },
-                                    },
-                                    [
-                                      _c("b-button", {
-                                        staticClass: "button is-small mr-1",
-                                        attrs: {
-                                          tag: "a",
-                                          "icon-right": "pencil",
-                                        },
-                                        on: {
-                                          click: function ($event) {
-                                            return _vm.getData(
-                                              props.row.learner_id
-                                            )
-                                          },
-                                        },
-                                      }),
-                                    ],
-                                    1
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "b-tooltip",
-                                    {
-                                      attrs: {
-                                        label: "Delete",
-                                        type: "is-danger",
-                                      },
-                                    },
-                                    [
-                                      _c("b-button", {
-                                        staticClass: "button is-small mr-1",
-                                        attrs: { "icon-right": "delete" },
-                                        on: {
-                                          click: function ($event) {
-                                            return _vm.confirmDelete(
-                                              props.row.learner_id
-                                            )
-                                          },
-                                        },
-                                      }),
-                                    ],
-                                    1
-                                  ),
-                                ],
-                                1
-                              ),
-                            ]
-                          },
-                        },
-                      ]),
-                    }),
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "columns" }, [
+                _c("div", { staticClass: "column" }, [
                   _c(
                     "div",
-                    { staticClass: "column" },
+                    { staticClass: "buttons is-right" },
                     [
-                      _c(
-                        "b-field",
-                        {
-                          attrs: {
-                            label: "Page",
-                            "label-position": "on-border",
-                          },
+                      _c("b-button", {
+                        attrs: {
+                          label: "Search",
+                          "icon-left": "magnify",
+                          type: "is-primary",
                         },
-                        [
-                          _c(
-                            "b-select",
-                            {
-                              staticClass: "is-small",
-                              on: { input: _vm.setPerPage },
-                              model: {
-                                value: _vm.perPage,
-                                callback: function ($$v) {
-                                  _vm.perPage = $$v
-                                },
-                                expression: "perPage",
-                              },
-                            },
-                            [
-                              _c("option", { attrs: { value: "5" } }, [
-                                _vm._v("5 per page"),
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "10" } }, [
-                                _vm._v("10 per page"),
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "15" } }, [
-                                _vm._v("15 per page"),
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "20" } }, [
-                                _vm._v("20 per page"),
-                              ]),
-                            ]
-                          ),
-                        ],
-                        1
-                      ),
+                        on: { click: _vm.loadAsyncData },
+                      }),
                     ],
                     1
                   ),
                 ]),
-              ],
-              1
-            ),
-          ]),
-        ]),
-      ]),
-      _vm._v(" "),
-      _c(
-        "b-modal",
-        {
-          attrs: {
-            "has-modal-card": "",
-            "trap-focus": "",
-            width: 640,
-            "aria-role": "dialog",
-            "aria-label": "Modal",
-            "aria-modal": "",
-          },
-          model: {
-            value: _vm.modalResetPassword,
-            callback: function ($$v) {
-              _vm.modalResetPassword = $$v
-            },
-            expression: "modalResetPassword",
-          },
-        },
-        [
-          _c(
-            "form",
-            {
-              on: {
-                submit: function ($event) {
-                  $event.preventDefault()
-                  return _vm.resetPassword.apply(null, arguments)
-                },
-              },
-            },
-            [
-              _c("div", { staticClass: "modal-card" }, [
-                _c("header", { staticClass: "modal-card-head" }, [
-                  _c("p", { staticClass: "modal-card-title" }, [
-                    _vm._v("Change Password"),
-                  ]),
-                  _vm._v(" "),
-                  _c("button", {
-                    staticClass: "delete",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function ($event) {
-                        _vm.modalResetPassword = false
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "buttons is-right mt-3" },
+                [
+                  _c(
+                    "b-button",
+                    {
+                      staticClass: "is-primary is-small",
+                      attrs: {
+                        tag: "a",
+                        href: "/manage-learners/create",
+                        "icon-left": "plus",
                       },
                     },
-                  }),
-                ]),
-                _vm._v(" "),
-                _c("section", { staticClass: "modal-card-body" }, [
-                  _c("div", {}, [
-                    _c("div", { staticClass: "columns" }, [
-                      _c(
-                        "div",
-                        { staticClass: "column" },
-                        [
-                          _c(
-                            "b-field",
-                            {
-                              attrs: {
-                                label: "Password",
-                                "label-position": "on-border",
-                                type: this.errors.password ? "is-danger" : "",
-                                message: this.errors.password
-                                  ? this.errors.password[0]
-                                  : "",
-                              },
-                            },
-                            [
-                              _c("b-input", {
-                                attrs: {
-                                  type: "password",
-                                  "password-reveal": "",
-                                  placeholder: "Password",
-                                  required: "",
-                                },
-                                model: {
-                                  value: _vm.fields.password,
-                                  callback: function ($$v) {
-                                    _vm.$set(_vm.fields, "password", $$v)
-                                  },
-                                  expression: "fields.password",
-                                },
-                              }),
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "b-field",
-                            {
-                              attrs: {
-                                label: "Confirm Password",
-                                "label-position": "on-border",
-                                type: this.errors.password_confirmation
-                                  ? "is-danger"
-                                  : "",
-                                message: this.errors.password_confirmation
-                                  ? this.errors.password_confirmation[0]
-                                  : "",
-                              },
-                            },
-                            [
-                              _c("b-input", {
-                                attrs: {
-                                  type: "password",
-                                  "password-reveal": "",
-                                  placeholder: "Confirm Password",
-                                  required: "",
-                                },
-                                model: {
-                                  value: _vm.fields.password_confirmation,
-                                  callback: function ($$v) {
-                                    _vm.$set(
-                                      _vm.fields,
-                                      "password_confirmation",
-                                      $$v
-                                    )
-                                  },
-                                  expression: "fields.password_confirmation",
-                                },
-                              }),
-                            ],
-                            1
-                          ),
-                        ],
-                        1
-                      ),
+                    [_vm._v("ADD LEARNER")]
+                  ),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("div", [_c("span", [_vm._v("TOTAL : " + _vm._s(_vm.total))])]),
+              _vm._v(" "),
+              _c(
+                "b-table",
+                {
+                  attrs: {
+                    data: _vm.data,
+                    loading: _vm.loading,
+                    paginated: "",
+                    "backend-pagination": "",
+                    total: _vm.total,
+                    "pagination-rounded": true,
+                    "per-page": _vm.perPage,
+                    "aria-next-label": "Next page",
+                    "aria-previous-label": "Previous page",
+                    "aria-page-label": "Page",
+                    "aria-current-label": "Current page",
+                    "backend-sorting": "",
+                    "default-sort-direction": _vm.defaultSortDirection,
+                  },
+                  on: { "page-change": _vm.onPageChange, sort: _vm.onSort },
+                },
+                [
+                  _c("b-table-column", {
+                    attrs: { field: "learner_id", label: "ID", sortable: "" },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function (props) {
+                          return [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(props.row.learner_id) +
+                                "\n                        "
+                            ),
+                          ]
+                        },
+                      },
                     ]),
-                  ]),
-                ]),
-                _vm._v(" "),
-                _c("footer", { staticClass: "modal-card-foot" }, [
-                  _c("button", { staticClass: "button is-primary" }, [
-                    _vm._v("SAVE"),
-                  ]),
-                ]),
+                  }),
+                  _vm._v(" "),
+                  _c("b-table-column", {
+                    attrs: { field: "lname", label: "Name", sortable: "" },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function (props) {
+                          return [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(props.row.learner.lname) +
+                                ", " +
+                                _vm._s(props.row.learner.fname) +
+                                " " +
+                                _vm._s(props.row.learner.mname) +
+                                "\n                        "
+                            ),
+                          ]
+                        },
+                      },
+                    ]),
+                  }),
+                  _vm._v(" "),
+                  _c("b-table-column", {
+                    attrs: { field: "sex", label: "Sex" },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function (props) {
+                          return [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(props.row.learner.sex) +
+                                "\n                        "
+                            ),
+                          ]
+                        },
+                      },
+                    ]),
+                  }),
+                  _vm._v(" "),
+                  _c("b-table-column", {
+                    attrs: { field: "grade_level", label: "Grade Level" },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function (props) {
+                          return [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(props.row.grade_level) +
+                                "\n                        "
+                            ),
+                          ]
+                        },
+                      },
+                    ]),
+                  }),
+                  _vm._v(" "),
+                  _c("b-table-column", {
+                    attrs: { field: "track_strand", label: "Track/Strand" },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function (props) {
+                          return [
+                            props.row.track
+                              ? _c("span", [
+                                  _vm._v(
+                                    "\n                                " +
+                                      _vm._s(props.row.track.track) +
+                                      "\n                            "
+                                  ),
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            props.row.strand
+                              ? _c("span", [
+                                  _vm._v(
+                                    "\n                                / " +
+                                      _vm._s(props.row.strand.strand) +
+                                      "\n\n                            "
+                                  ),
+                                ])
+                              : _vm._e(),
+                          ]
+                        },
+                      },
+                    ]),
+                  }),
+                  _vm._v(" "),
+                  _c("b-table-column", {
+                    attrs: { field: "section", label: "Section" },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function (props) {
+                          return [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(props.row.section.section) +
+                                "\n                        "
+                            ),
+                          ]
+                        },
+                      },
+                    ]),
+                  }),
+                  _vm._v(" "),
+                  _c("b-table-column", {
+                    attrs: { label: "Action" },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function (props) {
+                          return undefined
+                        },
+                      },
+                    ]),
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "columns" }, [
+                _c(
+                  "div",
+                  { staticClass: "column" },
+                  [
+                    _c(
+                      "b-field",
+                      {
+                        attrs: { label: "Page", "label-position": "on-border" },
+                      },
+                      [
+                        _c(
+                          "b-select",
+                          {
+                            staticClass: "is-small",
+                            on: { input: _vm.setPerPage },
+                            model: {
+                              value: _vm.perPage,
+                              callback: function ($$v) {
+                                _vm.perPage = $$v
+                              },
+                              expression: "perPage",
+                            },
+                          },
+                          [
+                            _c("option", { attrs: { value: "5" } }, [
+                              _vm._v("5 per page"),
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "10" } }, [
+                              _vm._v("10 per page"),
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "15" } }, [
+                              _vm._v("15 per page"),
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "20" } }, [
+                              _vm._v("20 per page"),
+                            ]),
+                          ]
+                        ),
+                      ],
+                      1
+                    ),
+                  ],
+                  1
+                ),
               ]),
-            ]
+            ],
+            1
           ),
-        ]
-      ),
-    ],
-    1
-  )
+        ]),
+      ]),
+    ]),
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -53419,6 +53278,10 @@ var render = function () {
                   ],
                   1
                 ),
+                _vm._v(" "),
+                _c("div", [
+                  _c("span", [_vm._v("TOTAL : " + _vm._s(_vm.total))]),
+                ]),
                 _vm._v(" "),
                 _c(
                   "b-table",

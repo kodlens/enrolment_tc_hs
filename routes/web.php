@@ -91,13 +91,16 @@ Route::middleware(['auth', 'admin'])->group(function(){
     Route::resource('/courses', App\Http\Controllers\Administrator\CourseController::class);
     Route::get('/get-courses', [App\Http\Controllers\Administrator\CourseController::class, 'getCourses']);
 
-    Route::resource('/enrollee', App\Http\Controllers\Administrator\EnrolleeController::class);
-    Route::get('/get-enrollee', [App\Http\Controllers\Administrator\EnrolleeController::class, 'getEnrollee']);
-
 
 
     Route::resource('/manage-learners', App\Http\Controllers\Administrator\ManageLearnerController::class);
     Route::get('/get-learners', [App\Http\Controllers\Administrator\ManageLearnerController::class, 'getLearners']);
+
+
+    Route::resource('/enrollee', App\Http\Controllers\Administrator\EnrolleeController::class);
+    Route::get('/get-enrollees', [App\Http\Controllers\Administrator\EnrolleeController::class, 'getEnrollees']);
+
+
 
     Route::resource('/users', App\Http\Controllers\Administrator\UserController::class);
     Route::get('/get-accounts', [App\Http\Controllers\Administrator\UserController::class, 'getAccounts']);
