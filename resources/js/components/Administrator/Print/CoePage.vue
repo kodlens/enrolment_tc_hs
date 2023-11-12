@@ -91,6 +91,37 @@
             </div>
 
         </div>
+
+        <div class="subject">
+          
+            <table class="table-subject" v-if="item.strand">
+                <tr>
+                    <th>Subject Code</th>
+                    <th>Subject Name</th>
+                    <th>Time</th>
+                    <th>Teacher</th>
+                </tr>
+                <tr v-for="(subj, ix) in item.strand.courses" :key="`course${ix}`">
+                    <td>
+                        <span v-if="subj.course">
+                            {{ subj.course.course_code }}
+                        </span>
+                    </td>
+                    <td>
+                        <span v-if="subj.course">
+                            {{ subj.course.course_desc }}
+                        </span>
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+      
+        <div class="footer">
+            <img class="img-footer" src="/img/print-footer.png" />
+        </div>
+
     </div>
 
 
@@ -149,6 +180,24 @@ export default{
         display: flex;
         justify-content: flex-end;
         flex: 1;
+    }
+
+    .table-subject{
+        width: 100%;
+    }
+
+    .table-subject > tr >th{
+        padding: 5px;
+
+    }
+
+    .table-subject > tr {
+        border: 1px solid gray;
+    }
+
+    .table-subject > tr > td {
+        border: 1px solid gray;
+        padding: 5px;
     }
 
 </style>

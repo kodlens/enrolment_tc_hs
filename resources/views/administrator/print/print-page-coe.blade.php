@@ -46,6 +46,12 @@
             margin: auto;
         }
 
+        .img-footer{
+            height: 50px;
+            margin: 0;
+        }
+        
+
         hr{
             margin: 3px;
         }

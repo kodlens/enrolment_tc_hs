@@ -10086,6 +10086,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     propData: {
@@ -10750,6 +10781,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -11002,6 +11047,34 @@ __webpack_require__.r(__webpack_exports__);
     emitBrowseCourse: function emitBrowseCourse(row) {
       this.course.course = row.course_code + ' - ' + row.course_desc;
       this.fields.course_id = row.course_id;
+    },
+    confirmDeleteStrandCourse: function confirmDeleteStrandCourse(delete_id) {
+      var _this8 = this;
+
+      this.$buefy.dialog.confirm({
+        title: 'DELETE!',
+        type: 'is-danger',
+        message: 'Are you sure you want to delete this data?',
+        cancelText: 'Cancel',
+        confirmText: 'Delete?',
+        onConfirm: function onConfirm() {
+          return _this8.deleteSubmitStrandCourse(delete_id);
+        }
+      });
+    },
+    //execute delete after confirming
+    deleteSubmitStrandCourse: function deleteSubmitStrandCourse(delete_id) {
+      var _this9 = this;
+
+      axios["delete"]('/strand-courses/' + delete_id).then(function (res) {
+        _this9.loadAsyncData();
+
+        _this9.clearFields();
+      })["catch"](function (err) {
+        if (err.response.status === 422) {
+          _this9.errors = err.response.data.errors;
+        }
+      });
     }
   },
   mounted: function mounted() {
@@ -31803,7 +31876,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\ntable > tr > td[data-v-18e80929]:first-child {\n    width: 120px;\n}\ntable > tr > td[data-v-18e80929] {\n    margin-left: 10px;\n}\n.info-left[data-v-18e80929]{\n    flex: 1;\n}\n.info-right[data-v-18e80929]{\n    display: flex;\n    justify-content: flex-end;\n    flex: 1;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\ntable > tr > td[data-v-18e80929]:first-child {\n    width: 120px;\n}\ntable > tr > td[data-v-18e80929] {\n    margin-left: 10px;\n}\n.info-left[data-v-18e80929]{\n    flex: 1;\n}\n.info-right[data-v-18e80929]{\n    display: flex;\n    justify-content: flex-end;\n    flex: 1;\n}\n.table-subject[data-v-18e80929]{\n    width: 100%;\n}\n.table-subject > tr >th[data-v-18e80929]{\n    padding: 5px;\n}\n.table-subject > tr[data-v-18e80929] {\n    border: 1px solid gray;\n}\n.table-subject > tr > td[data-v-18e80929] {\n    border: 1px solid gray;\n    padding: 5px;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -56662,6 +56735,53 @@ var render = function () {
               ]),
             ]),
           ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "subject" }, [
+            item.strand
+              ? _c(
+                  "table",
+                  { staticClass: "table-subject" },
+                  [
+                    _vm._m(2, true),
+                    _vm._v(" "),
+                    _vm._l(item.strand.courses, function (subj, ix) {
+                      return _c("tr", { key: "course" + ix }, [
+                        _c("td", [
+                          subj.course
+                            ? _c("span", [
+                                _vm._v(
+                                  "\r\n                            " +
+                                    _vm._s(subj.course.course_code) +
+                                    "\r\n                        "
+                                ),
+                              ])
+                            : _vm._e(),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          subj.course
+                            ? _c("span", [
+                                _vm._v(
+                                  "\r\n                            " +
+                                    _vm._s(subj.course.course_desc) +
+                                    "\r\n                        "
+                                ),
+                              ])
+                            : _vm._e(),
+                        ]),
+                        _vm._v(" "),
+                        _c("td"),
+                        _vm._v(" "),
+                        _c("td"),
+                      ])
+                    }),
+                  ],
+                  2
+                )
+              : _vm._e(),
+          ]),
+          _vm._v(" "),
+          _vm._m(3, true),
         ])
       }),
     ],
@@ -56688,6 +56808,31 @@ var staticRenderFns = [
       _c("td", [_vm._v("Specialization")]),
       _vm._v(" "),
       _c("td", [_vm._v(":\r\n\r\n                        ")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("th", [_vm._v("Subject Code")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Subject Name")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Time")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Teacher")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "footer" }, [
+      _c("img", {
+        staticClass: "img-footer",
+        attrs: { src: "/img/print-footer.png" },
+      }),
     ])
   },
 ]
@@ -57448,9 +57593,16 @@ var render = function () {
                       {
                         key: "detail",
                         fn: function (props) {
-                          return _vm._l(
-                            props.row.courses,
-                            function (item, index) {
+                          return [
+                            _c("tr", [
+                              _c("th", [_vm._v("Code")]),
+                              _vm._v(" "),
+                              _c("th", [_vm._v("Description")]),
+                              _vm._v(" "),
+                              _c("th", [_vm._v("Action")]),
+                            ]),
+                            _vm._v(" "),
+                            _vm._l(props.row.courses, function (item, index) {
                               return _c("tr", { key: "course" + index }, [
                                 _c("td", [
                                   item.course
@@ -57475,9 +57627,39 @@ var render = function () {
                                       ])
                                     : _vm._e(),
                                 ]),
+                                _vm._v(" "),
+                                _c(
+                                  "td",
+                                  [
+                                    _c(
+                                      "b-tooltip",
+                                      {
+                                        attrs: {
+                                          label: "Delete",
+                                          type: "is-danger",
+                                        },
+                                      },
+                                      [
+                                        _c("b-button", {
+                                          staticClass: "button is-small mr-1",
+                                          attrs: { "icon-right": "delete" },
+                                          on: {
+                                            click: function ($event) {
+                                              return _vm.confirmDeleteStrandCourse(
+                                                item.strand_course_id
+                                              )
+                                            },
+                                          },
+                                        }),
+                                      ],
+                                      1
+                                    ),
+                                  ],
+                                  1
+                                ),
                               ])
-                            }
-                          )
+                            }),
+                          ]
                         },
                       },
                     ]),

@@ -86,6 +86,10 @@ Route::middleware(['auth', 'admin'])->group(function(){
     Route::post('/add-course', [App\Http\Controllers\Administrator\StrandController::class, 'addCourse']);
 
 
+    Route::resource('/strand-courses', App\Http\Controllers\Administrator\StrandCourseController::class);
+    Route::get('/get-strand-courses', [App\Http\Controllers\Administrator\StrandController::class, 'getStrandCourses']);
+
+
     Route::resource('/sections', App\Http\Controllers\Administrator\SectionController::class);
     Route::get('/get-sections', [App\Http\Controllers\Administrator\SectionController::class, 'getSections']);
 

@@ -71,6 +71,13 @@
                             </b-table-column>
 
                             <template #detail="props">
+
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Description</th>
+                                    <th>Action</th>
+                                </tr>
+
                                 <tr v-for="(item, index) in props.row.courses" :key="`course${index}`">
                                     <td>
                                         <span v-if="item.course">
@@ -82,6 +89,13 @@
                                         <span v-if="item.course">
                                             {{ item.course.course_desc }}
                                         </span>
+                                    </td>
+                                    <td>
+                                        <b-tooltip label="Delete" type="is-danger">
+                                            <b-button class="button is-small mr-1" 
+                                                icon-right="delete" 
+                                                @click="confirmDeleteStrandCourse(item.strand_course_id)"></b-button>
+                                        </b-tooltip>
                                     </td>
                                 </tr>
                             </template>
@@ -483,7 +497,31 @@ export default{
         emitBrowseCourse(row){
             this.course.course = row.course_code + ' - ' + row.course_desc
             this.fields.course_id = row.course_id
-        }
+        },
+
+
+
+        confirmDeleteStrandCourse(delete_id) {
+            this.$buefy.dialog.confirm({
+                title: 'DELETE!',
+                type: 'is-danger',
+                message: 'Are you sure you want to delete this data?',
+                cancelText: 'Cancel',
+                confirmText: 'Delete?',
+                onConfirm: () => this.deleteSubmitStrandCourse(delete_id)
+            });
+        },
+        //execute delete after confirming
+        deleteSubmitStrandCourse(delete_id) {
+            axios.delete('/strand-courses/' + delete_id).then(res => {
+                this.loadAsyncData();
+                this.clearFields()
+            }).catch(err => {
+                if (err.response.status === 422) {
+                    this.errors = err.response.data.errors;
+                }
+            });
+        },
 
 
 
