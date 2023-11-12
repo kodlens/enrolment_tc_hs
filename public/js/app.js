@@ -8475,6 +8475,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -8488,12 +8508,14 @@ __webpack_require__.r(__webpack_exports__);
       defaultSortDirection: 'asc',
       global_id: 0,
       search: {
+        ay: '',
         lname: '',
         grade: ''
       },
       fields: {},
       errors: {},
-      gradeLevels: []
+      gradeLevels: [],
+      academicYears: []
     };
   },
   methods: {
@@ -8503,7 +8525,7 @@ __webpack_require__.r(__webpack_exports__);
     loadAsyncData: function loadAsyncData() {
       var _this = this;
 
-      var params = ["sort_by=".concat(this.sortField, ".").concat(this.sortOrder), "lname=".concat(this.search.lname), "grade=".concat(this.search.grade), "perpage=".concat(this.perPage), "page=".concat(this.page)].join('&');
+      var params = ["sort_by=".concat(this.sortField, ".").concat(this.sortOrder), "ay=".concat(this.search.ay), "lname=".concat(this.search.lname), "grade=".concat(this.search.grade), "perpage=".concat(this.perPage), "page=".concat(this.page)].join('&');
       this.loading = true;
       axios.get("/get-enrollees?".concat(params)).then(function (_ref) {
         var data = _ref.data;
@@ -8580,9 +8602,17 @@ __webpack_require__.r(__webpack_exports__);
       axios.get('/load-grade-levels').then(function (res) {
         _this4.gradeLevels = res.data;
       })["catch"](function (err) {});
+    },
+    loadAcademicYears: function loadAcademicYears() {
+      var _this5 = this;
+
+      axios.get('/load-academic-years').then(function (res) {
+        _this5.academicYears = res.data;
+      })["catch"](function (err) {});
     }
   },
   mounted: function mounted() {
+    this.loadAcademicYears();
     this.loadGradeLevels();
     this.loadAsyncData();
   }
@@ -52319,7 +52349,7 @@ var render = function () {
               "div",
               { staticClass: "box" },
               [
-                _c("div", { staticClass: "table-text" }, [_vm._v("COURSES")]),
+                _c("div", { staticClass: "table-text" }, [_vm._v("SUBJECTS")]),
                 _vm._v(" "),
                 _c(
                   "b-field",
@@ -52437,7 +52467,7 @@ var render = function () {
                     _c("b-table-column", {
                       attrs: {
                         field: "course_code",
-                        label: "Course Code",
+                        label: "Subject Code",
                         sortable: "",
                       },
                       scopedSlots: _vm._u([
@@ -52660,7 +52690,7 @@ var render = function () {
               _c("div", { staticClass: "modal-card" }, [
                 _c("header", { staticClass: "modal-card-head" }, [
                   _c("p", { staticClass: "modal-card-title" }, [
-                    _vm._v("Add/Update Course"),
+                    _vm._v("Add/Update Subject"),
                   ]),
                   _vm._v(" "),
                   _c("button", {
@@ -52816,6 +52846,60 @@ var render = function () {
                   [
                     _c(
                       "b-field",
+                      { attrs: { label: "Academic Year" } },
+                      [
+                        _c(
+                          "b-select",
+                          {
+                            model: {
+                              value: _vm.search.ay,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.search, "ay", $$v)
+                              },
+                              expression: "search.ay",
+                            },
+                          },
+                          [
+                            _c(
+                              "option",
+                              { attrs: { selected: "", value: "" } },
+                              [_vm._v("ALL")]
+                            ),
+                            _vm._v(" "),
+                            _vm._l(_vm.academicYears, function (item, ix) {
+                              return _c(
+                                "option",
+                                {
+                                  key: ix,
+                                  domProps: { value: item.academic_year_code },
+                                },
+                                [
+                                  _vm._v(
+                                    _vm._s(item.academic_year_code) +
+                                      " - " +
+                                      _vm._s(item.academic_year_desc)
+                                  ),
+                                ]
+                              )
+                            }),
+                          ],
+                          2
+                        ),
+                      ],
+                      1
+                    ),
+                  ],
+                  1
+                ),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "columns" }, [
+                _c(
+                  "div",
+                  { staticClass: "column" },
+                  [
+                    _c(
+                      "b-field",
                       [
                         _c(
                           "b-field",
@@ -52938,6 +53022,19 @@ var render = function () {
                     },
                     [_vm._v("ADD LEARNER")]
                   ),
+                  _vm._v(" "),
+                  _c(
+                    "b-button",
+                    {
+                      staticClass: "is-primary is-small",
+                      attrs: {
+                        tag: "a",
+                        href: "/manage-learners/create",
+                        "icon-left": "plus",
+                      },
+                    },
+                    [_vm._v("GENERATE COE")]
+                  ),
                 ],
                 1
               ),
@@ -52975,6 +53072,30 @@ var render = function () {
                             _vm._v(
                               "\n                            " +
                                 _vm._s(props.row.learner_id) +
+                                "\n                        "
+                            ),
+                          ]
+                        },
+                      },
+                    ]),
+                  }),
+                  _vm._v(" "),
+                  _c("b-table-column", {
+                    attrs: {
+                      field: "academic_year_code",
+                      label: "A.Y. Code",
+                      sortable: "",
+                    },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function (props) {
+                          return [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(
+                                  props.row.academic_year.academic_year_code
+                                ) +
                                 "\n                        "
                             ),
                           ]

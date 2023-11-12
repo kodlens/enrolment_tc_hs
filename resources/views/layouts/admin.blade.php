@@ -64,7 +64,7 @@
                         Sections
                     </b-navbar-item>
                     <b-navbar-item href="/courses">
-                        Courses
+                        Subjects
                     </b-navbar-item>
 
                 </b-navbar-dropdown>

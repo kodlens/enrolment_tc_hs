@@ -6,6 +6,20 @@
                     <div class="box">
                         <div class="has-text-weight-bold subtitle is-4">LEARNERS</div>
 
+
+                        <div class="columns">
+                            <div class="column">
+                                <b-field label="Academic Year">
+                                    <b-select
+                                        v-model="search.ay">
+                                        <option selected value="">ALL</option>
+                                    <option v-for="(item, ix) in academicYears" 
+                                        :key="ix"
+                                        :value="item.academic_year_code">{{ item.academic_year_code }} - {{ item.academic_year_desc }}</option>
+                                    </b-select>
+                                </b-field>
+                            </div>
+                        </div>
                         <div class="columns">
                             <div class="column">
                                 <b-field>
@@ -14,7 +28,6 @@
                                             v-model="search.lname" placeholder="Search Lastname"
                                             @keyup.native.enter="loadAsyncData"/>
                                     </b-field>
-
                                     <b-field label="Grade Level">
                                         <b-select
                                             v-model="search.grade">
@@ -45,8 +58,11 @@
                             <b-button tag="a" href="/manage-learners/create"
                                 icon-left="plus"
                                 class="is-primary is-small">ADD LEARNER</b-button>
-                        </div>
 
+                            <b-button tag="a" href="/manage-learners/create"
+                                icon-left="plus"
+                                class="is-primary is-small">GENERATE COE</b-button>
+                        </div>
 
                         <div>
                             <span>TOTAL : {{  total }}</span>
@@ -70,6 +86,10 @@
 
                             <b-table-column field="learner_id" label="ID" sortable v-slot="props">
                                 {{ props.row.learner_id }}
+                            </b-table-column>
+
+                            <b-table-column field="academic_year_code" label="A.Y. Code" sortable v-slot="props">
+                                {{ props.row.academic_year.academic_year_code }}
                             </b-table-column>
 
                             <b-table-column field="lname" label="Name" sortable v-slot="props">
@@ -158,6 +178,7 @@ export default{
             global_id : 0,
 
             search: {
+                ay: '',
                 lname: '',
                 grade: '',
             },
@@ -167,6 +188,7 @@ export default{
             errors: {},
 
             gradeLevels: [],
+            academicYears: [],
         }
 
     },
@@ -178,6 +200,7 @@ export default{
         loadAsyncData() {
             const params = [
                 `sort_by=${this.sortField}.${this.sortOrder}`,
+                `ay=${this.search.ay}`,
                 `lname=${this.search.lname}`,
                 `grade=${this.search.grade}`,
                 `perpage=${this.perPage}`,
@@ -260,6 +283,14 @@ export default{
             }).catch(err=>{
             
             })
+        },
+
+        loadAcademicYears(){
+            axios.get('/load-academic-years').then(res=>{
+                this.academicYears = res.data
+            }).catch(err=>{
+            
+            })
         }
 
 
@@ -268,6 +299,7 @@ export default{
     },
 
     mounted() {
+        this.loadAcademicYears()
         this.loadGradeLevels()
         this.loadAsyncData()
     }

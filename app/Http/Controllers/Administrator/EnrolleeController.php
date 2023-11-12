@@ -16,6 +16,9 @@ class EnrolleeController extends Controller
         $sort = explode('.', $req->sort_by);
 
         $data = Enrol::with(['academic_year', 'learner', 'semester', 'track', 'strand', 'section'])
+            ->whereHas('academic_year', function($q) use ($req){
+                $q->where('academic_year_code', 'like', '%' . $req->ay . '%');
+            })
             ->whereHas('learner', function($q) use ($req){
                 $q->where('lname', 'like', '%' . $req->name . '%')
                     ->orWhere('fname', 'like', '%' . $req->name . '%');
@@ -24,6 +27,13 @@ class EnrolleeController extends Controller
             ->orderBy($sort[0], $sort[1])
             ->paginate($req->perpage);
         return $data;
+    }
+
+
+
+
+    public function update(Request $req, $id){
+    
     }
 
 

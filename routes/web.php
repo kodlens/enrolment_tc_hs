@@ -60,7 +60,7 @@ Route::get('/load-provinces', [App\Http\Controllers\AddressController::class, 'l
 Route::get('/load-cities', [App\Http\Controllers\AddressController::class, 'loadCities']);
 Route::get('/load-barangays', [App\Http\Controllers\AddressController::class, 'loadBarangays']);
 
-
+Route::get('/load-academic-years', [App\Http\Controllers\OpenController::class, 'loadAcademicYears']);
 Route::get('/load-grade-levels', [App\Http\Controllers\OpenController::class, 'loadGradeLevels']);
 Route::get('/load-semesters', [App\Http\Controllers\OpenController::class, 'loadSemesters']);
 Route::get('/load-tracks', [App\Http\Controllers\OpenController::class, 'loadTracks']);

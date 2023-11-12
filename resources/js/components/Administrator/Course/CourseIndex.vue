@@ -5,7 +5,7 @@
                 <div class="column is-6">
                     <div class="box">
 
-                        <div class="table-text">COURSES</div>
+                        <div class="table-text">SUBJECTS</div>
 
                         <b-field label="Search" label-position="on-border">
                             <b-input type="text"
@@ -43,7 +43,7 @@
                                 {{ props.row.course_id }}
                             </b-table-column>
 
-                            <b-table-column field="course_code" label="Course Code" sortable v-slot="props">
+                            <b-table-column field="course_code" label="Subject Code" sortable v-slot="props">
                                 {{ props.row.course_code }}
                             </b-table-column>
 
@@ -104,7 +104,7 @@
             <form @submit.prevent="submit">
                 <div class="modal-card">
                     <header class="modal-card-head">
-                        <p class="modal-card-title">Add/Update Course</p>
+                        <p class="modal-card-title">Add/Update Subject</p>
                         <button
                             type="button"
                             class="delete"
