@@ -82,11 +82,10 @@
 }
 
 .welcome-container{
-    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+ 
 }
 .welcome-text{
     font-weight: bold;
@@ -97,6 +96,7 @@
 
 .logo-wrapper{
     display: flex;
+    justify-content: center;
 }
 .division-logo, .tcnhs-logo{
     height: 15rem;

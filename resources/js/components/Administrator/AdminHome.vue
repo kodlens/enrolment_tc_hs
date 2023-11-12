@@ -2,7 +2,7 @@
     <div>
         <div class="welcome-container">
 
-            <div class="logo-wrapper">
+            <!-- <div class="logo-wrapper">
                 <img src="/img/tc_division.png" class="division-logo" alt="Division Logo">
                 <img src="/img/tcnhs_logo.png" class="tcnhs-logo" alt="TCNHS Logo">
             </div>
@@ -17,7 +17,7 @@
 
             <div class="welcome-text">
                 WELCOME ADMINISTRATOR
-            </div>
+            </div> -->
             
         </div>
     </div>
