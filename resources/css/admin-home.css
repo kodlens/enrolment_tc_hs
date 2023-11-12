@@ -82,9 +82,11 @@
 }
 
 .welcome-container{
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
  
 }
 .welcome-text{
@@ -100,4 +102,19 @@
 }
 .division-logo, .tcnhs-logo{
     height: 15rem;
+}
+
+.report-text{
+    font-weight: bold;
+    font-size: 1.2em;
+    margin: 15px;
+}
+
+.report-table > tr > td{
+    padding: 10px;
+    border-bottom: 1px solid #c2c2c2;
+}
+
+.report-title{
+    border-bottom: 1px solid #c2c2c2;
 }

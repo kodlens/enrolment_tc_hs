@@ -74,6 +74,7 @@ Route::get('/load-strands', [App\Http\Controllers\OpenController::class, 'loadSt
 Route::middleware(['auth', 'admin'])->group(function(){
 
     Route::get('/admin-home', [App\Http\Controllers\Administrator\AdminHomeController::class, 'index']);
+    Route::get('/load-reports', [App\Http\Controllers\Administrator\AdminHomeController::class, 'loadReports']);
 
     Route::resource('/academic-years', App\Http\Controllers\Administrator\AcademicYearController::class);
     Route::get('/get-academic-years', [App\Http\Controllers\Administrator\AcademicYearController::class, 'getAcademicYears']);
@@ -121,6 +122,8 @@ Route::middleware(['auth', 'admin'])->group(function(){
     // PRINT
     Route::get('/print/print-page-coe', [App\Http\Controllers\Administrator\Print\PrintCoeController::class, 'index']);
 
+
+    
 
 });
 
