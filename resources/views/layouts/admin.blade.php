@@ -66,6 +66,7 @@
                     <b-navbar-item href="/courses">
                         Subjects
                     </b-navbar-item>
+                 
 
                 </b-navbar-dropdown>
 

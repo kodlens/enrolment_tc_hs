@@ -1,8 +1,8 @@
 <template>
     <div>
-        <b-field label="Patient">
-            <b-input :value="valueFullname" expanded icon-pack="fa"
-                    icon="account-outline" placeholder="Select Patient" required readonly>
+        <b-field label="Subject">
+            <b-input :value="valueFullname" expanded
+                icon="text-long" placeholder="Select subject" required readonly>
             </b-input>
 
             <p class="control">
@@ -11,7 +11,7 @@
         </b-field>
 
 
-        <b-modal v-model="this.isModalActive" has-modal-card
+        <b-modal v-model="isModalActive" has-modal-card
                  trap-focus scroll="keep" aria-role="dialog" aria-modal>
             <div class="modal-card card-width">
                 <header class="modal-card-head">
@@ -25,8 +25,8 @@
                     <div>
 
                         <b-field label="Search" label-position="on-border" >
-                            <b-input type="text" v-model="search.lname" placeholder="Search Lastname..." expanded auto-focus></b-input>
-                            <b-input type="text" v-model="search.fname" placeholder="Search Firstname..." expanded auto-focus></b-input>
+                            <b-input type="text" v-model="search.code" placeholder="Search Code..." expanded auto-focus></b-input>
+                            <b-input type="text" v-model="search.course" placeholder="Search Subject..." expanded auto-focus></b-input>
                             <p class="control">
                                 <b-button class="is-primary" icon-pack="fa" icon-left="search" @click="loadAsyncData"></b-button>
                             </p>
@@ -50,25 +50,23 @@
                                 default-sort-direction="defualtSortDirection"
                                 @sort="onSort">
 
-                                <b-table-column field="patient_id" label="ID" v-slot="props">
-                                    {{props.row.patient_id}}
+                                <b-table-column field="course_id" label="ID" v-slot="props">
+                                    {{props.row.course_id}}
                                 </b-table-column>
 
-                                <b-table-column field="lname" label="Lastname" v-slot="props">
-                                    {{props.row.lname}}
+                                <b-table-column field="course_code" label="Subject Code" v-slot="props">
+                                    {{props.row.course_code}}
                                 </b-table-column>
 
-                                <b-table-column field="fname" label="Firstname" v-slot="props">
-                                    {{props.row.fname}}
+                                <b-table-column field="course_desc" label="Description" v-slot="props">
+                                    {{props.row.course_desc}}
                                 </b-table-column>
 
-                                <b-table-column field="mname" label="Middlename" v-slot="props">
-                                    {{props.row.mname}}
-                                </b-table-column>
-
+    
                                 <b-table-column field="" label="Action" v-slot="props">
                                     <div class="buttons">
-                                        <b-button class="is-small is-rounded is-primary" @click="selectData(props.row)">
+                                        <b-button class="is-small is-rounded is-primary" 
+                                            @click="selectData(props.row)">
                                             <i class="fa fa-pencil"></i>&nbsp;&nbsp;SELECT</b-button>
                                     </div>
                                 </b-table-column>
@@ -93,7 +91,7 @@
 <script>
 export default {
     props: {
-        propDentist: {
+        propName: {
             type: String,
             default: '',
         },
@@ -104,7 +102,7 @@ export default {
             data: [],
             total: 0,
             loading: false,
-            sortfield: 'patient_id',
+            sortfield: 'course_id',
             sortOrder:'desc',
             page: 1,
             perPage: 5,
@@ -113,15 +111,14 @@ export default {
             isModalActive: false,
             errors:{},
 
-            dentist: {
-                fullname: '',
+            course: {
+                course: '',
             },
+
             search: {
-                lname: '',
-                fname: '',
+                code: '',
+                course: '',
             },
-
-
         }
     },
     methods: {
@@ -130,12 +127,12 @@ export default {
                 `sort_by=${this.sortfield}.${this.sortOrder}`,
                 `perpage=${this.perPage}`,
                 `page=${this.page}`,
-                `lname=${this.search.lname}`,
-                `fname=${this.search.fname}`,
+                `code=${this.search.code}`,
+                `course=${this.search.course}`,
             ].join('&');
 
             this.loading = true;
-            axios.get(`/get-browse-patient?${params}`).then(({data}) => {
+            axios.get(`/get-browse-courses?${params}`).then(({data}) => {
                 this.data = [];
                 let currentTotal = data.total;
                 if (data.total / this.perPage > 1000) {
@@ -179,7 +176,7 @@ export default {
 
         selectData(dataRow){
             this.isModalActive = false;
-            this.$emit('browsePatient', dataRow);
+            this.$emit('browseCourse', dataRow);
         }
 
 
@@ -187,7 +184,7 @@ export default {
 
     computed: {
         valueFullname(){
-            return this.propDentist;
+            return this.propName;
         }
     },
 

@@ -26,6 +26,15 @@ class CourseController extends Controller
         return $data;
     }
 
+    public function getBrowseCourses(Request $req){
+        $sort = explode('.', $req->sort_by);
+        $data = Course::where('course_code', 'like', '%'.$req->code . '%')
+            ->orWhere('course_desc', 'like', '%' . $req->course . '%')
+            ->orderBy($sort[0], $sort[1])
+            ->paginate($req->perpage);
+        return $data;
+    }
+
 
 
     public function show($id){

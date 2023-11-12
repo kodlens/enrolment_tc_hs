@@ -18,5 +18,11 @@ class Strand extends Model
     public function track(){
         return $this->belongsTo(Track::class, 'track_id', 'track_id');
     }
+    public function courses(){
+        return $this->hasMany(StrandCourse::class, 'strand_id', 'strand_id');
+    }
+
+
+    
 
 }

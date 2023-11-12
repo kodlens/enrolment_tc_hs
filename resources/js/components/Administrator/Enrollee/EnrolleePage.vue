@@ -13,9 +13,11 @@
                                     <b-select
                                         v-model="search.ay">
                                         <option selected value="">ALL</option>
-                                    <option v-for="(item, ix) in academicYears" 
-                                        :key="ix"
-                                        :value="item.academic_year_code">{{ item.academic_year_code }} - {{ item.academic_year_desc }}</option>
+                                        <option v-for="(item, ix) in academicYears" 
+                                            :key="ix"
+                                            :value="item.academic_year_id">
+                                            {{ item.academic_year_code }} - {{ item.academic_year_desc }}
+                                        </option>
                                     </b-select>
                                 </b-field>
                             </div>
@@ -59,7 +61,7 @@
                                 icon-left="plus"
                                 class="is-primary is-small">ADD LEARNER</b-button>
 
-                            <b-button tag="a" href="/manage-learners/create"
+                            <b-button tag="a" :href="`/print/print-page-coe?ay=${search.ay}`"
                                 icon-left="plus"
                                 class="is-primary is-small">GENERATE COE</b-button>
                         </div>

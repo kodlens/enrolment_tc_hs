@@ -24,6 +24,7 @@
                             :data="data"
                             :loading="loading"
                             paginated
+                            detailed
                             backend-pagination
                             :total="total"
                             :pagination-rounded="true"
@@ -61,9 +62,29 @@
                                     <b-tooltip label="Delete" type="is-danger">
                                         <b-button class="button is-small mr-1" icon-right="delete" @click="confirmDelete(props.row.strand_id)"></b-button>
                                     </b-tooltip>
+                                    <b-tooltip label="Add Subject" type="is-info">
+                                        <b-button class="button is-small mr-1" icon-right="text-long" 
+                                            @click="openModalAddCourse(props.row.strand_id)"></b-button>
+                                    </b-tooltip>
 
                                 </div>
                             </b-table-column>
+
+                            <template #detail="props">
+                                <tr v-for="(item, index) in props.row.courses" :key="`course${index}`">
+                                    <td>
+                                        <span v-if="item.course">
+                                            {{ item.course.course_code }}
+                                        </span>
+                                        
+                                    </td>
+                                    <td>
+                                        <span v-if="item.course">
+                                            {{ item.course.course_desc }}
+                                        </span>
+                                    </td>
+                                </tr>
+                            </template>
                         </b-table>
 
                         <div class="columns">
@@ -111,9 +132,8 @@
                                              :type="this.errors.track_id ? 'is-danger':''"
                                              :message="this.errors.track_id ? this.errors.track_id[0] : ''">
                                         <b-select v-model="fields.track_id"
-                                                  expanded
-                                                  @input="loadStrands"
-                                                  placeholder="Track" required>
+                                            expanded
+                                            placeholder="Track" required>
                                             <option :value="item.track_id" v-for="(item, ix) in tracks" :key="`track${ix}`">
                                                 {{ item.track }}
                                             </option>
@@ -125,10 +145,10 @@
                             <div class="columns">
                                 <div class="column">
                                     <b-field label="Strand" label-position="on-border"
-                                             :type="this.errors.strand ? 'is-danger':''"
-                                             :message="this.errors.strand ? this.errors.strand[0] : ''">
+                                        :type="this.errors.strand ? 'is-danger':''"
+                                        :message="this.errors.strand ? this.errors.strand[0] : ''">
                                         <b-input v-model="fields.strand"
-                                                 placeholder="Strand" required>
+                                        placeholder="Strand" required>
                                         </b-input>
                                     </b-field>
                                 </div>
@@ -144,6 +164,46 @@
                                                  placeholder="Description" required>
                                         </b-input>
                                     </b-field>
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
+                    <footer class="modal-card-foot">
+                        <button class="button is-primary">Save</button>
+                    </footer>
+                </div>
+            </form><!--close form-->
+        </b-modal>
+        <!--close modal-->
+
+
+        <!--modal create-->
+        <b-modal v-model="modalAddCourse" has-modal-card
+                 trap-focus
+                 :width="640"
+                 aria-role="dialog"
+                 aria-label="Modal"
+                 aria-modal>
+
+            <form @submit.prevent="submitAddCourse">
+                <div class="modal-card">
+                    <header class="modal-card-head">
+                        <p class="modal-card-title">Add Subject to Strand</p>
+                        <button
+                            type="button"
+                            class="delete"
+                            @click="modalAddCourse = false"/>
+                    </header>
+
+                    <section class="modal-card-body">
+                        <div class="">
+                            
+                            <div class="columns">
+                                <div class="column">
+                                    <modal-browse-course 
+                                        :prop-name="course.course"
+                                        @browseCourse="emitBrowseCourse"></modal-browse-course>
                                 </div>
                             </div>
 
@@ -184,14 +244,22 @@ export default{
             },
 
             isModalCreate: false,
+            modalAddCourse: false,
+
             modalResetPassword: false,
 
             fields: {
                 track_id: null,
                 strand: null,
                 strand_desc: null,
-            },
+            },      
             errors: {},
+
+            course: {
+                course: '',
+            },
+
+      
 
             tracks: [],
 
@@ -256,9 +324,18 @@ export default{
         openModal(){
             this.isModalCreate=true;
             this.fields = {};
+            this.global_id = 0;
             this.errors = {};
         },
 
+        openModalAddCourse(id){
+            this.modalAddCourse=true;
+            this.global_id = 0;
+            this.fields = {};
+            this.errors = {};
+            this.fields.strand_id = id
+            this.course.course = ''
+        },
 
 
         submit: function(){
@@ -309,6 +386,54 @@ export default{
         },
 
 
+        submitAddCourse(){
+            if(this.global_id > 0){
+                //update
+                axios.put('/add-course/'+this.global_id, this.fields).then(res=>{
+                    if(res.data.status === 'updated'){
+                        this.$buefy.dialog.alert({
+                            title: 'UPDATED!',
+                            message: 'Successfully updated.',
+                            type: 'is-success',
+                            onConfirm: () => {
+                                this.loadAsyncData();
+                                this.clearFields();
+                                this.global_id = 0;
+                                this.modalAddCourse = false;
+                            }
+                        })
+                    }
+                }).catch(err=>{
+                    if(err.response.status === 422){
+                        this.errors = err.response.data.errors;
+                    }
+                })
+            }else{
+                //INSERT HERE
+                axios.post('/add-course', this.fields).then(res=>{
+                    if(res.data.status === 'saved'){
+                        this.$buefy.dialog.alert({
+                            title: 'SAVED!',
+                            message: 'Successfully saved.',
+                            type: 'is-success',
+                            confirmText: 'OK',
+                            onConfirm: () => {
+                                this.modalAddCourse = false;
+                                this.loadAsyncData();
+                                this.clearFields();
+                                this.global_id = 0;
+                            }
+                        })
+                    }
+                }).catch(err=>{
+                    if(err.response.status === 422){
+                        this.errors = err.response.data.errors;
+                    }
+                });
+            }
+        },
+
+
         //alert box ask for deletion
         confirmDelete(delete_id) {
             this.$buefy.dialog.confirm({
@@ -333,12 +458,8 @@ export default{
         },
 
         clearFields(){
-            this.global_id = 0;
-
-            this.fields.track_id = null
-            this.fields.section_id = null
-            this.fields.section = null
-            this.fields.strand_desc = null
+            this.global_id = 0
+            this.fields = {}
         },
 
         loadTracks(){
@@ -346,7 +467,7 @@ export default{
                 this.tracks = res.data;
             })
         },
-
+      
         //update code here
         getData: function(data_id){
             this.clearFields();
@@ -358,6 +479,11 @@ export default{
                 this.fields = res.data;
             });
         },
+
+        emitBrowseCourse(row){
+            this.course.course = row.course_code + ' - ' + row.course_desc
+            this.fields.course_id = row.course_id
+        }
 
 
 

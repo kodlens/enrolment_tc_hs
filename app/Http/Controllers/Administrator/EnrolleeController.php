@@ -17,7 +17,7 @@ class EnrolleeController extends Controller
 
         $data = Enrol::with(['academic_year', 'learner', 'semester', 'track', 'strand', 'section'])
             ->whereHas('academic_year', function($q) use ($req){
-                $q->where('academic_year_code', 'like', '%' . $req->ay . '%');
+                $q->where('academic_year_id', 'like', '%' . $req->ay . '%');
             })
             ->whereHas('learner', function($q) use ($req){
                 $q->where('lname', 'like', '%' . $req->name . '%')

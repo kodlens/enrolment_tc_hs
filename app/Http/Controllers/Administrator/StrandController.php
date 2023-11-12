@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Administrator;
 use App\Http\Controllers\Controller;
 use App\Models\Strand;
 use Illuminate\Http\Request;
+use App\Models\StrandCourse;
 
 class StrandController extends Controller
 {
@@ -18,7 +19,7 @@ class StrandController extends Controller
 
         $sort = explode('.', $req->sort_by);
 
-        $data = Strand::with(['track'])
+        $data = Strand::with(['track', 'courses.course'])
             ->where('strand', 'like', $req->strand . '%')
             ->orderBy($sort[0], $sort[1])
             ->paginate($req->perpage);
@@ -76,4 +77,29 @@ class StrandController extends Controller
             'status' => 'deleted'
         ], 200);
     }
+
+
+
+
+
+
+
+
+    public function addCourse(Request $req){
+
+        $req->validate([
+            'strand_id' => ['required'],
+            'course_id' => ['required'],
+        ]);
+        StrandCourse::create([
+            'strand_id' => $req->strand_id,
+            'course_id' => $req->course_id,
+        ]);
+
+        return response()->json([
+            'status' => 'saved'
+        ], 200);
+    }
+
+
 }

@@ -83,6 +83,7 @@ Route::middleware(['auth', 'admin'])->group(function(){
 
     Route::resource('/strands', App\Http\Controllers\Administrator\StrandController::class);
     Route::get('/get-strands', [App\Http\Controllers\Administrator\StrandController::class, 'getStrands']);
+    Route::post('/add-course', [App\Http\Controllers\Administrator\StrandController::class, 'addCourse']);
 
 
     Route::resource('/sections', App\Http\Controllers\Administrator\SectionController::class);
@@ -90,6 +91,7 @@ Route::middleware(['auth', 'admin'])->group(function(){
 
     Route::resource('/courses', App\Http\Controllers\Administrator\CourseController::class);
     Route::get('/get-courses', [App\Http\Controllers\Administrator\CourseController::class, 'getCourses']);
+    Route::get('/get-browse-courses', [App\Http\Controllers\Administrator\CourseController::class, 'getBrowseCourses']);
 
 
 
@@ -110,6 +112,10 @@ Route::middleware(['auth', 'admin'])->group(function(){
 
 
     Route::post('/academic-year-active/{id}', [App\Http\Controllers\Administrator\AcademicYearController::class, 'active']);
+
+
+    // PRINT
+    Route::get('/print/print-page-coe', [App\Http\Controllers\Administrator\Print\PrintCoeController::class, 'index']);
 
 
 });
